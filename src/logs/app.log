@@ -1,0 +1,5 @@
+2025-02-19 23:42:45 INFO resources get Account for test@gmail.com activated successfully!
+2025-02-19 23:42:55 INFO resources post Login attempt for username: test
+2025-02-19 23:42:55 INFO resources post Login successful for user: test
+2025-02-19 23:44:32 INFO resources post Login attempt for username: admin
+2025-02-19 23:44:32 INFO resources post Login successful for user: admin
