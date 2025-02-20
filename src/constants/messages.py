@@ -40,3 +40,7 @@ NO_DEFAULT_ROLE = "Internal error: No default role assigned."
 INVITE_KEY_NOT_FOUND = "Invite key not found."
 INVALID_INVITE_KEY = "Invalid or expired invite key."
 INVITE_KEY_DELETED = "Invite key deleted successfully."
+GENERATE_INVITE_KEY_ERROR = "Failed to generate a unique invite key."
+
+# User Messages
+USER_DELETED = "User deleted successfully."

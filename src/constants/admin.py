@@ -1,1 +1,3 @@
 EXPIRATION_INVITE_KEY = 24 * 3600  
+
+ADMIN_ROLE = "Administrator"

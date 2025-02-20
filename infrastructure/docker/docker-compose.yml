@@ -1,0 +1,29 @@
+services:
+  web:
+    container_name: ${BACKEND_CONTAINER}
+    build: 
+      context: ${ROOT_PROJECT}
+      dockerfile: ${DOCKERFILE_DEV} # Development-specific Dockerfile
+    ports:
+      - "5050:5050"  
+    volumes:
+      - ${ROOT_PROJECT}:${ROOT_PROJECT}/app      
+
+  nginx:
+    image: nginx:latest
+    container_name: ${NGINX_CONTAINER}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ${NGINX_DEV}:/etc/nginx/nginx.conf:ro
+      - ${TLS_DIR}:/etc/nginx/ssl:ro
+    depends_on:
+      - web
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    ports:
+      - "8025:8025"  # Web UI for viewing emails
+      - "1025:1025"

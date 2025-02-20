@@ -3,6 +3,7 @@ from flask import current_app
 from src.extensions import db
 from src.models.user import UserModel
 from src.modules.auth.models import RoleModel
+from src.constants.admin import *
 
 @click.command("createadmin")
 def createadmin():
@@ -23,7 +24,7 @@ def createadmin():
         
         admin = UserModel(username=username, password=password, email=email)
 
-        admin_role = db.session.execute(db.select(RoleModel).where(RoleModel.name == "Administrator")).scalars().first()
+        admin_role = db.session.execute(db.select(RoleModel).where(RoleModel.name == ADMIN_ROLE)).scalars().first()
         if admin_role:
             admin.roles.append(admin_role)
         db.session.add(admin)
