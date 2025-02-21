@@ -12,12 +12,13 @@ from src.modules.auth.models import RoleModel
 
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, get_jwt
 from src.modules.auth.services import validate_password, verify_token, send_activation_email, send_password_reset_email, add_token_to_blacklist
+from src.modules.admin.services import is_invite_key_expired
 from http import HTTPStatus
 from src.constants.messages import *
 
 from src.modules.admin.models import InviteKeyModel
 
-blp = Blueprint("auth", __name__, description="Authentication and User Management")
+blp = Blueprint("auth_func", __name__, description="Authentication and User Management")
 
 @blp.route("/login")
 class UserLogin(MethodView):
@@ -81,7 +82,8 @@ class UserRegister(MethodView):
         current_app.logger.info(f"User registration attempt: {user_data['username']}")
 
         invite_key = db.session.get(InviteKeyModel, user_data["invite_key"])
-        if not invite_key:
+        print(invite_key)
+        if is_invite_key_expired(invite_key):
             abort(HTTPStatus.BAD_REQUEST, message=INVALID_INVITE_KEY)
 
         default_role = db.session.execute(

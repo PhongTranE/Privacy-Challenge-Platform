@@ -43,7 +43,6 @@ class UserSchema(Schema):
         dump_only=True,
         error_messages={"invalid": "Active status must be a boolean (true or false)."}
     )
-
 class UserRegisterSchema(UserSchema):
     email = fields.Str(
         required=True,

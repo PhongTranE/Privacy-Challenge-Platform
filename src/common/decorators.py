@@ -1,6 +1,7 @@
 from flask_jwt_extended import get_jwt, jwt_required
 from flask_smorest import abort
 from functools import wraps
+from src.constants.messages import *
 
 def role_required(required_roles):
     """
@@ -14,7 +15,7 @@ def role_required(required_roles):
             user_roles = jwt_claims.get("roles", [])
 
             if not any(role in user_roles for role in required_roles):
-                abort(403, message="You do not have permission to access this resource.")
+                abort(403, message=UNAUTHORIZED_ACCESS)
 
             return fn(*args, **kwargs)
         return wrapper

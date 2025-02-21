@@ -13,7 +13,7 @@ MISSING_TOKEN = "Request does not contain an access token."
 
 # User Account Messages
 USER_NOT_FOUND = "User not found."
-USER_ALREADY_EXISTS = "A user with that username already exists."
+USER_ALREADY_EXISTS = "A user with that username or email already exists."
 USER_ACTIVATED = "Account for {} activated successfully!"
 USER_ALREADY_ACTIVATED = "User is already activated."
 ACTIVATION_EMAIL_SENT = "Activation email sent successfully."
@@ -44,3 +44,6 @@ GENERATE_INVITE_KEY_ERROR = "Failed to generate a unique invite key."
 
 # User Messages
 USER_DELETED = "User deleted successfully."
+
+# RBAC
+UNAUTHORIZED_ACCESS = "You do not have permission to access this resource."

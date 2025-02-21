@@ -20,7 +20,7 @@ from src.common.pagination import PageNumberPagination
 
 from docs import *
 
-blp = Blueprint("admins", __name__, description="Admin Management")
+blp = Blueprint("admin_func", __name__, description="Admin Management")
 
 @blp.route("/invite")
 class InviteUser(MethodView):
