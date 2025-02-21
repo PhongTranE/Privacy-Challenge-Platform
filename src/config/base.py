@@ -21,7 +21,7 @@ class BaseConfig(ABC):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # API Documentation (OpenAPI / Swagger)
-    API_TITLE = "Skeleton Authentication and RBAC"
+    API_TITLE = "Privacy Challenge Platform"
     API_VERSION = "v1"
     OPENAPI_VERSION = "3.0.3"
     OPENAPI_URL_PREFIX = "/"

@@ -42,7 +42,7 @@ def create_app(config=None):
     register_error_handlers(app)
     register_jwt_handlers(jwt)
 
-    app.register_blueprint(api_blp)
+    api.register_blueprint(api_blp)
     
     return app
 

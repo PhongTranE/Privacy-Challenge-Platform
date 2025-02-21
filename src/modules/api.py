@@ -1,10 +1,10 @@
-from flask import Blueprint
+from flask_smorest import Blueprint
 
 from src.modules.auth.resources import blp as auth_blp
 from src.modules.admin.resources import blp as admin_blp
 
 # Create a global API Blueprint
-api_blp = Blueprint("api", __name__, url_prefix="/api")
+api_blp = Blueprint("api", __name__, url_prefix="/api", description="Main API Blueprint")
 
 # Register the individual Blueprints under the main API Blueprint
 api_blp.register_blueprint(auth_blp, url_prefix="/auth")

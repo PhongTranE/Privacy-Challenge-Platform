@@ -15,7 +15,7 @@ from src.modules.auth.services import validate_password, verify_token, send_acti
 from http import HTTPStatus
 from src.constants.messages import *
 
-from src.modules.admin.models import InviteKey
+from src.modules.admin.models import InviteKeyModel
 
 blp = Blueprint("auth", __name__, description="Authentication and User Management")
 
@@ -80,7 +80,7 @@ class UserRegister(MethodView):
     def post(self, user_data):
         current_app.logger.info(f"User registration attempt: {user_data['username']}")
 
-        invite_key = db.session.get(InviteKey, user_data["invite_key"])
+        invite_key = db.session.get(InviteKeyModel, user_data["invite_key"])
         if not invite_key:
             abort(HTTPStatus.BAD_REQUEST, message=INVALID_INVITE_KEY)
 

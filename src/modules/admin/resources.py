@@ -1,10 +1,11 @@
 from src.extensions import db 
 from flask.views import MethodView
+from flask import request
 from flask_smorest import Blueprint, abort
 from src.common.decorators import role_required
 from src.modules.admin.services import generate_invite_key
 
-from src.modules.admin.models import InviteKey
+from src.modules.admin.models import InviteKeyModel
 from src.models.user import UserModel
 
 from flask import jsonify
@@ -12,18 +13,21 @@ from src.modules.admin.schemas import InviteKeySchema
 from src.modules.auth.schemas import UserSchema
 
 from http import HTTPStatus
-from sqlalchemy import select
+from sqlalchemy import select, func
 from src.constants.messages import *
 from src.constants.admin import *
+from src.common.pagination import PageNumberPagination
 
+from docs import *
 
-blp = Blueprint("admin", __name__, description="Admin Management")
+blp = Blueprint("admins", __name__, description="Admin Management")
 
 @blp.route("/invite")
 class InviteUser(MethodView):
 
     @role_required([ADMIN_ROLE])
     @blp.response(HTTPStatus.CREATED, InviteKeySchema)
+
     def post(self):
         """Generate a new invite key """
         new_key = generate_invite_key()
@@ -31,14 +35,14 @@ class InviteUser(MethodView):
         MAX_RETRIES = 10  # Set a reasonable limit
         attempt = 0
 
-        while db.session.get(InviteKey, new_key) and attempt < MAX_RETRIES:
+        while db.session.get(InviteKeyModel, new_key) and attempt < MAX_RETRIES:
             new_key = generate_invite_key()
             attempt += 1
 
         if attempt == MAX_RETRIES:
             abort(HTTPStatus.INTERNAL_SERVER_ERROR, message=GENERATE_INVITE_KEY_ERROR)
 
-        invite_key = InviteKey(key=new_key)
+        invite_key = InviteKeyModel(key=new_key)
         db.session.add(invite_key)
         db.session.commit()
 
@@ -46,16 +50,44 @@ class InviteUser(MethodView):
     
     @role_required([ADMIN_ROLE])
     @blp.response(HTTPStatus.OK, InviteKeySchema(many=True))
+    @blp.doc(**invite_key_list_doc)
     def get(self):
-        invite_keys = db.session.execute(select(InviteKey)).scalars().all()
-        return invite_keys
+        page = request.args.get('page', type=int)
+        per_page = request.args.get('per_page', type=int)
+        count = request.args.get('count', type=str)
+
+        # Convert 'count' parameter to boolean if provided
+        if count is not None:
+            count = count.lower() == 'true'
+
+        invite_keys = select(InviteKeyModel)
+
+        paginator = PageNumberPagination(
+            select=invite_keys,  
+            page=page,
+            per_page=per_page,
+            count=count
+        )
+
+        result = paginator.paginate()
+        items = result['data']
+        meta = result['meta']
+
+        # Serialize items using the schema
+        serialized_items = InviteKeySchema(many=True).dump(items)
+
+        # Return a JSON response with data and metadata
+        return jsonify({
+            'data': serialized_items,
+            'meta': meta
+        })
 
 @blp.route("/invite/<string:key>")
 class InviteKeyRemove(MethodView):
 
     @role_required([ADMIN_ROLE])
     def delete(self, key):
-        invite_key = db.session.get(InviteKey, key)
+        invite_key = db.session.get(InviteKeyModel, key)
         if not invite_key:
             abort(HTTPStatus.NOT_FOUND, message=INVITE_KEY_NOT_FOUND)
         db.session.delete(invite_key)
@@ -67,9 +99,34 @@ class UserList(MethodView):
 
     @role_required([ADMIN_ROLE])
     @blp.response(HTTPStatus.OK, UserSchema(many=True))
+    @blp.doc(**user_list_doc)
     def get(self):
-        users = db.session.execute(select(UserModel)).scalars().all()
-        return users
+        page = request.args.get('page', type=int)
+        per_page = request.args.get('per_page', type=int)
+        count = request.args.get('count', type=str)
+
+        if count is not None:
+            count = count.lower() == 'true'
+
+        users = select(UserModel)
+
+        paginator = PageNumberPagination(
+            select=users,  
+            page=page,
+            per_page=per_page,
+            count=count
+        )
+
+        result = paginator.paginate()
+        items = result['data']
+        meta = result['meta']
+
+        serialized_items = UserSchema(many=True).dump(items)
+
+        return jsonify({
+            'data': serialized_items,
+            'meta': meta
+        })
 
 @blp.route("/user/<int:user_id>")
 class User(MethodView):

@@ -677,3 +677,487 @@ FROM invite_keys
 2025-02-19 23:50:01 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
 FROM invite_keys | Params: () | Execution Time: 0.00024s
 2025-02-19 23:50:01 | INFO | ROLLBACK
+2025-02-20 21:42:38 | INFO | BEGIN (implicit)
+2025-02-20 21:42:38 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users 
+WHERE users.username = ?
+2025-02-20 21:42:38 | INFO | [generated in 0.00016s] ('admin',)
+2025-02-20 21:42:38 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users 
+WHERE users.username = ? | Params: ('admin',) | Execution Time: 0.00124s
+2025-02-20 21:42:38 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-02-20 21:42:38 | INFO | [generated in 0.00011s] (1,)
+2025-02-20 21:42:38 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (1,) | Execution Time: 0.00082s
+2025-02-20 21:42:38 | INFO | ROLLBACK
+2025-02-20 21:42:53 | INFO | BEGIN (implicit)
+2025-02-20 21:42:53 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-20 21:42:53 | INFO | [generated in 0.00015s] ('1a22f7d1-3dec-471f-a578-609b660c1582',)
+2025-02-20 21:42:53 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('1a22f7d1-3dec-471f-a578-609b660c1582',) | Execution Time: 0.00095s
+2025-02-20 21:42:53 | INFO | SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+2025-02-20 21:42:53 | INFO | [generated in 0.00007s] ()
+2025-02-20 21:42:53 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys | Params: () | Execution Time: 0.00012s
+2025-02-20 21:42:53 | INFO | ROLLBACK
+2025-02-20 21:43:31 | INFO | BEGIN (implicit)
+2025-02-20 21:43:31 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-20 21:43:31 | INFO | [generated in 0.00016s] ('1a22f7d1-3dec-471f-a578-609b660c1582',)
+2025-02-20 21:43:31 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('1a22f7d1-3dec-471f-a578-609b660c1582',) | Execution Time: 0.00108s
+2025-02-20 21:43:31 | INFO | SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+2025-02-20 21:43:31 | INFO | [generated in 0.00014s] ()
+2025-02-20 21:43:31 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys | Params: () | Execution Time: 0.00020s
+2025-02-20 21:43:31 | INFO | ROLLBACK
+2025-02-20 21:48:30 | INFO | BEGIN (implicit)
+2025-02-20 21:48:30 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-20 21:48:30 | INFO | [generated in 0.00020s] ('1a22f7d1-3dec-471f-a578-609b660c1582',)
+2025-02-20 21:48:30 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('1a22f7d1-3dec-471f-a578-609b660c1582',) | Execution Time: 0.00142s
+2025-02-20 21:48:30 | INFO | SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+2025-02-20 21:48:30 | INFO | [generated in 0.00008s] ()
+2025-02-20 21:48:30 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys | Params: () | Execution Time: 0.00011s
+2025-02-20 21:48:30 | INFO | ROLLBACK
+2025-02-20 21:54:23 | INFO | BEGIN (implicit)
+2025-02-20 21:54:23 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-20 21:54:23 | INFO | [generated in 0.00025s] ('1a22f7d1-3dec-471f-a578-609b660c1582',)
+2025-02-20 21:54:23 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('1a22f7d1-3dec-471f-a578-609b660c1582',) | Execution Time: 0.00140s
+2025-02-20 21:54:23 | INFO | SELECT count(*) AS count_1 
+FROM invite_keys
+2025-02-20 21:54:23 | INFO | [generated in 0.00011s] ()
+2025-02-20 21:54:23 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM invite_keys | Params: () | Execution Time: 0.00016s
+2025-02-20 21:54:23 | INFO | SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+2025-02-20 21:54:23 | INFO | [generated in 0.00005s] ()
+2025-02-20 21:54:23 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys | Params: () | Execution Time: 0.00008s
+2025-02-20 21:54:23 | INFO | ROLLBACK
+2025-02-20 21:54:59 | INFO | BEGIN (implicit)
+2025-02-20 21:54:59 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-20 21:54:59 | INFO | [cached since 36.27s ago] ('1a22f7d1-3dec-471f-a578-609b660c1582',)
+2025-02-20 21:54:59 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('1a22f7d1-3dec-471f-a578-609b660c1582',) | Execution Time: 0.00042s
+2025-02-20 21:54:59 | INFO | SELECT count(*) AS count_1 
+FROM invite_keys
+2025-02-20 21:54:59 | INFO | [cached since 36.26s ago] ()
+2025-02-20 21:54:59 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM invite_keys | Params: () | Execution Time: 0.00019s
+2025-02-20 21:54:59 | INFO | SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+2025-02-20 21:54:59 | INFO | [cached since 36.26s ago] ()
+2025-02-20 21:54:59 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys | Params: () | Execution Time: 0.00006s
+2025-02-20 21:54:59 | INFO | ROLLBACK
+2025-02-20 21:57:04 | INFO | BEGIN (implicit)
+2025-02-20 21:57:04 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-20 21:57:04 | INFO | [generated in 0.00035s] ('1a22f7d1-3dec-471f-a578-609b660c1582',)
+2025-02-20 21:57:04 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('1a22f7d1-3dec-471f-a578-609b660c1582',) | Execution Time: 0.00211s
+2025-02-20 21:57:04 | INFO | SELECT count(*) AS count_1 
+FROM invite_keys
+2025-02-20 21:57:04 | INFO | [generated in 0.00009s] ()
+2025-02-20 21:57:04 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM invite_keys | Params: () | Execution Time: 0.00014s
+2025-02-20 21:57:04 | INFO | ROLLBACK
+2025-02-20 21:57:16 | INFO | BEGIN (implicit)
+2025-02-20 21:57:16 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-20 21:57:16 | INFO | [cached since 12.02s ago] ('1a22f7d1-3dec-471f-a578-609b660c1582',)
+2025-02-20 21:57:16 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('1a22f7d1-3dec-471f-a578-609b660c1582',) | Execution Time: 0.00080s
+2025-02-20 21:57:16 | INFO | SELECT count(*) AS count_1 
+FROM invite_keys
+2025-02-20 21:57:16 | INFO | [cached since 12.02s ago] ()
+2025-02-20 21:57:16 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM invite_keys | Params: () | Execution Time: 0.00015s
+2025-02-20 21:57:16 | INFO | ROLLBACK
+2025-02-20 21:58:18 | INFO | BEGIN (implicit)
+2025-02-20 21:58:18 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-20 21:58:18 | INFO | [generated in 0.00012s] ('1a22f7d1-3dec-471f-a578-609b660c1582',)
+2025-02-20 21:58:18 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('1a22f7d1-3dec-471f-a578-609b660c1582',) | Execution Time: 0.00170s
+2025-02-20 21:58:18 | INFO | SELECT count(*) AS count_1 
+FROM invite_keys
+2025-02-20 21:58:18 | INFO | [generated in 0.00016s] ()
+2025-02-20 21:58:18 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM invite_keys | Params: () | Execution Time: 0.00029s
+2025-02-20 21:58:18 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys
+2025-02-20 21:58:18 | INFO | [generated in 0.00013s] ()
+2025-02-20 21:58:18 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys | Params: () | Execution Time: 0.00020s
+2025-02-20 21:58:18 | INFO | ROLLBACK
+2025-02-20 21:58:37 | INFO | BEGIN (implicit)
+2025-02-20 21:58:37 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-20 21:58:37 | INFO | [generated in 0.00020s] ('1a22f7d1-3dec-471f-a578-609b660c1582',)
+2025-02-20 21:58:37 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('1a22f7d1-3dec-471f-a578-609b660c1582',) | Execution Time: 0.00172s
+2025-02-20 21:58:37 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys
+2025-02-20 21:58:37 | INFO | [generated in 0.00009s] ()
+2025-02-20 21:58:37 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys | Params: () | Execution Time: 0.00012s
+2025-02-20 21:58:37 | INFO | ROLLBACK
+2025-02-20 22:00:15 | INFO | BEGIN (implicit)
+2025-02-20 22:00:15 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-20 22:00:15 | INFO | [generated in 0.00018s] ('1a22f7d1-3dec-471f-a578-609b660c1582',)
+2025-02-20 22:00:15 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('1a22f7d1-3dec-471f-a578-609b660c1582',) | Execution Time: 0.00134s
+2025-02-20 22:00:15 | INFO | SELECT count(*) AS count_1 
+FROM invite_keys
+2025-02-20 22:00:15 | INFO | [generated in 0.00008s] ()
+2025-02-20 22:00:15 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM invite_keys | Params: () | Execution Time: 0.00012s
+2025-02-20 22:00:15 | INFO | SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+2025-02-20 22:00:15 | INFO | [generated in 0.00005s] ()
+2025-02-20 22:00:15 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys | Params: () | Execution Time: 0.00008s
+2025-02-20 22:00:15 | INFO | ROLLBACK
+2025-02-20 22:08:15 | INFO | BEGIN (implicit)
+2025-02-20 22:08:15 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-20 22:08:15 | INFO | [generated in 0.00025s] ('1a22f7d1-3dec-471f-a578-609b660c1582',)
+2025-02-20 22:08:15 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('1a22f7d1-3dec-471f-a578-609b660c1582',) | Execution Time: 0.00114s
+2025-02-20 22:08:15 | INFO | SELECT count(*) AS count_1 
+FROM invite_keys
+2025-02-20 22:08:15 | INFO | [generated in 0.00007s] ()
+2025-02-20 22:08:15 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM invite_keys | Params: () | Execution Time: 0.00009s
+2025-02-20 22:08:15 | INFO | SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+2025-02-20 22:08:15 | INFO | [generated in 0.00004s] ()
+2025-02-20 22:08:15 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys | Params: () | Execution Time: 0.00007s
+2025-02-20 22:08:15 | INFO | ROLLBACK
+2025-02-20 22:08:29 | INFO | BEGIN (implicit)
+2025-02-20 22:08:29 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-20 22:08:29 | INFO | [generated in 0.00013s] ('1a22f7d1-3dec-471f-a578-609b660c1582',)
+2025-02-20 22:08:29 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('1a22f7d1-3dec-471f-a578-609b660c1582',) | Execution Time: 0.00170s
+2025-02-20 22:08:29 | INFO | SELECT count(*) AS count_1 
+FROM invite_keys
+2025-02-20 22:08:29 | INFO | [generated in 0.00012s] ()
+2025-02-20 22:08:29 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM invite_keys | Params: () | Execution Time: 0.00017s
+2025-02-20 22:08:29 | INFO | SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+2025-02-20 22:08:29 | INFO | [generated in 0.00005s] ()
+2025-02-20 22:08:29 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys | Params: () | Execution Time: 0.00011s
+2025-02-20 22:08:29 | INFO | ROLLBACK
+2025-02-20 22:08:47 | INFO | BEGIN (implicit)
+2025-02-20 22:08:47 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-20 22:08:47 | INFO | [cached since 18.5s ago] ('1a22f7d1-3dec-471f-a578-609b660c1582',)
+2025-02-20 22:08:47 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('1a22f7d1-3dec-471f-a578-609b660c1582',) | Execution Time: 0.00052s
+2025-02-20 22:08:47 | INFO | SELECT count(*) AS count_1 
+FROM invite_keys
+2025-02-20 22:08:47 | INFO | [cached since 18.5s ago] ()
+2025-02-20 22:08:47 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM invite_keys | Params: () | Execution Time: 0.00023s
+2025-02-20 22:08:47 | INFO | SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+2025-02-20 22:08:47 | INFO | [cached since 18.5s ago] ()
+2025-02-20 22:08:47 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys | Params: () | Execution Time: 0.00007s
+2025-02-20 22:08:47 | INFO | ROLLBACK
+2025-02-20 22:20:15 | INFO | BEGIN (implicit)
+2025-02-20 22:20:15 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-20 22:20:15 | INFO | [generated in 0.00018s] ('1a22f7d1-3dec-471f-a578-609b660c1582',)
+2025-02-20 22:20:15 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('1a22f7d1-3dec-471f-a578-609b660c1582',) | Execution Time: 0.00185s
+2025-02-20 22:20:15 | INFO | ROLLBACK
+2025-02-20 23:08:17 | INFO | BEGIN (implicit)
+2025-02-20 23:08:17 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users
+2025-02-20 23:08:17 | INFO | [generated in 0.00029s] ()
+2025-02-20 23:08:17 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users | Params: () | Execution Time: 0.00074s
+2025-02-20 23:08:27 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users
+2025-02-20 23:08:27 | INFO | [cached since 9.562s ago] ()
+2025-02-20 23:08:27 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users | Params: () | Execution Time: 0.00125s
+2025-02-21 00:55:10 | INFO | ROLLBACK
+2025-02-21 00:56:07 | INFO | BEGIN (implicit)
+2025-02-21 00:56:07 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users 
+WHERE users.username = ?
+2025-02-21 00:56:07 | INFO | [generated in 0.00025s] ('admin',)
+2025-02-21 00:56:07 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users 
+WHERE users.username = ? | Params: ('admin',) | Execution Time: 0.00104s
+2025-02-21 00:56:07 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-02-21 00:56:07 | INFO | [generated in 0.00017s] (1,)
+2025-02-21 00:56:07 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (1,) | Execution Time: 0.00094s
+2025-02-21 00:56:07 | INFO | ROLLBACK
+2025-02-21 00:56:17 | INFO | BEGIN (implicit)
+2025-02-21 00:56:17 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-21 00:56:17 | INFO | [generated in 0.00028s] ('2dae59a0-1ba5-4159-8b42-420a474578a7',)
+2025-02-21 00:56:17 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('2dae59a0-1ba5-4159-8b42-420a474578a7',) | Execution Time: 0.00109s
+2025-02-21 00:56:17 | INFO | SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-02-21 00:56:17 | INFO | [generated in 0.00008s] (11, 0)
+2025-02-21 00:56:17 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (11, 0) | Execution Time: 0.00012s
+2025-02-21 00:56:17 | INFO | ROLLBACK
+2025-02-21 00:56:30 | INFO | BEGIN (implicit)
+2025-02-21 00:56:30 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-21 00:56:30 | INFO | [cached since 13.21s ago] ('2dae59a0-1ba5-4159-8b42-420a474578a7',)
+2025-02-21 00:56:30 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('2dae59a0-1ba5-4159-8b42-420a474578a7',) | Execution Time: 0.00042s
+2025-02-21 00:56:30 | INFO | SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-02-21 00:56:30 | INFO | [cached since 13.21s ago] (2, 0)
+2025-02-21 00:56:30 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (2, 0) | Execution Time: 0.00013s
+2025-02-21 00:56:30 | INFO | ROLLBACK
+2025-02-21 00:56:48 | INFO | BEGIN (implicit)
+2025-02-21 00:56:48 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-21 00:56:48 | INFO | [cached since 31.69s ago] ('2dae59a0-1ba5-4159-8b42-420a474578a7',)
+2025-02-21 00:56:48 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('2dae59a0-1ba5-4159-8b42-420a474578a7',) | Execution Time: 0.00035s
+2025-02-21 00:56:48 | INFO | SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-02-21 00:56:48 | INFO | [cached since 31.69s ago] (2, 1)
+2025-02-21 00:56:48 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (2, 1) | Execution Time: 0.00055s
+2025-02-21 00:56:48 | INFO | ROLLBACK
+2025-02-21 00:59:15 | INFO | BEGIN (implicit)
+2025-02-21 00:59:15 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-21 00:59:15 | INFO | [generated in 0.00017s] ('2dae59a0-1ba5-4159-8b42-420a474578a7',)
+2025-02-21 00:59:15 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('2dae59a0-1ba5-4159-8b42-420a474578a7',) | Execution Time: 0.00124s
+2025-02-21 00:59:15 | INFO | SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-02-21 00:59:15 | INFO | [generated in 0.00019s] (1, 1)
+2025-02-21 00:59:15 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (1, 1) | Execution Time: 0.00029s
+2025-02-21 00:59:15 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created 
+FROM invite_keys) AS anon_1
+2025-02-21 00:59:15 | INFO | [generated in 0.00014s] ()
+2025-02-21 00:59:15 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00021s
+2025-02-21 00:59:15 | INFO | ROLLBACK
+2025-02-21 01:02:30 | INFO | BEGIN (implicit)
+2025-02-21 01:02:30 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-21 01:02:30 | INFO | [generated in 0.00017s] ('2dae59a0-1ba5-4159-8b42-420a474578a7',)
+2025-02-21 01:02:30 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('2dae59a0-1ba5-4159-8b42-420a474578a7',) | Execution Time: 0.00110s
+2025-02-21 01:02:30 | INFO | SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-02-21 01:02:30 | INFO | [generated in 0.00009s] (1, 1)
+2025-02-21 01:02:30 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (1, 1) | Execution Time: 0.00011s
+2025-02-21 01:02:30 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created 
+FROM invite_keys) AS anon_1
+2025-02-21 01:02:30 | INFO | [generated in 0.00006s] ()
+2025-02-21 01:02:30 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00008s
+2025-02-21 01:02:30 | INFO | ROLLBACK
+2025-02-21 01:07:55 | INFO | BEGIN (implicit)
+2025-02-21 01:07:55 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-21 01:07:55 | INFO | [generated in 0.00014s] ('2dae59a0-1ba5-4159-8b42-420a474578a7',)
+2025-02-21 01:07:55 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('2dae59a0-1ba5-4159-8b42-420a474578a7',) | Execution Time: 0.00114s
+2025-02-21 01:07:55 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users
+ LIMIT ? OFFSET ?
+2025-02-21 01:07:55 | INFO | [generated in 0.00010s] (1, 1)
+2025-02-21 01:07:55 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users
+ LIMIT ? OFFSET ? | Params: (1, 1) | Execution Time: 0.00034s
+2025-02-21 01:07:55 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT users.id AS id, users.username AS username, users._password AS _password, users.email AS email, users.is_active AS is_active 
+FROM users) AS anon_1
+2025-02-21 01:07:55 | INFO | [generated in 0.00006s] ()
+2025-02-21 01:07:55 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT users.id AS id, users.username AS username, users._password AS _password, users.email AS email, users.is_active AS is_active 
+FROM users) AS anon_1 | Params: () | Execution Time: 0.00038s
+2025-02-21 01:07:55 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-02-21 01:07:55 | INFO | [generated in 0.00006s] (2,)
+2025-02-21 01:07:55 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (2,) | Execution Time: 0.00009s
+2025-02-21 01:07:55 | INFO | ROLLBACK
+2025-02-21 01:08:15 | INFO | BEGIN (implicit)
+2025-02-21 01:08:15 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-21 01:08:15 | INFO | [cached since 19.81s ago] ('2dae59a0-1ba5-4159-8b42-420a474578a7',)
+2025-02-21 01:08:15 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('2dae59a0-1ba5-4159-8b42-420a474578a7',) | Execution Time: 0.00015s
+2025-02-21 01:08:15 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users
+ LIMIT ? OFFSET ?
+2025-02-21 01:08:15 | INFO | [cached since 19.81s ago] (10, 0)
+2025-02-21 01:08:15 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users
+ LIMIT ? OFFSET ? | Params: (10, 0) | Execution Time: 0.00009s
+2025-02-21 01:08:15 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT users.id AS id, users.username AS username, users._password AS _password, users.email AS email, users.is_active AS is_active 
+FROM users) AS anon_1
+2025-02-21 01:08:15 | INFO | [cached since 19.81s ago] ()
+2025-02-21 01:08:15 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT users.id AS id, users.username AS username, users._password AS _password, users.email AS email, users.is_active AS is_active 
+FROM users) AS anon_1 | Params: () | Execution Time: 0.00006s
+2025-02-21 01:08:15 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-02-21 01:08:15 | INFO | [cached since 19.8s ago] (1,)
+2025-02-21 01:08:15 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (1,) | Execution Time: 0.00006s
+2025-02-21 01:08:15 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-02-21 01:08:15 | INFO | [cached since 19.8s ago] (2,)
+2025-02-21 01:08:15 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (2,) | Execution Time: 0.00005s
+2025-02-21 01:08:15 | INFO | ROLLBACK
+2025-02-21 01:08:47 | INFO | BEGIN (implicit)
+2025-02-21 01:08:47 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-21 01:08:47 | INFO | [cached since 51.75s ago] ('2dae59a0-1ba5-4159-8b42-420a474578a7',)
+2025-02-21 01:08:47 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('2dae59a0-1ba5-4159-8b42-420a474578a7',) | Execution Time: 0.00028s
+2025-02-21 01:08:47 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users
+ LIMIT ? OFFSET ?
+2025-02-21 01:08:47 | INFO | [cached since 51.75s ago] (11, 0)
+2025-02-21 01:08:47 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users
+ LIMIT ? OFFSET ? | Params: (11, 0) | Execution Time: 0.00024s
+2025-02-21 01:08:47 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-02-21 01:08:47 | INFO | [cached since 51.75s ago] (1,)
+2025-02-21 01:08:47 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (1,) | Execution Time: 0.00024s
+2025-02-21 01:08:47 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-02-21 01:08:47 | INFO | [cached since 51.75s ago] (2,)
+2025-02-21 01:08:47 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (2,) | Execution Time: 0.00007s
+2025-02-21 01:08:47 | INFO | ROLLBACK
+2025-02-21 01:09:07 | INFO | BEGIN (implicit)
+2025-02-21 01:09:07 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-21 01:09:07 | INFO | [cached since 71.98s ago] ('2dae59a0-1ba5-4159-8b42-420a474578a7',)
+2025-02-21 01:09:07 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('2dae59a0-1ba5-4159-8b42-420a474578a7',) | Execution Time: 0.00035s
+2025-02-21 01:09:07 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users
+ LIMIT ? OFFSET ?
+2025-02-21 01:09:07 | INFO | [cached since 71.98s ago] (2, 0)
+2025-02-21 01:09:07 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users
+ LIMIT ? OFFSET ? | Params: (2, 0) | Execution Time: 0.00037s
+2025-02-21 01:09:07 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-02-21 01:09:07 | INFO | [cached since 71.97s ago] (1,)
+2025-02-21 01:09:07 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (1,) | Execution Time: 0.00019s
+2025-02-21 01:09:07 | INFO | ROLLBACK
