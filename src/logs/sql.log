@@ -1,0 +1,148 @@
+2025-02-21 20:08:43 | INFO | BEGIN (implicit)
+2025-02-21 20:08:43 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users 
+WHERE users.username = ?
+2025-02-21 20:08:43 | INFO | [generated in 0.00015s] ('admin',)
+2025-02-21 20:08:43 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users 
+WHERE users.username = ? | Params: ('admin',) | Execution Time: 0.00094s
+2025-02-21 20:08:43 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-02-21 20:08:43 | INFO | [generated in 0.00009s] (1,)
+2025-02-21 20:08:43 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (1,) | Execution Time: 0.00088s
+2025-02-21 20:08:43 | INFO | ROLLBACK
+2025-02-21 20:12:40 | INFO | BEGIN (implicit)
+2025-02-21 20:12:40 | INFO | SELECT count(?) AS count_1 
+FROM users
+2025-02-21 20:12:40 | INFO | [generated in 0.00016s] ('*',)
+2025-02-21 20:12:40 | INFO | SQL Query: SELECT count(?) AS count_1 
+FROM users | Params: ('*',) | Execution Time: 0.00073s
+2025-02-21 20:12:40 | INFO | SELECT anon_1.users_id AS anon_1_users_id, anon_1.users_username AS anon_1_users_username, anon_1.users__password AS anon_1_users__password, anon_1.users_email AS anon_1_users_email, anon_1.users_is_active AS anon_1_users_is_active, roles_1.id AS roles_1_id, roles_1.name AS roles_1_name, roles_1."default" AS roles_1_default, roles_1.permissions AS roles_1_permissions 
+FROM (SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active 
+FROM users
+ LIMIT ? OFFSET ?) AS anon_1 LEFT OUTER JOIN (roles_users AS roles_users_1 JOIN roles AS roles_1 ON roles_1.id = roles_users_1.role_id) ON anon_1.users_id = roles_users_1.user_id
+2025-02-21 20:12:40 | INFO | [generated in 0.00019s] (20, 0)
+2025-02-21 20:12:40 | INFO | SQL Query: SELECT anon_1.users_id AS anon_1_users_id, anon_1.users_username AS anon_1_users_username, anon_1.users__password AS anon_1_users__password, anon_1.users_email AS anon_1_users_email, anon_1.users_is_active AS anon_1_users_is_active, roles_1.id AS roles_1_id, roles_1.name AS roles_1_name, roles_1."default" AS roles_1_default, roles_1.permissions AS roles_1_permissions 
+FROM (SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active 
+FROM users
+ LIMIT ? OFFSET ?) AS anon_1 LEFT OUTER JOIN (roles_users AS roles_users_1 JOIN roles AS roles_1 ON roles_1.id = roles_users_1.role_id) ON anon_1.users_id = roles_users_1.user_id | Params: (20, 0) | Execution Time: 0.00131s
+2025-02-21 20:12:40 | INFO | ROLLBACK
+2025-02-21 20:12:52 | INFO | BEGIN (implicit)
+2025-02-21 20:12:52 | INFO | SELECT count(?) AS count_1 
+FROM users
+2025-02-21 20:12:52 | INFO | [generated in 0.00020s] ('*',)
+2025-02-21 20:12:52 | INFO | SQL Query: SELECT count(?) AS count_1 
+FROM users | Params: ('*',) | Execution Time: 0.00074s
+2025-02-21 20:12:52 | INFO | SELECT anon_1.users_id AS anon_1_users_id, anon_1.users_username AS anon_1_users_username, anon_1.users__password AS anon_1_users__password, anon_1.users_email AS anon_1_users_email, anon_1.users_is_active AS anon_1_users_is_active, roles_1.id AS roles_1_id, roles_1.name AS roles_1_name, roles_1."default" AS roles_1_default, roles_1.permissions AS roles_1_permissions 
+FROM (SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active 
+FROM users
+ LIMIT ? OFFSET ?) AS anon_1 LEFT OUTER JOIN (roles_users AS roles_users_1 JOIN roles AS roles_1 ON roles_1.id = roles_users_1.role_id) ON anon_1.users_id = roles_users_1.user_id
+2025-02-21 20:12:52 | INFO | [generated in 0.00022s] (20, 0)
+2025-02-21 20:12:52 | INFO | SQL Query: SELECT anon_1.users_id AS anon_1_users_id, anon_1.users_username AS anon_1_users_username, anon_1.users__password AS anon_1_users__password, anon_1.users_email AS anon_1_users_email, anon_1.users_is_active AS anon_1_users_is_active, roles_1.id AS roles_1_id, roles_1.name AS roles_1_name, roles_1."default" AS roles_1_default, roles_1.permissions AS roles_1_permissions 
+FROM (SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active 
+FROM users
+ LIMIT ? OFFSET ?) AS anon_1 LEFT OUTER JOIN (roles_users AS roles_users_1 JOIN roles AS roles_1 ON roles_1.id = roles_users_1.role_id) ON anon_1.users_id = roles_users_1.user_id | Params: (20, 0) | Execution Time: 0.00154s
+2025-02-21 20:12:52 | INFO | ROLLBACK
+2025-02-21 20:12:54 | INFO | BEGIN (implicit)
+2025-02-21 20:12:54 | INFO | SELECT count(?) AS count_1 
+FROM roles
+2025-02-21 20:12:54 | INFO | [generated in 0.00032s] ('*',)
+2025-02-21 20:12:54 | INFO | SQL Query: SELECT count(?) AS count_1 
+FROM roles | Params: ('*',) | Execution Time: 0.00059s
+2025-02-21 20:12:54 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles
+ LIMIT ? OFFSET ?
+2025-02-21 20:12:54 | INFO | [generated in 0.00012s] (20, 0)
+2025-02-21 20:12:54 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles
+ LIMIT ? OFFSET ? | Params: (20, 0) | Execution Time: 0.00025s
+2025-02-21 20:12:54 | INFO | ROLLBACK
+2025-02-21 20:12:57 | INFO | BEGIN (implicit)
+2025-02-21 20:12:57 | INFO | SELECT count(?) AS count_1 
+FROM blacklisted_tokens
+2025-02-21 20:12:57 | INFO | [generated in 0.00053s] ('*',)
+2025-02-21 20:12:57 | INFO | SQL Query: SELECT count(?) AS count_1 
+FROM blacklisted_tokens | Params: ('*',) | Execution Time: 0.00089s
+2025-02-21 20:12:57 | INFO | SELECT blacklisted_tokens.id AS blacklisted_tokens_id, blacklisted_tokens.jti AS blacklisted_tokens_jti, blacklisted_tokens.created_at AS blacklisted_tokens_created_at 
+FROM blacklisted_tokens
+ LIMIT ? OFFSET ?
+2025-02-21 20:12:57 | INFO | [generated in 0.00029s] (20, 0)
+2025-02-21 20:12:57 | INFO | SQL Query: SELECT blacklisted_tokens.id AS blacklisted_tokens_id, blacklisted_tokens.jti AS blacklisted_tokens_jti, blacklisted_tokens.created_at AS blacklisted_tokens_created_at 
+FROM blacklisted_tokens
+ LIMIT ? OFFSET ? | Params: (20, 0) | Execution Time: 0.00042s
+2025-02-21 20:12:57 | INFO | ROLLBACK
+2025-02-21 20:13:00 | INFO | BEGIN (implicit)
+2025-02-21 20:13:00 | INFO | SELECT count(?) AS count_1 
+FROM invite_keys
+2025-02-21 20:13:00 | INFO | [generated in 0.00050s] ('*',)
+2025-02-21 20:13:00 | INFO | SQL Query: SELECT count(?) AS count_1 
+FROM invite_keys | Params: ('*',) | Execution Time: 0.00073s
+2025-02-21 20:13:00 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-02-21 20:13:00 | INFO | [generated in 0.00011s] (20, 0)
+2025-02-21 20:13:00 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (20, 0) | Execution Time: 0.00017s
+2025-02-21 20:13:00 | INFO | ROLLBACK
+2025-02-21 20:13:19 | INFO | BEGIN (implicit)
+2025-02-21 20:13:19 | INFO | SELECT count(?) AS count_1 
+FROM users
+2025-02-21 20:13:19 | INFO | [cached since 27.43s ago] ('*',)
+2025-02-21 20:13:19 | INFO | SQL Query: SELECT count(?) AS count_1 
+FROM users | Params: ('*',) | Execution Time: 0.00037s
+2025-02-21 20:13:19 | INFO | SELECT anon_1.users_id AS anon_1_users_id, anon_1.users_username AS anon_1_users_username, anon_1.users__password AS anon_1_users__password, anon_1.users_email AS anon_1_users_email, anon_1.users_is_active AS anon_1_users_is_active, roles_1.id AS roles_1_id, roles_1.name AS roles_1_name, roles_1."default" AS roles_1_default, roles_1.permissions AS roles_1_permissions 
+FROM (SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active 
+FROM users
+ LIMIT ? OFFSET ?) AS anon_1 LEFT OUTER JOIN (roles_users AS roles_users_1 JOIN roles AS roles_1 ON roles_1.id = roles_users_1.role_id) ON anon_1.users_id = roles_users_1.user_id
+2025-02-21 20:13:19 | INFO | [cached since 27.42s ago] (20, 0)
+2025-02-21 20:13:19 | INFO | SQL Query: SELECT anon_1.users_id AS anon_1_users_id, anon_1.users_username AS anon_1_users_username, anon_1.users__password AS anon_1_users__password, anon_1.users_email AS anon_1_users_email, anon_1.users_is_active AS anon_1_users_is_active, roles_1.id AS roles_1_id, roles_1.name AS roles_1_name, roles_1."default" AS roles_1_default, roles_1.permissions AS roles_1_permissions 
+FROM (SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active 
+FROM users
+ LIMIT ? OFFSET ?) AS anon_1 LEFT OUTER JOIN (roles_users AS roles_users_1 JOIN roles AS roles_1 ON roles_1.id = roles_users_1.role_id) ON anon_1.users_id = roles_users_1.user_id | Params: (20, 0) | Execution Time: 0.00055s
+2025-02-21 20:13:19 | INFO | ROLLBACK
+2025-02-21 20:13:20 | INFO | BEGIN (implicit)
+2025-02-21 20:13:20 | INFO | SELECT count(?) AS count_1 
+FROM roles
+2025-02-21 20:13:20 | INFO | [cached since 26.12s ago] ('*',)
+2025-02-21 20:13:20 | INFO | SQL Query: SELECT count(?) AS count_1 
+FROM roles | Params: ('*',) | Execution Time: 0.00056s
+2025-02-21 20:13:20 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles
+ LIMIT ? OFFSET ?
+2025-02-21 20:13:20 | INFO | [cached since 26.12s ago] (20, 0)
+2025-02-21 20:13:20 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles
+ LIMIT ? OFFSET ? | Params: (20, 0) | Execution Time: 0.00020s
+2025-02-21 20:13:20 | INFO | ROLLBACK
+2025-02-21 20:13:21 | INFO | BEGIN (implicit)
+2025-02-21 20:13:21 | INFO | SELECT count(?) AS count_1 
+FROM blacklisted_tokens
+2025-02-21 20:13:21 | INFO | [cached since 24.12s ago] ('*',)
+2025-02-21 20:13:21 | INFO | SQL Query: SELECT count(?) AS count_1 
+FROM blacklisted_tokens | Params: ('*',) | Execution Time: 0.00028s
+2025-02-21 20:13:21 | INFO | SELECT blacklisted_tokens.id AS blacklisted_tokens_id, blacklisted_tokens.jti AS blacklisted_tokens_jti, blacklisted_tokens.created_at AS blacklisted_tokens_created_at 
+FROM blacklisted_tokens
+ LIMIT ? OFFSET ?
+2025-02-21 20:13:21 | INFO | [cached since 24.12s ago] (20, 0)
+2025-02-21 20:13:21 | INFO | SQL Query: SELECT blacklisted_tokens.id AS blacklisted_tokens_id, blacklisted_tokens.jti AS blacklisted_tokens_jti, blacklisted_tokens.created_at AS blacklisted_tokens_created_at 
+FROM blacklisted_tokens
+ LIMIT ? OFFSET ? | Params: (20, 0) | Execution Time: 0.00041s
+2025-02-21 20:13:21 | INFO | ROLLBACK
+2025-02-21 20:13:21 | INFO | BEGIN (implicit)
+2025-02-21 20:13:21 | INFO | SELECT count(?) AS count_1 
+FROM invite_keys
+2025-02-21 20:13:21 | INFO | [cached since 21.47s ago] ('*',)
+2025-02-21 20:13:21 | INFO | SQL Query: SELECT count(?) AS count_1 
+FROM invite_keys | Params: ('*',) | Execution Time: 0.00138s
+2025-02-21 20:13:21 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-02-21 20:13:21 | INFO | [cached since 21.47s ago] (20, 0)
+2025-02-21 20:13:21 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (20, 0) | Execution Time: 0.00015s
+2025-02-21 20:13:21 | INFO | ROLLBACK
