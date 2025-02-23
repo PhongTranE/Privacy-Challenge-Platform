@@ -18,18 +18,18 @@ from src.constants.messages import *
 from src.constants.admin import *
 from src.common.pagination import PageNumberPagination
 
-from docs import *
+from openapi import *
 
 blp = Blueprint("admin_func", __name__, description="Admin Management")
 
 @blp.route("/invite")
 class InviteUser(MethodView):
-
+    """Handles invite key management for user registration."""
     @role_required([ADMIN_ROLE])
     @blp.response(HTTPStatus.CREATED, InviteKeySchema)
 
     def post(self):
-        """Generate a new invite key """
+        """Generates a new unique invite key for user registration."""
         new_key = generate_invite_key()
 
         MAX_RETRIES = 10  # Set a reasonable limit
@@ -52,6 +52,7 @@ class InviteUser(MethodView):
     @blp.response(HTTPStatus.OK, InviteKeySchema(many=True))
     @blp.doc(**invite_key_list_doc)
     def get(self):
+        """Retrieves a paginated list of all active invite keys."""
         page = request.args.get('page', type=int)
         per_page = request.args.get('per_page', type=int)
         count = request.args.get('count', type=str)
@@ -84,9 +85,10 @@ class InviteUser(MethodView):
 
 @blp.route("/invite/<string:key>")
 class InviteKeyRemove(MethodView):
-
+    """Handles deleting an invite key."""
     @role_required([ADMIN_ROLE])
     def delete(self, key):
+        """Deletes an invite key if it exists."""
         invite_key = db.session.get(InviteKeyModel, key)
         if not invite_key:
             abort(HTTPStatus.NOT_FOUND, message=INVITE_KEY_NOT_FOUND)
@@ -96,11 +98,12 @@ class InviteKeyRemove(MethodView):
 
 @blp.route("/user")
 class UserList(MethodView):
-
+    """Handles retrieving a list of users with pagination."""
     @role_required([ADMIN_ROLE])
     @blp.response(HTTPStatus.OK, UserSchema(many=True))
     @blp.doc(**user_list_doc)
     def get(self):
+        """Retrieves a paginated list of users."""
         page = request.args.get('page', type=int)
         per_page = request.args.get('per_page', type=int)
         count = request.args.get('count', type=str)
@@ -130,9 +133,10 @@ class UserList(MethodView):
 
 @blp.route("/user/<int:user_id>")
 class User(MethodView):
-
+    """Handles deleting a user from the system."""
     @role_required([ADMIN_ROLE])
     def delete(self, user_id):
+        """Deletes a user if they exist."""
         user = db.session.get(UserModel, user_id)
         if not user:
             abort(HTTPStatus.NOT_FOUND, message=USER_NOT_FOUND)

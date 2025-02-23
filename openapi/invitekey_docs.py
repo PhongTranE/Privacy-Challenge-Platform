@@ -1,15 +1,13 @@
-# docs/user_docs.py
-
 from http import HTTPStatus
-from src.modules.auth.schemas import UserSchema
-from docs.components import pagination_parameters, pagination_metadata
+from openapi.components import pagination_parameters, pagination_metadata
+from src.modules.admin.schemas import InviteKeySchema
 
-user_list_doc = {
-    "description": "Retrieve a paginated list of users.",
+invite_key_list_doc = {
+    "description": "Retrieve a paginated list of invite keys.",
     "parameters": pagination_parameters,
     "responses": {
         HTTPStatus.OK.value: {
-            "description": "A paginated list of users.",
+            "description": "A paginated list of invite keys.",
             "content": {
                 "application/json": {
                     "schema": {
@@ -17,7 +15,7 @@ user_list_doc = {
                         "properties": {
                             "data": {
                                 "type": "array",
-                                "items": UserSchema
+                                "items": InviteKeySchema
                             },
                             "meta": pagination_metadata
                         }

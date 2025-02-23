@@ -36,3 +36,6 @@ class BaseConfig(ABC):
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
     JWT_BLACKLIST_ENABLED = True  # Enable token revocation
     JWT_BLACKLIST_TOKEN_CHECKS = ["access", "refresh"] 
+
+    CELERY_BROKER_URL = "redis://redis:6379/0"
+    CELERY_RESULT_BACKEND = "redis://redis:6379/0"

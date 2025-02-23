@@ -22,8 +22,10 @@ blp = Blueprint("auth_func", __name__, description="Authentication and User Mana
 
 @blp.route("/login")
 class UserLogin(MethodView):
+    """Handles user login and JWT token generation."""
     @blp.arguments(UserSchema)
     def post(self, user_data):
+        """Authenticates a user and returns access and refresh tokens."""
         stm = select(UserModel).where(UserModel.username == user_data["username"])
         user = db.session.execute(stm).scalars().first()
 
@@ -57,8 +59,10 @@ class UserLogin(MethodView):
 
 @blp.route("/refresh")
 class TokenRefresh(MethodView):
+    """Handles token refresh to issue a new access token."""
     @jwt_required(refresh=True)
     def post(self):
+        """Issues a new access token using a valid refresh token."""
         current_user_id = get_jwt_identity()
         user = db.session.get(UserModel, current_user_id)
 
@@ -76,9 +80,11 @@ class TokenRefresh(MethodView):
     
 @blp.route("/register")
 class UserRegister(MethodView):
+    """Handles new user registration."""
     @blp.arguments(UserRegisterSchema)
     @blp.response(HTTPStatus.CREATED, UserRegisterSchema)
     def post(self, user_data):
+        """Registers a new user."""
         current_app.logger.info(f"User registration attempt: {user_data['username']}")
 
         invite_key = db.session.get(InviteKeyModel, user_data["invite_key"])
@@ -126,7 +132,9 @@ class UserRegister(MethodView):
 
 @blp.route("/activation/<string:token>")
 class UserActivateAccount(MethodView):
+    """""Activates a user account using an activation token."""""
     def get(self, token):
+        """Activates a user's account if the token is valid."""
         email = verify_token(token)
         if email:
             stm = select(UserModel).where(UserModel.email == email)
@@ -142,8 +150,10 @@ class UserActivateAccount(MethodView):
 
 @blp.route("/resend_activation")
 class UserResendActivateAccount(MethodView):
+    """Handles resending the account activation email."""
     @blp.arguments(SendEmailSchema)
     def post(self, user_data):
+        """Resends an activation email to a user if their account is not yet activated."""
         stm = select(UserModel).where(UserModel.email == user_data["email"])
         user = db.session.execute(stm).scalars().first()
 
@@ -202,7 +212,7 @@ class ForgotPassword(MethodView):
 
     @blp.arguments(SendEmailSchema)
     def post(self, user_data):
-        """Return a password reset token for API-based reset."""
+        """Sends a password reset email."""
         stm = select(UserModel).where(UserModel.email == user_data["email"])
         user = db.session.execute(stm).scalars().first()
 
@@ -250,5 +260,6 @@ class Logout(MethodView):
     """Logs out a user by revoking their token."""
     @jwt_required(refresh=True)
     def post(self):
+        """Logs out a user by adding their token to the blacklist."""
         add_token_to_blacklist()
         return jsonify({"message": LOGOUT_SUCCESS}), HTTPStatus.OK
