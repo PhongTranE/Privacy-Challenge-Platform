@@ -3,8 +3,7 @@ from flask_admin.contrib.sqla import ModelView
 from flask_jwt_extended import get_jwt
 from flask_smorest import abort
 from src.extensions import db
-from src.models.user import UserModel
-from src.modules.auth.models import RoleModel, BlacklistedToken
+from src.modules.auth.models import RoleModel, BlacklistedToken, UserModel
 from src.modules.admin.models import InviteKeyModel
 from src.modules.auth.models import Permission
 

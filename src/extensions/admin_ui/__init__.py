@@ -1,9 +1,8 @@
 from flask_admin import Admin
 from src.extensions import db
 from src.extensions.admin_ui.views import SecureAdminIndexView, UserAdmin, RoleAdmin, BlacklistedTokenAdmin, InviteKeyAdmin
-from src.models.user import UserModel
 from src.modules.admin.models import InviteKeyModel
-from src.modules.auth.models import BlacklistedToken, RoleModel
+from src.modules.auth.models import BlacklistedToken, RoleModel, UserModel
 from flask_admin.contrib.sqla import ModelView
 
 

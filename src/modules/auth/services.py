@@ -11,6 +11,14 @@ from flask_jwt_extended import get_jwt
 from src.extensions import db
 from sqlalchemy import select
 
+from passlib.hash import pbkdf2_sha256
+
+def hash_password(raw_password: str) -> str:
+    return pbkdf2_sha256.hash(raw_password)
+
+def verify_password(raw_password: str, hashed_password: str) -> bool:
+    return pbkdf2_sha256.verify(raw_password, hashed_password)
+
 password_schema = PasswordValidator()
 password_schema \
     .min(8) \

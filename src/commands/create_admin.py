@@ -1,8 +1,7 @@
 import click
 from flask import current_app
 from src.extensions import db
-from src.models.user import UserModel
-from src.modules.auth.models import RoleModel
+from src.modules.auth.models import RoleModel, UserModel
 from src.constants.admin import *
 
 @click.command("createadmin")

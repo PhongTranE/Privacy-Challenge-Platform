@@ -6,7 +6,7 @@ from src.common.decorators import role_required
 from src.modules.admin.services import generate_invite_key
 
 from src.modules.admin.models import InviteKeyModel
-from src.models.user import UserModel
+from src.modules.auth.models import UserModel
 
 from flask import jsonify
 from src.modules.admin.schemas import InviteKeySchema

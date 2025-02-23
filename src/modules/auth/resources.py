@@ -1,17 +1,15 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from passlib.hash import pbkdf2_sha256
 from flask import current_app, jsonify
 
 from src.extensions import db
 from sqlalchemy import select
-from src.models.user import UserModel
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from src.modules.auth.schemas import UserSchema, UserRegisterSchema, ChangePasswordSchema, ResetPasswordSchema, SendEmailSchema
-from src.modules.auth.models import RoleModel
+from src.modules.auth.models import RoleModel, UserModel
 
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, get_jwt
-from src.modules.auth.services import validate_password, verify_token, send_activation_email, send_password_reset_email, add_token_to_blacklist
+from src.modules.auth.services import validate_password, verify_token, send_activation_email, send_password_reset_email, add_token_to_blacklist, verify_password
 from src.modules.admin.services import is_invite_key_expired
 from http import HTTPStatus
 from src.constants.messages import *
@@ -38,7 +36,7 @@ class UserLogin(MethodView):
         if not user.is_active:
             abort(HTTPStatus.UNAUTHORIZED, message=ACCOUNT_NOT_ACTIVATED)
 
-        if user.verify_password(user_data["password"]):
+        if verify_password(user_data["password"], user._password):
             if not isinstance(user.id, int):
                 abort(HTTPStatus.INTERNAL_SERVER_ERROR, message="Invalid user ID format")
 
@@ -195,7 +193,7 @@ class ChangePassword(MethodView):
         if not user:
             abort(HTTPStatus.NOT_FOUND, message=USER_NOT_FOUND)
 
-        if not user.verify_password(old_password):
+        if not verify_password(old_password, user._password):
             abort(HTTPStatus.UNAUTHORIZED, message=INCORRECT_OLD_PASSWORD)
 
         user.password = new_password 
