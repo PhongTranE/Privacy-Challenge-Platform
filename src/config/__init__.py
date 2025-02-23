@@ -8,9 +8,9 @@ def get_config():
     if env == "production":
         from .production import ProductionConfig
         return ProductionConfig()
-    elif env == "staging":
-        from .staging import StagingConfig
-        return StagingConfig()
+    elif env == "docker":
+        from .docker import DockerConfig
+        return DockerConfig()
     else:
         from .development import DevelopmentConfig
         return DevelopmentConfig()

@@ -146,3 +146,216 @@ FROM invite_keys
 FROM invite_keys
  LIMIT ? OFFSET ? | Params: (20, 0) | Execution Time: 0.00015s
 2025-02-21 20:13:21 | INFO | ROLLBACK
+2025-02-23 09:45:54 | INFO | BEGIN (implicit)
+2025-02-23 09:45:54 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-23 09:45:54 | INFO | [generated in 0.00012s] ('c292ae46-4fbf-475d-993b-4027328425c2',)
+2025-02-23 09:45:54 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('c292ae46-4fbf-475d-993b-4027328425c2',) | Execution Time: 0.00172s
+2025-02-23 09:45:54 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-02-23 09:45:54 | INFO | [generated in 0.00010s] ('65PCCK',)
+2025-02-23 09:45:54 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('65PCCK',) | Execution Time: 0.00015s
+2025-02-23 09:45:54 | INFO | INSERT INTO invite_keys ("key", created) VALUES (?, ?)
+2025-02-23 09:45:54 | INFO | [generated in 0.00015s] ('65PCCK', '2025-02-23 08:45:54.101020')
+2025-02-23 09:45:54 | INFO | SQL Query: INSERT INTO invite_keys ("key", created) VALUES (?, ?) | Params: ('65PCCK', '2025-02-23 08:45:54.101020') | Execution Time: 0.00038s
+2025-02-23 09:45:54 | INFO | COMMIT
+2025-02-23 09:45:54 | INFO | BEGIN (implicit)
+2025-02-23 09:45:54 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-02-23 09:45:54 | INFO | [generated in 0.00006s] ('65PCCK',)
+2025-02-23 09:45:54 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('65PCCK',) | Execution Time: 0.00008s
+2025-02-23 09:45:54 | INFO | ROLLBACK
+2025-02-23 09:46:00 | INFO | BEGIN (implicit)
+2025-02-23 09:46:00 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-02-23 09:46:00 | INFO | [cached since 5.999s ago] ('65PCCK',)
+2025-02-23 09:46:00 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('65PCCK',) | Execution Time: 0.00014s
+2025-02-23 09:46:00 | INFO | SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ?
+2025-02-23 09:46:00 | INFO | [generated in 0.00010s] (1, 0)
+2025-02-23 09:46:00 | INFO | SQL Query: SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ? | Params: (1, 0) | Execution Time: 0.00043s
+2025-02-23 09:46:00 | INFO | DELETE FROM invite_keys WHERE invite_keys."key" = ?
+2025-02-23 09:46:00 | INFO | [generated in 0.00015s] ('65PCCK',)
+2025-02-23 09:46:00 | INFO | SQL Query: DELETE FROM invite_keys WHERE invite_keys."key" = ? | Params: ('65PCCK',) | Execution Time: 0.00042s
+2025-02-23 09:46:00 | INFO | INSERT INTO users (username, _password, email, is_active) VALUES (?, ?, ?, ?)
+2025-02-23 09:46:00 | INFO | [generated in 0.00006s] ('test3', '$pbkdf2-sha256$29000$31srBYBwrtW6935PqfWecw$..v6NmQszGVJ9PoHMdEPMxr05ux9rkwSsRxnMEx4LwM', 'test3@gmail.com', 0)
+2025-02-23 09:46:00 | INFO | SQL Query: INSERT INTO users (username, _password, email, is_active) VALUES (?, ?, ?, ?) | Params: ('test3', '$pbkdf2-sha256$29000$31srBYBwrtW6935PqfWecw$..v6NmQszGVJ9PoHMdEPMxr05ux9rkwSsRxnMEx4LwM', 'test3@gmail.com', 0) | Execution Time: 0.00057s
+2025-02-23 09:46:00 | INFO | INSERT INTO roles_users (role_id, user_id) VALUES (?, ?)
+2025-02-23 09:46:00 | INFO | [generated in 0.00006s] (1, 4)
+2025-02-23 09:46:00 | INFO | SQL Query: INSERT INTO roles_users (role_id, user_id) VALUES (?, ?) | Params: (1, 4) | Execution Time: 0.00009s
+2025-02-23 09:46:00 | INFO | COMMIT
+2025-02-23 09:46:00 | INFO | BEGIN (implicit)
+2025-02-23 09:46:00 | INFO | SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active 
+FROM users 
+WHERE users.id = ?
+2025-02-23 09:46:00 | INFO | [generated in 0.00010s] (4,)
+2025-02-23 09:46:00 | INFO | SQL Query: SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active 
+FROM users 
+WHERE users.id = ? | Params: (4,) | Execution Time: 0.00017s
+2025-02-23 09:46:00 | INFO | ROLLBACK
+2025-02-23 09:46:34 | INFO | BEGIN (implicit)
+2025-02-23 09:46:34 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-02-23 09:46:34 | INFO | [cached since 40.37s ago] ('65PCCK',)
+2025-02-23 09:46:34 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('65PCCK',) | Execution Time: 0.00029s
+2025-02-23 09:46:34 | INFO | ROLLBACK
+2025-02-23 09:46:42 | INFO | BEGIN (implicit)
+2025-02-23 09:46:42 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-23 09:46:42 | INFO | [cached since 48.41s ago] ('c292ae46-4fbf-475d-993b-4027328425c2',)
+2025-02-23 09:46:42 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('c292ae46-4fbf-475d-993b-4027328425c2',) | Execution Time: 0.00043s
+2025-02-23 09:46:42 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-02-23 09:46:42 | INFO | [cached since 48.41s ago] ('ZOYF21',)
+2025-02-23 09:46:42 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('ZOYF21',) | Execution Time: 0.00020s
+2025-02-23 09:46:42 | INFO | INSERT INTO invite_keys ("key", created) VALUES (?, ?)
+2025-02-23 09:46:42 | INFO | [cached since 48.41s ago] ('ZOYF21', '2025-02-23 08:46:42.510870')
+2025-02-23 09:46:42 | INFO | SQL Query: INSERT INTO invite_keys ("key", created) VALUES (?, ?) | Params: ('ZOYF21', '2025-02-23 08:46:42.510870') | Execution Time: 0.00030s
+2025-02-23 09:46:42 | INFO | COMMIT
+2025-02-23 09:46:42 | INFO | BEGIN (implicit)
+2025-02-23 09:46:42 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-02-23 09:46:42 | INFO | [cached since 48.41s ago] ('ZOYF21',)
+2025-02-23 09:46:42 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('ZOYF21',) | Execution Time: 0.00008s
+2025-02-23 09:46:42 | INFO | ROLLBACK
+2025-02-23 09:46:51 | INFO | BEGIN (implicit)
+2025-02-23 09:46:51 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-02-23 09:46:51 | INFO | [cached since 57.25s ago] ('ZOYF21',)
+2025-02-23 09:46:51 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('ZOYF21',) | Execution Time: 0.00093s
+2025-02-23 09:46:51 | INFO | SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ?
+2025-02-23 09:46:51 | INFO | [cached since 51.25s ago] (1, 0)
+2025-02-23 09:46:51 | INFO | SQL Query: SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ? | Params: (1, 0) | Execution Time: 0.00023s
+2025-02-23 09:46:51 | INFO | DELETE FROM invite_keys WHERE invite_keys."key" = ?
+2025-02-23 09:46:51 | INFO | [cached since 51.25s ago] ('ZOYF21',)
+2025-02-23 09:46:51 | INFO | SQL Query: DELETE FROM invite_keys WHERE invite_keys."key" = ? | Params: ('ZOYF21',) | Execution Time: 0.00045s
+2025-02-23 09:46:51 | INFO | INSERT INTO users (username, _password, email, is_active) VALUES (?, ?, ?, ?)
+2025-02-23 09:46:51 | INFO | [cached since 51.25s ago] ('test3', '$pbkdf2-sha256$29000$/P9/D8GYcw5BaK1VKgVgbA$qI540FAKvOBdOPsk7kjCe0JKjvm89xl5WfHiyVejrLI', 'test3@gmail.com', 0)
+2025-02-23 09:46:51 | INFO | ROLLBACK
+2025-02-23 09:47:03 | INFO | BEGIN (implicit)
+2025-02-23 09:47:03 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-02-23 09:47:03 | INFO | [cached since 69.6s ago] ('ZOYF21',)
+2025-02-23 09:47:03 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('ZOYF21',) | Execution Time: 0.00033s
+2025-02-23 09:47:03 | INFO | SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ?
+2025-02-23 09:47:03 | INFO | [cached since 63.6s ago] (1, 0)
+2025-02-23 09:47:03 | INFO | SQL Query: SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ? | Params: (1, 0) | Execution Time: 0.00039s
+2025-02-23 09:47:03 | INFO | DELETE FROM invite_keys WHERE invite_keys."key" = ?
+2025-02-23 09:47:03 | INFO | [cached since 63.6s ago] ('ZOYF21',)
+2025-02-23 09:47:03 | INFO | SQL Query: DELETE FROM invite_keys WHERE invite_keys."key" = ? | Params: ('ZOYF21',) | Execution Time: 0.00043s
+2025-02-23 09:47:03 | INFO | INSERT INTO users (username, _password, email, is_active) VALUES (?, ?, ?, ?)
+2025-02-23 09:47:03 | INFO | [cached since 63.6s ago] ('test4', '$pbkdf2-sha256$29000$2juHcE6Jcc7ZW2sNAcBYaw$4VS1k1LPVLA4vMvbftaR6hWxD0JZUChV66TGTIXokrY', 'test4@gmail.com', 0)
+2025-02-23 09:47:03 | INFO | SQL Query: INSERT INTO users (username, _password, email, is_active) VALUES (?, ?, ?, ?) | Params: ('test4', '$pbkdf2-sha256$29000$2juHcE6Jcc7ZW2sNAcBYaw$4VS1k1LPVLA4vMvbftaR6hWxD0JZUChV66TGTIXokrY', 'test4@gmail.com', 0) | Execution Time: 0.00009s
+2025-02-23 09:47:03 | INFO | INSERT INTO roles_users (role_id, user_id) VALUES (?, ?)
+2025-02-23 09:47:03 | INFO | [cached since 63.6s ago] (1, 5)
+2025-02-23 09:47:03 | INFO | SQL Query: INSERT INTO roles_users (role_id, user_id) VALUES (?, ?) | Params: (1, 5) | Execution Time: 0.00006s
+2025-02-23 09:47:03 | INFO | COMMIT
+2025-02-23 09:47:03 | INFO | BEGIN (implicit)
+2025-02-23 09:47:03 | INFO | SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active 
+FROM users 
+WHERE users.id = ?
+2025-02-23 09:47:03 | INFO | [cached since 63.6s ago] (5,)
+2025-02-23 09:47:03 | INFO | SQL Query: SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active 
+FROM users 
+WHERE users.id = ? | Params: (5,) | Execution Time: 0.00010s
+2025-02-23 09:47:03 | INFO | ROLLBACK
+2025-02-23 10:33:16 | INFO | BEGIN (implicit)
+2025-02-23 10:33:16 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users 
+WHERE users.username = ?
+2025-02-23 10:33:16 | INFO | [generated in 0.00016s] ('admin',)
+2025-02-23 10:33:16 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users 
+WHERE users.username = ? | Params: ('admin',) | Execution Time: 0.00098s
+2025-02-23 10:33:16 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-02-23 10:33:16 | INFO | [generated in 0.00013s] (1,)
+2025-02-23 10:33:16 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (1,) | Execution Time: 0.00117s
+2025-02-23 10:33:16 | INFO | ROLLBACK
+2025-02-23 10:33:25 | INFO | BEGIN (implicit)
+2025-02-23 10:33:25 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-02-23 10:33:25 | INFO | [generated in 0.00012s] ('b0130010-0d16-4b04-a36e-ebe97f99fe57',)
+2025-02-23 10:33:25 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('b0130010-0d16-4b04-a36e-ebe97f99fe57',) | Execution Time: 0.00021s
+2025-02-23 10:33:25 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-02-23 10:33:25 | INFO | [generated in 0.00011s] ('LPYJGM',)
+2025-02-23 10:33:25 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('LPYJGM',) | Execution Time: 0.00016s
+2025-02-23 10:33:25 | INFO | INSERT INTO invite_keys ("key", created) VALUES (?, ?)
+2025-02-23 10:33:25 | INFO | [generated in 0.00013s] ('LPYJGM', '2025-02-23 09:33:25.426658')
+2025-02-23 10:33:25 | INFO | SQL Query: INSERT INTO invite_keys ("key", created) VALUES (?, ?) | Params: ('LPYJGM', '2025-02-23 09:33:25.426658') | Execution Time: 0.00140s
+2025-02-23 10:33:25 | INFO | COMMIT
+2025-02-23 10:33:25 | INFO | BEGIN (implicit)
+2025-02-23 10:33:25 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-02-23 10:33:25 | INFO | [generated in 0.00006s] ('LPYJGM',)
+2025-02-23 10:33:25 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('LPYJGM',) | Execution Time: 0.00009s
+2025-02-23 10:33:25 | INFO | ROLLBACK
+2025-02-23 10:33:34 | INFO | BEGIN (implicit)
+2025-02-23 10:33:34 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users 
+WHERE users.email = ?
+2025-02-23 10:33:34 | INFO | [generated in 0.00020s] ('test3@gmail.com',)
+2025-02-23 10:33:34 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active 
+FROM users 
+WHERE users.email = ? | Params: ('test3@gmail.com',) | Execution Time: 0.00063s
+2025-02-23 10:33:34 | INFO | ROLLBACK

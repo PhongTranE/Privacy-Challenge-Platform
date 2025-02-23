@@ -12,6 +12,7 @@ from src.extensions import db
 from sqlalchemy import select
 
 from passlib.hash import pbkdf2_sha256
+from flask import current_app
 
 def hash_password(raw_password: str) -> str:
     return pbkdf2_sha256.hash(raw_password)
@@ -47,12 +48,21 @@ def verify_token(token, expiration=3600):
         return None
 
 
+def get_scheme():
+    return current_app.config.get('PREFERRED_URL_SCHEME', 'http')
+
+def get_server_name():
+    return current_app.config.get('SERVER_NAME', '127.0.0.1:5000')
+
 def send_activation_email(user_email):
     """Send an account activation email."""
+
     activation_token = generate_activation_token(user_email)
-    
+
+    scheme = get_scheme()
+    server_name = get_server_name()
     # Direct backend API endpoint for activation
-    activation_link = f"http://127.0.0.1:5000/api/auth/activation/{activation_token}"
+    activation_link = f"{scheme}://{server_name}/api/auth/activation/{activation_token}"
 
     msg = Message(
         subject="Activate Your Account",
@@ -69,8 +79,11 @@ def send_activation_email(user_email):
 def send_password_reset_email(user_email):
     """Send a password reset email."""
     reset_token = generate_activation_token(user_email)
+
+    scheme = get_scheme()
+    server_name = get_server_name()    
     
-    reset_link = f"http://127.0.0.1:5000/api/auth/reset-password/{reset_token}"
+    reset_link = f"{scheme}://{server_name}/api/auth/reset-password/{reset_token}"
 
     msg = Message(
         subject="Reset Your Password",

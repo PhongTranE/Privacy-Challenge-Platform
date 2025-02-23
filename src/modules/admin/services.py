@@ -19,6 +19,4 @@ def is_invite_key_expired(invite_key: InviteKeyModel) -> bool:
         invite_created_aware = invite_key.created
 
     expiration_time = invite_created_aware + timedelta(seconds=EXPIRATION_INVITE_KEY)
-    print(expiration_time)
-    print(datetime.now(timezone.utc))
     return datetime.now(timezone.utc) > expiration_time
