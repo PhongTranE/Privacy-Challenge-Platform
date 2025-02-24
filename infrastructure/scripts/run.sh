@@ -11,7 +11,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-SERVICES=("web" "nginx" "mailhog") 
+SERVICES=("web" "nginx" "mailhog" "redis" "celery") 
 
 # Set dynamic paths and configurations
 SCRIPT_DIR="$(dirname "$0")"
@@ -22,6 +22,8 @@ export ROOT_PROJECT
 export NGINX_CONTAINER="nginx"
 export BACKEND_CONTAINER="api_backend"
 export BACKEND_PORT="5050"
+export CELERY_WORKER_CONTAINER="celery_worker"
+export REDIS_CONTAINER="redis"
 
 TLS_DIR="${ROOT_PROJECT}/infrastructure/nginx_reverse_proxy/tls"
 NGINX_DEV="${ROOT_PROJECT}/infrastructure/nginx_reverse_proxy/nginx/nginx-dev.conf"

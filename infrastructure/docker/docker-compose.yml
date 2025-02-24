@@ -7,7 +7,12 @@ services:
     ports:
       - "5050:5050"  
     volumes:
-      - ${ROOT_PROJECT}:${ROOT_PROJECT}/app      
+      - ${ROOT_PROJECT}:/app     
+    env_file:
+      - ${ROOT_PROJECT}/.env 
+    depends_on:
+      - redis
+      - mailhog
 
   nginx:
     image: nginx:latest
@@ -27,3 +32,29 @@ services:
     ports:
       - "8025:8025"  # Web UI for viewing emails
       - "1025:1025"
+
+  # Celery Worker
+  celery:
+    container_name: ${CELERY_WORKER_CONTAINER}
+    build:
+      context: ${ROOT_PROJECT}
+      dockerfile: ${DOCKERFILE_DEV}
+    user: "${DOCKER_UID}:${DOCKER_GID}"
+    command: >
+      sh -c 'celery -A run:celery_app worker --loglevel=INFO'
+    volumes:
+      - ${ROOT_PROJECT}:/app
+    depends_on:
+      - web
+      - redis
+
+  redis:
+    image: redis:6.2
+    container_name: ${REDIS_CONTAINER}
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:

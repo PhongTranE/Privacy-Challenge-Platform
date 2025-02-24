@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 from flask_smorest import Api
-from src.extensions import db, jwt, mail
+from src.extensions import db, jwt, mail, init_celery
 from flask_migrate import Migrate
 
 from src.config import get_config
@@ -13,6 +13,7 @@ from src.common.error_handlers import register_error_handlers, register_jwt_hand
 
 from src.modules.api import api_blp
 from src.extensions.admin_ui import init_admin
+
 
 def create_app(config=None):
     app = Flask(__name__, template_folder="templates")
@@ -37,6 +38,9 @@ def create_app(config=None):
 
     # Initialize Flask-Mail 
     mail.init_app(app)
+
+    # Celery
+    init_celery(app)
 
     # Initialize Flask-Admin
     init_admin(app)

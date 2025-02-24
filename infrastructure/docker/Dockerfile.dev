@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ${ROOT_PROJECT} .
 
-ENV FLASK_APP=run:app
+ENV FLASK_APP=run:flask_app
 ENV FLASK_ENV=docker
 
 EXPOSE 5050
