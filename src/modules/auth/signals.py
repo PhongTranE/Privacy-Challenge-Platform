@@ -10,6 +10,6 @@ def user_registered_listener(mapper, connection, target):
         with current_app.app_context():
             app = current_app._get_current_object()
             user_register.send(app, user_email=target.email)
-            current_app.logger.info(f"Activation email triggered for {target.email}")
+            current_app.logger.info(f"Activation email triggered for {target.email}.")
     except Exception as e:
-        current_app.logger.error(f"Failed to send activation email for {target.email}: {str(e)}")
+        current_app.logger.error(f"Failed to send activation email for {target.email}: {str(e)}.")

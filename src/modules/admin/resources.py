@@ -143,4 +143,3 @@ class User(MethodView):
         db.session.delete(user)
         db.session.commit()
         return jsonify({"message": USER_DELETED}), HTTPStatus.OK
-

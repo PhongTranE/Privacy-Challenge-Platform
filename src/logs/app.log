@@ -1,5 +1,0 @@
-2025-02-24 00:36:15 DEBUG tasks send_activation_email_task Inside task
-2025-02-24 00:58:14 ERROR resources post Error resending activation email: [Errno 111] Connection refused
-2025-02-24 01:07:26 INFO resources post Activation email resent to: test3@gmail.com
-2025-02-24 01:11:57 INFO resources post Activation email resent to: test3@gmail.com
-2025-02-24 01:41:29 INFO resources post Activation email resent to: test3@gmail.com

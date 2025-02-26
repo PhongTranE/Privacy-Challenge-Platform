@@ -13,7 +13,7 @@ from src.common.error_handlers import register_error_handlers, register_jwt_hand
 
 from src.modules.api import api_blp
 from src.extensions.admin_ui import init_admin
-
+import src.modules.auth.signals 
 
 def create_app(config=None):
     app = Flask(__name__, template_folder="templates")

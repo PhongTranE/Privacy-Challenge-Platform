@@ -1,14 +1,6 @@
 from flask import Flask
 from celery import Celery, Task
 
-
-# celery = Celery(
-#     __name__,
-#     broker="redis://redis:6379/0",
-#     backend="redis://redis:6379/0"
-# )
-
-
 def init_celery(app: Flask) -> Celery:
     """
     Configures Celery to use Flask's app context.
@@ -22,12 +14,12 @@ def init_celery(app: Flask) -> Celery:
                 return self.run(*args, **kwargs)
     celery = Celery(
         app.name,
-        broker="redis://redis:6379/0",
-        backend="redis://redis:6379/0",
+        # broker="redis://redis:6379/0",
+        # backend="redis://redis:6379/0",
         task_cls=FlaskTask
     )            
-    # celery = Celery(app.name, task_cls=FlaskTask)
-    celery.conf.update(app.config)
+    celery.conf.broker_url = app.config.get("CELERY_BROKER_URL")
+    celery.conf.result_backend = app.config.get("CELERY_RESULT_BACKEND")
     celery.set_default()
     app.extensions["celery"] = celery
     return celery
