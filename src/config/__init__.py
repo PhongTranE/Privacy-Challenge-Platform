@@ -11,6 +11,9 @@ def get_config():
     elif env == "docker":
         from .docker import DockerConfig
         return DockerConfig()
+    elif env == "testing":
+        from .testing import TestingConfig
+        return TestingConfig()
     else:
         from .development import DevelopmentConfig
         return DevelopmentConfig()

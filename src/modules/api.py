@@ -1,7 +1,8 @@
 from flask_smorest import Blueprint
 
 from src.modules.auth.resources import blp as auth_blp
-from src.modules.admin.resources import blp as admin_blp
+from src.modules.admin.resources import admin_blp
+
 
 # Create a global API Blueprint
 api_blp = Blueprint("api", __name__, url_prefix="/api", description="Main API Blueprint")
