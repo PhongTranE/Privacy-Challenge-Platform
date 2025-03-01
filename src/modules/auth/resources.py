@@ -4,18 +4,16 @@ from flask import current_app
 
 from src.extensions import db
 from sqlalchemy import select
-from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from src.modules.auth.schemas import UserSchema, UserRegisterSchema, ChangePasswordSchema, ResetPasswordSchema, SendEmailSchema
-from src.modules.auth.models import RoleModel, UserModel
+from src.modules.auth.models import UserModel
 
-from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, get_jwt
-from src.modules.auth.services import validate_password, verify_token, add_token_to_blacklist, verify_password
+from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required
+from src.modules.auth.services import validate_password, verify_token, add_token_to_blacklist, verify_password, create_user
 from src.modules.auth.tasks import send_activation_email_task, send_password_reset_email_task
-from src.modules.admin.services import is_invite_key_expired
+
 from http import HTTPStatus
 from src.constants.messages import *
 
-from src.modules.admin.models import InviteKeyModel
 
 blp = Blueprint("auth_func", __name__, description="Authentication and User Management")
 
@@ -85,45 +83,22 @@ class UserRegister(MethodView):
     def post(self, user_data):
         """Registers a new user."""
         current_app.logger.info(f"User registration attempt: {user_data['username']}")
-
-        invite_key = db.session.get(InviteKeyModel, user_data["invite_key"])
-        print(invite_key)
-        if is_invite_key_expired(invite_key):
-            abort(HTTPStatus.BAD_REQUEST, message=INVALID_INVITE_KEY)
-
-        default_role = db.session.execute(
-            select(RoleModel).where(RoleModel.default == True).limit(1)
-        ).scalars().first()
-
-        if not default_role:
-            current_app.logger.error("No default role found in database.")
-            abort(HTTPStatus.INTERNAL_SERVER_ERROR, message=NO_DEFAULT_ROLE)
-
         try:
-            validate_password(user_data["password"])
+            user = create_user(
+                username=user_data["username"],
+                email=user_data["email"],
+                password=user_data["password"],
+                invite_key=user_data["invite_key"],
+                group_name=user_data["group_name"],  
+                is_active=False
+            )
+            current_app.logger.info(f"User created successfully: {user.username}")
+            return user
         except ValueError as e:
             abort(HTTPStatus.BAD_REQUEST, message=str(e))
-
-        user = UserModel(username=user_data["username"], email=user_data["email"], is_active=False)
-        user.password = user_data["password"]
-        user.roles.append(default_role)
-
-        try:
-            db.session.add(user)
-            db.session.delete(invite_key) 
-            db.session.commit()
-            current_app.logger.info(f"User created successfully: {user.username}")
-            return user 
-
-        except IntegrityError:
-            db.session.rollback()
-            current_app.logger.warning(f"Registration failed: Username '{user_data['username']}' already exists")
-            abort(HTTPStatus.CONFLICT, message=USER_ALREADY_EXISTS)
-
-        except SQLAlchemyError as e:
-            db.session.rollback()
+        except RuntimeError as e:
             current_app.logger.error(f"Database error during registration: {str(e)}")
-            abort(HTTPStatus.INTERNAL_SERVER_ERROR, message=INTERNAL_SERVER_ERROR)
+            abort(HTTPStatus.INTERNAL_SERVER_ERROR, message="Internal server error.")
 
 
 @blp.route("/activation/<string:token>")

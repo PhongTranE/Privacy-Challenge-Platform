@@ -64,6 +64,13 @@ class UserRegisterSchema(UserSchema):
         }
     )
 
+    group_name = fields.Str(
+        required=True,
+        error_messages={
+            "required": "Group name is required.",
+        }
+    )
+
 class ChangePasswordSchema(Schema):
     old_password = fields.Str(
         load_only=True, 
@@ -111,4 +118,13 @@ class SendEmailSchema(Schema):
             "required": "Email is required.",
             "null": "Email cannot be null."
         }
+    )
+
+
+class GroupUserSchema(Schema):
+    name = fields.Str(
+        required=True,
+        error_messages={
+            "required": "Group name is required."
+        }        
     )

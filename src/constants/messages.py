@@ -34,7 +34,7 @@ INVALID_OR_EXPIRED_TOKEN = "Invalid or expired token."
 INTERNAL_SERVER_ERROR = "An unexpected error occurred. Please try again later."
 BAD_REQUEST = "Invalid request parameters."
 PERMISSION_DENIED = "Permission denied. Missing required roles."
-NO_DEFAULT_ROLE = "Internal error: No default role assigned."
+NO_DEFAULT_ROLE = "No default role assigned."
 
 # Invite Messages
 INVITE_KEY_NOT_FOUND = "Invite key not found."

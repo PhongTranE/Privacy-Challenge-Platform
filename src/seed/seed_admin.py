@@ -13,7 +13,7 @@ def create_admin():
     admin = db.session.execute(db.select(UserModel).where(UserModel.username == "admin")).scalars().first()
 
     if not admin:
-        admin = UserModel(username="admin", password="admin123", email="admin@gmail.com", is_active=True)
+        admin = UserModel(username="admin", password="Admin1234@@", email="admin@gmail.com", is_active=True)
 
         admin_role = db.session.execute(db.select(RoleModel).where(RoleModel.name == ADMIN_ROLE)).scalars().first()
 

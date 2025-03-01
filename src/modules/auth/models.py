@@ -2,6 +2,9 @@ from src.extensions import db
 import sqlalchemy as sa
 import sqlalchemy.orm as so 
 from datetime import datetime, timezone
+from src.extensions import db
+from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 
 class UserModel(db.Model):
     """User model for authentication"""
@@ -17,6 +20,9 @@ class UserModel(db.Model):
     )
     is_active: so.Mapped[bool] = so.mapped_column(sa.Boolean(), default=False, server_default=sa.text("false"))
 
+    group_id: so.Mapped[int | None] = so.mapped_column(sa.ForeignKey("group_users.id", ondelete="SET NULL"), unique=True, nullable=True)
+    group: so.Mapped["GroupUserModel"] = so.relationship("GroupUserModel", back_populates="users")
+
     @property
     def password(self):
         """Prevent direct access to the hashed password."""
@@ -27,7 +33,7 @@ class UserModel(db.Model):
         """Hash password before storing it."""
         from src.modules.auth.services import hash_password
         self._password = hash_password(raw_password)
-    
+
     def __repr__(self):
         return '<User {}>'.format(self.username)
     
@@ -81,3 +87,10 @@ class BlacklistedToken(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     jti: so.Mapped[str] = so.mapped_column(sa.String(36), unique=True, nullable=False)
     created_at: so.Mapped[datetime] = so.mapped_column(sa.DateTime, default=lambda: datetime.now(timezone.utc))
+
+class GroupUserModel(db.Model):
+    __tablename__ = "group_users"
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    name: so.Mapped[str] = so.mapped_column(sa.String(64), unique=True, nullable=False)
+
+    users: so.Mapped[list["UserModel"]] = so.relationship("UserModel", back_populates="group")

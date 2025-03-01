@@ -6,11 +6,11 @@ from src.common.decorators import role_required
 from src.modules.admin.services import generate_invite_key
 
 from src.modules.admin.models import InviteKeyModel
-from src.modules.auth.models import UserModel
+from src.modules.auth.models import UserModel, GroupUserModel
 
 from flask import jsonify
 from src.modules.admin.schemas import InviteKeySchema
-from src.modules.auth.schemas import UserSchema
+from src.modules.auth.schemas import UserSchema, GroupUserSchema
 
 from http import HTTPStatus
 from sqlalchemy import select
@@ -144,3 +144,38 @@ class User(MethodView):
         db.session.commit()
         return jsonify({"message": USER_DELETED}), HTTPStatus.OK
 
+
+
+@admin_blp.route("/group_user")
+class GroupUserList(MethodView):
+    """Handles retrieving a list of group_users with pagination."""
+    @role_required([ADMIN_ROLE])
+    @admin_blp.response(HTTPStatus.OK, GroupUserSchema(many=True))
+    def get(self):
+        """Retrieves a paginated list of group_users."""
+        page = request.args.get('page', type=int)
+        per_page = request.args.get('per_page', type=int)
+        count = request.args.get('count', type=str)
+
+        if count is not None:
+            count = count.lower() == 'true'
+
+        users = select(GroupUserModel)
+
+        paginator = PageNumberPagination(
+            select=users,  
+            page=page,
+            per_page=per_page,
+            count=count
+        )
+
+        result = paginator.paginate()
+        items = result['data']
+        meta = result['meta']
+
+        serialized_items = GroupUserSchema(many=True).dump(items)
+
+        return jsonify({
+            'data': serialized_items,
+            'meta': meta
+        })

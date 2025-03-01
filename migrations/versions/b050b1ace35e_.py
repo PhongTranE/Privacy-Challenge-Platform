@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 96e8a35726e7
+Revision ID: b050b1ace35e
 Revises: 
-Create Date: 2025-02-19 23:30:41.346869
+Create Date: 2025-02-28 19:28:21.181433
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '96e8a35726e7'
+revision = 'b050b1ace35e'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,6 +24,12 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('jti')
+    )
+    op.create_table('group_users',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=64), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name')
     )
     op.create_table('invite_keys',
     sa.Column('key', sa.String(length=6), nullable=False),
@@ -47,8 +53,11 @@ def upgrade():
     sa.Column('_password', sa.String(length=256), nullable=False),
     sa.Column('email', sa.String(length=64), nullable=False),
     sa.Column('is_active', sa.Boolean(), server_default=sa.text('(false)'), nullable=False),
+    sa.Column('group_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['group_id'], ['group_users.id'], ondelete='SET NULL'),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('group_id'),
     sa.UniqueConstraint('username')
     )
     op.create_table('roles_users',
@@ -71,5 +80,6 @@ def downgrade():
 
     op.drop_table('roles')
     op.drop_table('invite_keys')
+    op.drop_table('group_users')
     op.drop_table('blacklisted_tokens')
     # ### end Alembic commands ###

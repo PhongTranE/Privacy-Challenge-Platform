@@ -3,6 +3,8 @@ from werkzeug.utils import secure_filename
 import uuid
 import zipfile
 import shutil
+import tempfile
+from flask import current_app
 
 class FileManager:
     def __init__(self, upload_dir="default", allowed_extensions=None, max_zip_size=50_000_000):
@@ -12,9 +14,14 @@ class FileManager:
         - `allowed_extensions`: Set of allowed file extensions.
         - `max_zip_size`: Maximum allowed size for ZIP files (default: 50MB).
         """
-        # Determine src
-        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+        self.test_mode = current_app.config.get("TESTING", False)
 
+        # Determine src
+        if self.test_mode:
+            project_root = tempfile.gettempdir() 
+        else:
+            project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+        
         # Ensure the `uploads/` directory exists at the project root
         uploads_dir = os.path.join(project_root, "uploads")
         os.makedirs(uploads_dir, exist_ok=True)
@@ -36,13 +43,14 @@ class FileManager:
     def save_file(self, file, filename=None):
         filename = filename or secure_filename(file.filename)
 
-        if not self.is_allowed_filename(filename):
+        if not self.is_allowed_filename(filename) or not self.is_allowed_filename(file.filename):
             raise ValueError(f"Invalid file type: Allowed types: {self.allowed_extensions}")
 
-        unique_id = uuid.uuid4().hex[:16]
-        # filename = f"{unique_id}_{filename}"
-        extension = os.path.splitext(filename)[1].lower()  # Extract the extension
-        filename = f"{unique_id}{extension}"
+        if not filename:
+            unique_id = uuid.uuid4().hex[:16]
+            # filename = f"{unique_id}_{filename}"
+            extension = os.path.splitext(filename)[1].lower()  # Extract the extension
+            filename = f"{unique_id}{extension}"
 
         file_path = os.path.abspath(os.path.join(self.upload_dir, filename))
 

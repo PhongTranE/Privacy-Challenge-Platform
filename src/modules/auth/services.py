@@ -14,6 +14,12 @@ from sqlalchemy import select
 from passlib.hash import pbkdf2_sha256
 from flask import current_app
 
+from src.modules.admin.models import InviteKeyModel
+from src.modules.admin.services import is_invite_key_expired
+from src.modules.auth.models import GroupUserModel, RoleModel, UserModel
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from src.constants.messages import *
+
 def hash_password(raw_password: str) -> str:
     return pbkdf2_sha256.hash(raw_password)
 
@@ -112,3 +118,41 @@ def is_token_blacklisted(jti):
     return db.session.execute(stmt).scalar_one_or_none() is not None
 
 
+def create_user(username, email, password, invite_key, group_name, is_active=False):
+    """Creates a user with invite key validation and optional group assignment."""
+    session = db.session
+    # Validate invite key
+    invite = session.get(InviteKeyModel, invite_key)
+    if not invite or is_invite_key_expired(invite):
+        raise ValueError("Invalid invite key.")
+    
+    group = session.execute(
+        select(GroupUserModel).where(GroupUserModel.name == group_name)
+    ).scalars().first()
+    if not group:
+        group = GroupUserModel(name=group_name)
+        session.add(group)
+        session.flush()  # Ensure group.id is available
+    
+    role = session.execute(
+        select(RoleModel).where(RoleModel.default == True).limit(1)
+    ).scalars().first()
+    if not role:
+        raise ValueError(NO_DEFAULT_ROLE)
+    
+    validate_password(password)
+    
+    user = UserModel(username=username, email=email, is_active=is_active, group=group)
+    user.password = password  
+    user.roles.append(role)
+    try:
+        session.add(user)
+        session.delete(invite)  
+        session.commit()  
+        return user
+    except IntegrityError:
+        session.rollback()
+        raise ValueError(USER_ALREADY_EXISTS)
+    except SQLAlchemyError as e:
+        session.rollback()
+        raise RuntimeError(f"Database error: {str(e)}")

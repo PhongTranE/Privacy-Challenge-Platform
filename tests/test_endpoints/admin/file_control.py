@@ -11,7 +11,6 @@ import io
 import zipfile
 import pytest
 from http import HTTPStatus
-from src.core.services.file_manager import FileManager
 
 # Initialize logger
 logger = logging.getLogger(__name__)
@@ -22,11 +21,6 @@ UPLOAD_ENDPOINT = "/api/admin/upload"
 @pytest.mark.usefixtures("client")
 class TestFileUploadAPI:
     """Test class for File Upload API in Flask."""
-
-    @pytest.fixture(scope="class", autouse=True)
-    def setup(self):
-        """Initialize necessary setup before running tests."""
-        self.file_manager = FileManager(upload_dir="original_files", allowed_extensions={"zip"})
 
     @pytest.fixture
     def zip_file(self):
