@@ -12,7 +12,7 @@ from src.modules.auth.services import validate_password, verify_token, add_token
 from src.modules.auth.tasks import send_activation_email_task, send_password_reset_email_task
 
 from http import HTTPStatus
-from src.constants.messages import *
+from src.constants.app_msg import *
 
 
 blp = Blueprint("auth_func", __name__, description="Authentication and User Management")

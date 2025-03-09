@@ -18,7 +18,7 @@ from src.modules.admin.models import InviteKeyModel
 from src.modules.admin.services import is_invite_key_expired
 from src.modules.auth.models import GroupUserModel, RoleModel, UserModel
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from src.constants.messages import *
+from src.constants.app_msg import *
 
 def hash_password(raw_password: str) -> str:
     return pbkdf2_sha256.hash(raw_password)

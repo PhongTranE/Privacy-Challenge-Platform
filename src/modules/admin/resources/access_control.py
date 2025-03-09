@@ -14,7 +14,7 @@ from src.modules.auth.schemas import UserSchema, GroupUserSchema
 
 from http import HTTPStatus
 from sqlalchemy import select
-from src.constants.messages import *
+from src.constants.app_msg import *
 from src.constants.admin import *
 from src.common.pagination import PageNumberPagination
 

@@ -2,7 +2,7 @@ from flask import jsonify
 from werkzeug.exceptions import HTTPException, UnprocessableEntity
 from marshmallow.exceptions import ValidationError
 from src.modules.auth.services import is_token_blacklisted
-from src.constants.messages import (
+from src.constants.app_msg import (
     VALIDATION_ERROR, INTERNAL_SERVER_ERROR, MISSING_FIELD_ERROR,
     TOKEN_EXPIRED, TOKEN_NOT_FRESH,
     INVALID_TOKEN, TOKEN_REVOKED, MISSING_TOKEN

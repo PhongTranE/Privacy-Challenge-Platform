@@ -20,7 +20,7 @@ class FileManager:
         if self.test_mode:
             project_root = tempfile.gettempdir() 
         else:
-            project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+            project_root = current_app.config.get("PROJECT_PATH")
         
         # Ensure the `uploads/` directory exists at the project root
         uploads_dir = os.path.join(project_root, "uploads")
@@ -67,7 +67,6 @@ class FileManager:
         abs_target = os.path.abspath(os.path.join(base_path, path))
         return abs_target.startswith(abs_base)
     
-    
     def unzip_file(self, file_path):
         """Extracts a ZIP file containing exactly one file into the upload directory."""
         # Extract only the filename from the provided path
@@ -83,7 +82,7 @@ class FileManager:
             raise FileNotFoundError(f"File {zip_file_path} not found!")
 
         # Create a temporary extraction directory
-        extraction_dir = os.path.join(self.upload_dir, f"{safe_filename}_extract")
+        extraction_dir = os.path.join(self.upload_dir, f"{safe_filename[:-4]}_extract")
 
         try:
             with zipfile.ZipFile(zip_file_path, "r") as zip_ref:
@@ -109,7 +108,8 @@ class FileManager:
 
                 # Move the extracted CSV file to the upload directory
                 extracted_file_path = os.path.join(extraction_dir, extracted_file)
-                final_file_path = os.path.join(self.upload_dir, extracted_file)
+                final_csv_filename = f"{safe_filename[:-4]}.csv"
+                final_file_path = os.path.join(self.upload_dir, final_csv_filename)
 
                 os.rename(extracted_file_path, final_file_path)
                 return final_file_path
@@ -133,3 +133,14 @@ class FileManager:
         return f"File '{filename}' deleted successfully."
 
 
+    @staticmethod
+    def create_dir(directory_path):
+        """
+        Creates a directory if it does not exist.
+
+        :param directory_path: Path of the directory to be created.
+        """
+        try:
+            os.makedirs(directory_path, exist_ok=True) 
+        except Exception as e:
+            raise RuntimeError(f"Error creating directory {directory_path}: {str(e)}")

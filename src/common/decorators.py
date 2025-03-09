@@ -1,7 +1,7 @@
 from flask_jwt_extended import get_jwt, jwt_required
 from flask_smorest import abort
 from functools import wraps
-from src.constants.messages import *
+from src.constants.app_msg import *
 
 def role_required(required_roles):
     """

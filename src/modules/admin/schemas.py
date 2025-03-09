@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, validate
+from marshmallow import Schema, fields
 
 class InviteKeySchema(Schema):
     key = fields.Str(dump_only=True)

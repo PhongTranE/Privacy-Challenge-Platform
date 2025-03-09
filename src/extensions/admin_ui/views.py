@@ -6,10 +6,11 @@ from src.extensions import db
 from src.modules.auth.models import RoleModel, BlacklistedToken, UserModel
 from src.modules.admin.models import InviteKeyModel
 from src.modules.auth.models import Permission
-
+import json
 from src.constants.admin import ADMIN_ROLE
-from src.constants.messages import UNAUTHORIZED_ACCESS
-
+from src.constants.app_msg import UNAUTHORIZED_ACCESS
+from src.modules.anonymisation.models import MetricModel
+from wtforms import TextAreaField
 # Secure Admin Panel Index Page 
 class SecureAdminIndexView(AdminIndexView):
     """Restrict Admin Dashboard access to users with ADMIN_ROLE."""
@@ -93,4 +94,28 @@ class InviteKeyAdmin(SecureModelView):
 
     # def __init__(self, model, session, **kwargs):
     #     super().__init__(model, session, endpoint="admin_invite_key", name="Invite Keys", **kwargs)
+class MetricAdmin(SecureModelView):
+    """Flask-Admin Panel View for Managing Metrics"""
+    
+    column_list = ("id", "name", "is_selected", "parameters")  
+    column_searchable_list = ("name",)  
+    column_filters = ("is_selected",)  
 
+    form_columns = ("name", "is_selected", "parameters")  
+    # form_overrides = {"parameters": TextAreaField}  
+
+    # # def on_model_change(self, form, model, is_created):
+    # #     """Ensure JSON format for parameters before saving."""
+    # #     try:
+    # #         json.loads(model.parameters)  # Just to validate if it's proper JSON
+    # #     except json.JSONDecodeError:
+    # #         abort(400, message="Invalid JSON format for parameters.")
+
+    # def format_parameters(self, context, model, name):
+    #     """Pretty-print JSON parameters in the admin panel."""
+    #     try:
+    #         return json.dumps(json.loads(model.parameters), indent=2)
+    #     except json.JSONDecodeError:
+    #         return model.parameters  # If invalid, return as is
+
+    # column_formatters = {"parameters": format_parameters}

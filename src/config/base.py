@@ -20,6 +20,10 @@ class BaseConfig(ABC):
         pass
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+
+    PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))   
+
+
     # API Documentation (OpenAPI / Swagger)
     API_TITLE = "Privacy Challenge Platform"
     API_VERSION = "v1"

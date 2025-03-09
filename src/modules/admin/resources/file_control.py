@@ -1,9 +1,9 @@
 from flask.views import MethodView
 from flask_smorest import abort
 from src.common.decorators import role_required
-from flask import request 
+from flask import request, current_app
 from src.constants.admin import *
-from src.constants.messages import *
+from src.constants.app_msg import *
 from http import HTTPStatus
 from src.core.services.file_manager import FileManager
 from flask import jsonify
@@ -22,6 +22,9 @@ class OriginalFile(MethodView):
             filename= f"{ORIGINAL_FILENAME}.zip"
             file_path = file_manager.save_file(file, filename=filename)
             extracted_file_path = file_manager.unzip_file(file_path)
+            current_app.config["ORIGINAL_FILE_PATH"] = extracted_file_path
+
+            print(f"origin_file: {current_app.config.get("ORIGINAL_FILE_PATH")}")
             return jsonify({
                 "message": FILE_UPLOADED_SUCESS,
                 "file_path": file_path,
