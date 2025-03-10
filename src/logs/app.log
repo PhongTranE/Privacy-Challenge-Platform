@@ -1,1 +1,10 @@
-2025-03-09 21:48:51 INFO services run_anonymization Anonymization completed for ID 33
+2025-03-10 00:50:49 INFO services process_anonymization Submitting anonymization task for 1
+2025-03-10 00:50:49 INFO services run_anonymization Anonymization completed for ID 1
+2025-03-10 01:02:40 INFO services process_anonymization Submitting anonymization task for 1
+2025-03-10 01:02:40 INFO services run_anonymization Anonymization completed for ID 1
+2025-03-10 01:04:30 INFO services process_anonymization Submitting anonymization task for 1
+2025-03-10 01:04:30 INFO services run_anonymization Anonymization completed for ID 1
+2025-03-10 10:14:40 INFO resources post Login attempt for username: test1
+2025-03-10 10:14:40 INFO resources post Login successful for user: test1
+2025-03-10 10:15:10 INFO services process_anonymization Submitting anonymization task for 2
+2025-03-10 10:15:10 INFO services run_anonymization Anonymization completed for ID 2

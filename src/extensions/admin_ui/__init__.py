@@ -1,9 +1,9 @@
 from flask_admin import Admin
 from src.extensions import db
-from src.extensions.admin_ui.views import SecureAdminIndexView, UserAdmin, RoleAdmin, BlacklistedTokenAdmin, InviteKeyAdmin, MetricAdmin
+from src.extensions.admin_ui.views import SecureAdminIndexView, UserAdmin, RoleAdmin, BlacklistedTokenAdmin, InviteKeyAdmin, MetricAdmin, AnonymAdmin
 from src.modules.admin.models import InviteKeyModel
 from src.modules.auth.models import BlacklistedToken, RoleModel, UserModel
-from src.modules.anonymisation.models import MetricModel
+from src.modules.anonymisation.models import MetricModel, AnonymModel
 from flask_admin.contrib.sqla import ModelView
 
 
@@ -20,4 +20,5 @@ def init_admin(app):
     admin_panel.add_view(BlacklistedTokenAdmin(BlacklistedToken, db.session))
     admin_panel.add_view(InviteKeyAdmin(InviteKeyModel, db.session))
     admin_panel.add_view(MetricAdmin(MetricModel, db.session))
+    admin_panel.add_view(AnonymAdmin(AnonymModel, db.session))
 

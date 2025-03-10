@@ -1,13 +1,12 @@
 from flask.views import MethodView
 from flask_smorest import abort
-from flask import jsonify, request, current_app
+from flask import jsonify
 from http import HTTPStatus
 from src.extensions import db
 from src.modules.anonymisation.models import MetricModel
 from src.modules.admin.resources import admin_blp
 from sqlalchemy import select
 from src.modules.anonymisation.schemas import MetricSchema
-import json
 from sqlalchemy.exc import IntegrityError
 from src.common.decorators import role_required
 from src.constants.admin import *
@@ -44,7 +43,7 @@ class MetricList(MethodView):
     def post(self, data):
         """Creates a new metric."""
         metric_name = data["name"].strip()
-        # parameters = data.get("parameters", "{}")
+        parameters = data.get("parameters", "{}")
         
         existing_metric = db.session.execute(
             select(MetricModel).where(MetricModel.name == metric_name)
@@ -55,7 +54,7 @@ class MetricList(MethodView):
 
         new_metric = MetricModel(
             name=metric_name,
-            # parameters=parameters,
+            parameters=parameters,
             is_selected=False
         )
 

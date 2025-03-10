@@ -9,7 +9,7 @@ class DevelopmentConfig(BaseConfig):
     @property
     def SQLALCHEMY_DATABASE_URI(self):
         return os.getenv("DATABASE_URL", "sqlite:///dev.db")
-    ORIGINAL_FILE_PATH = '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/original_files/6335f2d9fa1e4047.csv'
+
     SEED_ADMIN = True
 
     MAIL_SERVER = 'localhost'

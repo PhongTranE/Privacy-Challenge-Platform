@@ -21,8 +21,9 @@ class BaseConfig(ABC):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
-    PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))   
+    PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))  
 
+    ORIGINAL_FILE_PATH = f"{PROJECT_PATH}/uploads/original_files/6335f2d9fa1e4047.csv"
 
     # API Documentation (OpenAPI / Swagger)
     API_TITLE = "Privacy Challenge Platform"

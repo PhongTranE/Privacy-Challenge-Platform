@@ -1,9 +1,6 @@
 from src.extensions import db
 import sqlalchemy as sa
 import sqlalchemy.orm as so
-import json
-from enum import Enum
-
 
 class AnonymModel(db.Model):
     """Tracks anonymization file processing activities."""
@@ -24,6 +21,12 @@ class AnonymModel(db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(64), nullable=False, index=True)
     is_published: so.Mapped[bool] = so.mapped_column(sa.Boolean(), nullable=False, default=False, index=True)
 
+    group_id: so.Mapped[int] = so.mapped_column(
+        sa.ForeignKey("group_users.id", name="fk_anonym_group", ondelete="CASCADE"),
+        nullable=True
+    )    
+    group: so.Mapped["GroupUserModel"] = so.relationship("GroupUserModel", back_populates="anonyms")
+    
     def __repr__(self):
         return f"<Anonymisation {self.name} - {self.status}>"
     

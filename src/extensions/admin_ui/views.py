@@ -119,3 +119,33 @@ class MetricAdmin(SecureModelView):
     #         return model.parameters  # If invalid, return as is
 
     # column_formatters = {"parameters": format_parameters}
+
+class AnonymAdmin(SecureModelView):
+    """Flask-Admin Panel View for Managing Anonymization Records"""
+    
+    column_list = (
+        "id", "name", "status", "file_link", "original_file", 
+        "footprint_file", "shuffled_file", "utility", "naive_attack", "is_published"
+    )  
+    column_searchable_list = ("name", "status")  
+    column_filters = ("status", "is_published")  
+    column_editable_list = ("status", "is_published")  
+
+    form_columns = (
+        "name", "status", "file_link", "original_file", 
+        "footprint_file", "shuffled_file", "utility", "naive_attack", "is_published"
+    )
+
+    def on_model_change(self, form, model, is_created):
+        """Hook to validate before saving changes."""
+        if model.utility < 0 or model.utility > 1:
+            raise ValueError("Utility score must be between 0 and 1.")
+
+        if model.naive_attack < 0 or model.naive_attack > 1:
+            raise ValueError("Naive attack score must be between 0 and 1.")
+
+    def format_status(self, context, model, name):
+        """Format status column."""
+        return f"{model.status}" if model.status == "completed" else f" {model.status}"
+
+    column_formatters = {"status": format_status}

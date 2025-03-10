@@ -45,7 +45,10 @@ class UserLogin(MethodView):
             access_token = create_access_token(
                 identity=user_id, 
                 fresh=True,
-                additional_claims={"roles": [role.name for role in user.roles]}
+                additional_claims={
+                    "roles": [role.name for role in user.roles],
+                    "group": user.group.id if user.group else None
+                    }
             )
             refresh_token = create_refresh_token(identity=user_id)
 

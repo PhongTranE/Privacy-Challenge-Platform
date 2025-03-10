@@ -8,6 +8,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from src.constants.core_msg import *
 from http import HTTPStatus
+from flask_jwt_extended import get_jwt
 
 class AnonymService:
     """Handles anonymization processing and business logic."""
@@ -17,6 +18,12 @@ class AnonymService:
     @staticmethod
     def process_anonymization(file):
         """Processes an uploaded anonymized file asynchronously."""
+
+        jwt_claims = get_jwt()
+        group_id = jwt_claims.get("group")  # Ensure the group_id is included in the JWT claims
+
+        if not group_id:
+            return {"message": "User must be part of a group to submit anonymization."}, HTTPStatus.FORBIDDEN
         file_manager = FileManager(upload_dir="anonym_file", allowed_extensions={"zip"})
         filename = f"{generate_secure_filename()}.zip"
         file_path = file_manager.save_file(file, filename=filename)
@@ -34,12 +41,13 @@ class AnonymService:
             return {"message": ORIGIN_FILE_NOT_FOUND}, HTTPStatus.BAD_REQUEST
 
         anonym_model = AnonymModel(
-            footprint_file=footprint_file,
-            shuffled_file=shuffled_file,
-            original_file=original_file,
-            file_link=extracted_file_path,
+            footprint_file=footprint_file[:-4],
+            shuffled_file=shuffled_file[:-4],
+            original_file=original_file[:-4],
+            file_link=extracted_file_path[:-4],
             name=os.path.splitext(file.filename)[0],  # Remove ".zip"
-            status="processing"
+            status="processing",
+            group_id=group_id
         )
         db.session.add(anonym_model)
         db.session.commit()
@@ -60,7 +68,7 @@ class AnonymService:
 
                 anonym_model = db.session.query(AnonymModel).get(anonym_id)
                 if anonym_model:
-                    anonym_model.status = "success"
+                    anonym_model.status = "completed"
                     anonym_model.utility = utility_score
                     db.session.commit()
                     current_app.logger.info(f"Anonymization completed for ID {anonym_id}")
@@ -69,7 +77,7 @@ class AnonymService:
                 db.session.rollback()
                 anonym_model = db.session.query(AnonymModel).get(anonym_id)
                 if anonym_model:
-                    anonym_model.status = f"failed since {str(e)}"
+                    anonym_model.status = f"failed with Error: {str(e)}"
                     db.session.commit()
                     current_app.logger.error(f"Anonymization failed for ID {anonym_id}: {str(e)}")
                     raise Exception(str(e))

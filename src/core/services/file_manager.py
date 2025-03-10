@@ -144,3 +144,40 @@ class FileManager:
             os.makedirs(directory_path, exist_ok=True) 
         except Exception as e:
             raise RuntimeError(f"Error creating directory {directory_path}: {str(e)}")
+        
+    @staticmethod
+    def zip_file(source_path):
+        """
+        Compresses a file or directory into a ZIP archive and saves it in the same location.
+
+        :param source_path: Path to the file or directory to be zipped.
+        :return: Path to the created ZIP file.
+        """
+        if not os.path.exists(source_path):
+            raise FileNotFoundError(f"Source path '{source_path}' not found.")
+
+        # Get the directory and filename of the source
+        source_dir = os.path.dirname(source_path)
+        base_name = os.path.basename(source_path)
+
+        # Define the ZIP filename (same name, but with .zip extension)
+        zip_filename = f"{base_name}.zip"
+        zip_file_path = os.path.join(source_dir, zip_filename)
+
+        try:
+            with zipfile.ZipFile(zip_file_path, "w", zipfile.ZIP_DEFLATED) as zipf:
+                if os.path.isdir(source_path):
+                    # If source is a directory, add all files recursively
+                    for root, _, files in os.walk(source_path):
+                        for file in files:
+                            file_path = os.path.join(root, file)
+                            arcname = os.path.relpath(file_path, start=os.path.dirname(source_path))
+                            zipf.write(file_path, arcname)
+                else:
+                    # If source is a single file, add it directly
+                    zipf.write(source_path, base_name)
+
+            return zip_file_path
+
+        except Exception as e:
+            raise RuntimeError(f"Error creating ZIP file: {str(e)}")

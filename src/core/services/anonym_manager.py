@@ -1,5 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from src.core.services.anonym_threads import Footprint, Utility
+from src.core.services.anonym_threads import Footprint, Utility, Shuffle
 from src.constants.core_msg import *
 from src.common.utils import *
 
@@ -25,6 +25,12 @@ class AnonymManager:
         with self.app.app_context():
             utility = Utility(self.input_file, self.origin_file)
             return utility.process() 
+        
+    def _run_shuffle(self):
+        """Runs Shuffle in a separate thread."""
+        with self.app.app_context():
+            shuffle = Shuffle(self.input_file, self.origin_file, self.shuffled_file)
+            return shuffle.process() 
 
     def process(self):
         """Executes the anonymization process with concurrency."""
@@ -39,9 +45,10 @@ class AnonymManager:
                 # Run both functions asynchronously
                 future_footprint = executor.submit(self._run_footprint)
                 future_utility = executor.submit(self._run_utility)
+                future_shuffle = executor.submit(self._run_shuffle)
                 
                 # Wait for completion and store results
-                for future in as_completed([future_footprint, future_utility]):
+                for future in as_completed([future_footprint, future_utility, future_shuffle]):
                     try:
 
                         result = future.result()
@@ -49,6 +56,8 @@ class AnonymManager:
                             results["footprint"] = result
                         elif future == future_utility:
                             results["utility"] = result
+                        elif future == future_shuffle:
+                            results["shuffle"] = result
                     except Exception as e:
                         print(f"Error in task execution: {str(e)}")
                         raise RuntimeError(UNKNOWN_ERROR.format(str(e)))

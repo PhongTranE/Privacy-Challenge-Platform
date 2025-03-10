@@ -20,7 +20,7 @@ class UserModel(db.Model):
     )
     is_active: so.Mapped[bool] = so.mapped_column(sa.Boolean(), default=False, server_default=sa.text("false"))
 
-    group_id: so.Mapped[int | None] = so.mapped_column(sa.ForeignKey("group_users.id", ondelete="SET NULL"), unique=True, nullable=True)
+    group_id: so.Mapped[int | None] = so.mapped_column(sa.ForeignKey("group_users.id", ondelete="SET NULL"), nullable=True)
     group: so.Mapped["GroupUserModel"] = so.relationship("GroupUserModel", back_populates="users")
 
     @property
@@ -94,3 +94,4 @@ class GroupUserModel(db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(64), unique=True, nullable=False)
 
     users: so.Mapped[list["UserModel"]] = so.relationship("UserModel", back_populates="group")
+    anonyms: so.Mapped[list["AnonymModel"]] = so.relationship("AnonymModel", back_populates="group")
