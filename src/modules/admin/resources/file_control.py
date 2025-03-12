@@ -24,7 +24,7 @@ class OriginalFile(MethodView):
             extracted_file_path = file_manager.unzip_file(file_path)
             current_app.config["ORIGINAL_FILE_PATH"] = extracted_file_path
 
-            print(f"origin_file: {current_app.config.get("ORIGINAL_FILE_PATH")}")
+            print(f"origin_file: {current_app.config.get('ORIGINAL_FILE_PATH')}")
             return jsonify({
                 "message": FILE_UPLOADED_SUCESS,
                 "file_path": file_path,
