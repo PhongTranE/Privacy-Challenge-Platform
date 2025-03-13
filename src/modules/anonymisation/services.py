@@ -64,12 +64,13 @@ class AnonymService:
         with app.app_context():
             try:
                 anonym = AnonymManager(app, input_file, origin_file, shuffled_file, footprint_file)
-                utility_score = anonym.process()
+                utility_score, naive_attack_score = anonym.process()
 
                 anonym_model = db.session.query(AnonymModel).get(anonym_id)
                 if anonym_model:
                     anonym_model.status = "completed"
                     anonym_model.utility = utility_score
+                    anonym_model.naive_attack = naive_attack_score
                     db.session.commit()
                     current_app.logger.info(f"Anonymization completed for ID {anonym_id}")
             

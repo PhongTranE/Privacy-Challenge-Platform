@@ -67,3 +67,4 @@ class Footprint:
         except Exception as e:
             self.exception = UNKNOWN_ERROR.format(str(e))
             return (self.exception, -1)
+    

@@ -1,5 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from src.core.services.anonym_threads import Footprint, Utility, Shuffle
+from src.core.services.anonym_threads import Footprint, Utility, Shuffle, NaiveAttack
 from src.constants.core_msg import *
 from src.common.utils import *
 
@@ -32,6 +32,12 @@ class AnonymManager:
             shuffle = Shuffle(self.input_file, self.origin_file, self.shuffled_file)
             return shuffle.process() 
 
+    def _run_naive_attack(self):
+        """Runs Naive Attack in a separate thread after shuffle is completed."""
+        with self.app.app_context():
+            naive_attack = NaiveAttack(self.origin_file, self.input_file, self.footprint_file)
+            return naive_attack.process()
+        
     def process(self):
         """Executes the anonymization process with concurrency."""
         check = checking_shape(self.input_file, self.origin_file)
@@ -58,6 +64,9 @@ class AnonymManager:
                             results["utility"] = result
                         elif future == future_shuffle:
                             results["shuffle"] = result
+                            # Start naive attack after shuffle is done
+                            future_naive_attack = executor.submit(self._run_naive_attack)
+                            results["naive_attack"] = future_naive_attack.result()
                     except Exception as e:
                         print(f"Error in task execution: {str(e)}")
                         raise RuntimeError(UNKNOWN_ERROR.format(str(e)))
@@ -66,7 +75,7 @@ class AnonymManager:
                     if isinstance(value, tuple):
                         raise Exception(value[0])
 
-                return results.get("utility", 0)
+                return (results.get("utility", 0), results.get("naive_attack", -1))
         
         except Exception as e:
             raise RuntimeError(UNKNOWN_ERROR.format(str(e)))
