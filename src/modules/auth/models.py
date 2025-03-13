@@ -95,3 +95,4 @@ class GroupUserModel(db.Model):
 
     users: so.Mapped[list["UserModel"]] = so.relationship("UserModel", back_populates="group")
     anonyms: so.Mapped[list["AnonymModel"]] = so.relationship("AnonymModel", back_populates="group")
+    attacks: so.Mapped[list["AttackModel"]] = so.relationship("AttackModel", back_populates="group")

@@ -7,6 +7,7 @@ from .models import AnonymModel
 from src.common.decorators import group_required  
 from src.extensions import db
 from flask_jwt_extended import jwt_required
+
 blp = Blueprint("anonymisation_func", __name__, description="Anonymisation Management")
 
 @blp.route("/upload")

@@ -109,3 +109,333 @@ WHERE blacklisted_tokens.jti = ?
 FROM blacklisted_tokens 
 WHERE blacklisted_tokens.jti = ? | Params: ('4937b104-dab6-4e00-8558-908eeefdea04',) | Execution Time: 0.00053s
 2025-03-13 22:26:39 | INFO | ROLLBACK
+2025-03-14 00:07:47 | INFO | BEGIN (implicit)
+2025-03-14 00:07:47 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ?
+2025-03-14 00:07:47 | INFO | [generated in 0.00027s] ('admin',)
+2025-03-14 00:07:47 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ? | Params: ('admin',) | Execution Time: 0.00196s
+2025-03-14 00:07:47 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-03-14 00:07:47 | INFO | [generated in 0.00011s] (1,)
+2025-03-14 00:07:47 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (1,) | Execution Time: 0.00082s
+2025-03-14 00:07:47 | INFO | ROLLBACK
+2025-03-14 00:08:01 | INFO | BEGIN (implicit)
+2025-03-14 00:08:01 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ?
+2025-03-14 00:08:01 | INFO | [cached since 14.37s ago] ('test1',)
+2025-03-14 00:08:01 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ? | Params: ('test1',) | Execution Time: 0.00034s
+2025-03-14 00:08:01 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-03-14 00:08:01 | INFO | [cached since 14.37s ago] (2,)
+2025-03-14 00:08:01 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (2,) | Execution Time: 0.00025s
+2025-03-14 00:08:01 | INFO | SELECT group_users.id AS group_users_id, group_users.name AS group_users_name 
+FROM group_users 
+WHERE group_users.id = ?
+2025-03-14 00:08:01 | INFO | [generated in 0.00012s] (1,)
+2025-03-14 00:08:01 | INFO | SQL Query: SELECT group_users.id AS group_users_id, group_users.name AS group_users_name 
+FROM group_users 
+WHERE group_users.id = ? | Params: (1,) | Execution Time: 0.00070s
+2025-03-14 00:08:01 | INFO | ROLLBACK
+2025-03-14 00:08:40 | INFO | BEGIN (implicit)
+2025-03-14 00:08:40 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-03-14 00:08:40 | INFO | [generated in 0.00018s] ('a254db0c-0b5b-404f-aea3-ffffa1f10197',)
+2025-03-14 00:08:40 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('a254db0c-0b5b-404f-aea3-ffffa1f10197',) | Execution Time: 0.00027s
+2025-03-14 00:08:40 | INFO | SELECT anonymisations.footprint_file 
+FROM anonymisations 
+WHERE anonymisations.id = ?
+2025-03-14 00:08:40 | INFO | [generated in 0.00010s] (3,)
+2025-03-14 00:08:40 | INFO | SQL Query: SELECT anonymisations.footprint_file 
+FROM anonymisations 
+WHERE anonymisations.id = ? | Params: (3,) | Execution Time: 0.00015s
+2025-03-14 00:08:40 | INFO | ROLLBACK
+2025-03-14 00:15:22 | INFO | BEGIN (implicit)
+2025-03-14 00:15:22 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ?
+2025-03-14 00:15:22 | INFO | [cached since 455.6s ago] ('test1',)
+2025-03-14 00:15:22 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ? | Params: ('test1',) | Execution Time: 0.00032s
+2025-03-14 00:15:22 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-03-14 00:15:22 | INFO | [cached since 455.5s ago] (2,)
+2025-03-14 00:15:22 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (2,) | Execution Time: 0.00020s
+2025-03-14 00:15:22 | INFO | SELECT group_users.id AS group_users_id, group_users.name AS group_users_name 
+FROM group_users 
+WHERE group_users.id = ?
+2025-03-14 00:15:22 | INFO | [cached since 441.2s ago] (1,)
+2025-03-14 00:15:22 | INFO | SQL Query: SELECT group_users.id AS group_users_id, group_users.name AS group_users_name 
+FROM group_users 
+WHERE group_users.id = ? | Params: (1,) | Execution Time: 0.00007s
+2025-03-14 00:15:22 | INFO | ROLLBACK
+2025-03-14 00:15:36 | INFO | BEGIN (implicit)
+2025-03-14 00:15:36 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-03-14 00:15:36 | INFO | [cached since 416s ago] ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',)
+2025-03-14 00:15:36 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',) | Execution Time: 0.00034s
+2025-03-14 00:15:36 | INFO | ROLLBACK
+2025-03-14 00:15:57 | INFO | BEGIN (implicit)
+2025-03-14 00:15:57 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-03-14 00:15:57 | INFO | [cached since 436.5s ago] ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',)
+2025-03-14 00:15:57 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',) | Execution Time: 0.00025s
+2025-03-14 00:15:57 | INFO | INSERT INTO anonymisations (footprint_file, shuffled_file, original_file, file_link, naive_attack, utility, status, name, is_published, group_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-03-14 00:15:57 | INFO | [generated in 0.00024s] ('/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/footprint/7d212d730261459a.', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/shuffled_file/ba40a94891b04bd9', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/original_files/6335f2d9fa1e4047', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/anonym_file/054449402a4d46d0', 0.0, 0.0, 'processing', 'ano_1', 0, 1)
+2025-03-14 00:15:57 | INFO | SQL Query: INSERT INTO anonymisations (footprint_file, shuffled_file, original_file, file_link, naive_attack, utility, status, name, is_published, group_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | Params: ('/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/footprint/7d212d730261459a.', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/shuffled_file/ba40a94891b04bd9', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/original_files/6335f2d9fa1e4047', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/anonym_file/054449402a4d46d0', 0.0, 0.0, 'processing', 'ano_1', 0, 1) | Execution Time: 0.00053s
+2025-03-14 00:15:57 | INFO | COMMIT
+2025-03-14 00:15:57 | INFO | BEGIN (implicit)
+2025-03-14 00:15:57 | INFO | SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ?
+2025-03-14 00:15:57 | INFO | [generated in 0.00015s] (4,)
+2025-03-14 00:15:57 | INFO | SQL Query: SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ? | Params: (4,) | Execution Time: 0.00023s
+2025-03-14 00:15:57 | INFO | ROLLBACK
+2025-03-14 00:15:57 | INFO | BEGIN (implicit)
+2025-03-14 00:15:57 | INFO | SELECT metrics.name, metrics.parameters 
+FROM metrics 
+WHERE metrics.is_selected = 1
+2025-03-14 00:15:57 | INFO | [generated in 0.00031s] ()
+2025-03-14 00:15:57 | INFO | SQL Query: SELECT metrics.name, metrics.parameters 
+FROM metrics 
+WHERE metrics.is_selected = 1 | Params: () | Execution Time: 0.00169s
+2025-03-14 00:15:57 | INFO | SELECT aggregations.name 
+FROM aggregations
+2025-03-14 00:15:57 | INFO | [generated in 0.00012s] ()
+2025-03-14 00:15:57 | INFO | SQL Query: SELECT aggregations.name 
+FROM aggregations | Params: () | Execution Time: 0.00021s
+2025-03-14 00:15:57 | INFO | ROLLBACK
+2025-03-14 00:15:57 | INFO | BEGIN (implicit)
+2025-03-14 00:15:57 | INFO | SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ?
+2025-03-14 00:15:57 | INFO | [generated in 0.00009s] (4,)
+2025-03-14 00:15:57 | INFO | SQL Query: SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ? | Params: (4,) | Execution Time: 0.00012s
+2025-03-14 00:15:57 | INFO | UPDATE anonymisations SET naive_attack=?, utility=?, status=? WHERE anonymisations.id = ?
+2025-03-14 00:15:57 | INFO | [generated in 0.00007s] (0.86, 0.6730855501004456, 'completed', 4)
+2025-03-14 00:15:57 | INFO | SQL Query: UPDATE anonymisations SET naive_attack=?, utility=?, status=? WHERE anonymisations.id = ? | Params: (0.86, 0.6730855501004456, 'completed', 4) | Execution Time: 0.00030s
+2025-03-14 00:15:57 | INFO | COMMIT
+2025-03-14 00:16:20 | INFO | BEGIN (implicit)
+2025-03-14 00:16:20 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-03-14 00:16:20 | INFO | [cached since 459.6s ago] ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',)
+2025-03-14 00:16:20 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',) | Execution Time: 0.00024s
+2025-03-14 00:16:20 | INFO | SELECT anonymisations.footprint_file 
+FROM anonymisations 
+WHERE anonymisations.id = ?
+2025-03-14 00:16:20 | INFO | [cached since 459.6s ago] (4,)
+2025-03-14 00:16:20 | INFO | SQL Query: SELECT anonymisations.footprint_file 
+FROM anonymisations 
+WHERE anonymisations.id = ? | Params: (4,) | Execution Time: 0.00019s
+2025-03-14 00:16:20 | INFO | ROLLBACK
+2025-03-14 00:16:40 | INFO | BEGIN (implicit)
+2025-03-14 00:16:40 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-03-14 00:16:40 | INFO | [generated in 0.00016s] ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',)
+2025-03-14 00:16:40 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',) | Execution Time: 0.00045s
+2025-03-14 00:16:40 | INFO | INSERT INTO anonymisations (footprint_file, shuffled_file, original_file, file_link, naive_attack, utility, status, name, is_published, group_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-03-14 00:16:40 | INFO | [generated in 0.00028s] ('/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/footprint/15554d6f62ad4ba5', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/shuffled_file/2e86b43d5d27468e', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/original_files/6335f2d9fa1e4047', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/anonym_file/1d77bedfdafc40f0', 0.0, 0.0, 'processing', 'ano_1', 0, 1)
+2025-03-14 00:16:40 | INFO | SQL Query: INSERT INTO anonymisations (footprint_file, shuffled_file, original_file, file_link, naive_attack, utility, status, name, is_published, group_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | Params: ('/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/footprint/15554d6f62ad4ba5', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/shuffled_file/2e86b43d5d27468e', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/original_files/6335f2d9fa1e4047', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/anonym_file/1d77bedfdafc40f0', 0.0, 0.0, 'processing', 'ano_1', 0, 1) | Execution Time: 0.00066s
+2025-03-14 00:16:40 | INFO | COMMIT
+2025-03-14 00:16:40 | INFO | BEGIN (implicit)
+2025-03-14 00:16:40 | INFO | SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ?
+2025-03-14 00:16:40 | INFO | [generated in 0.00014s] (5,)
+2025-03-14 00:16:40 | INFO | SQL Query: SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ? | Params: (5,) | Execution Time: 0.00029s
+2025-03-14 00:16:40 | INFO | ROLLBACK
+2025-03-14 00:16:40 | INFO | BEGIN (implicit)
+2025-03-14 00:16:40 | INFO | SELECT metrics.name, metrics.parameters 
+FROM metrics 
+WHERE metrics.is_selected = 1
+2025-03-14 00:16:40 | INFO | [generated in 0.00128s] ()
+2025-03-14 00:16:40 | INFO | SQL Query: SELECT metrics.name, metrics.parameters 
+FROM metrics 
+WHERE metrics.is_selected = 1 | Params: () | Execution Time: 0.00191s
+2025-03-14 00:16:40 | INFO | SELECT aggregations.name 
+FROM aggregations
+2025-03-14 00:16:40 | INFO | [generated in 0.00011s] ()
+2025-03-14 00:16:40 | INFO | SQL Query: SELECT aggregations.name 
+FROM aggregations | Params: () | Execution Time: 0.00018s
+2025-03-14 00:16:40 | INFO | ROLLBACK
+2025-03-14 00:16:40 | INFO | BEGIN (implicit)
+2025-03-14 00:16:40 | INFO | SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ?
+2025-03-14 00:16:40 | INFO | [generated in 0.00008s] (5,)
+2025-03-14 00:16:40 | INFO | SQL Query: SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ? | Params: (5,) | Execution Time: 0.00012s
+2025-03-14 00:16:40 | INFO | UPDATE anonymisations SET naive_attack=?, utility=?, status=? WHERE anonymisations.id = ?
+2025-03-14 00:16:40 | INFO | [generated in 0.00009s] (0.86, 0.6730855501004456, 'completed', 5)
+2025-03-14 00:16:40 | INFO | SQL Query: UPDATE anonymisations SET naive_attack=?, utility=?, status=? WHERE anonymisations.id = ? | Params: (0.86, 0.6730855501004456, 'completed', 5) | Execution Time: 0.00025s
+2025-03-14 00:16:40 | INFO | COMMIT
+2025-03-14 00:16:50 | INFO | BEGIN (implicit)
+2025-03-14 00:16:50 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-03-14 00:16:50 | INFO | [cached since 9.676s ago] ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',)
+2025-03-14 00:16:50 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',) | Execution Time: 0.00028s
+2025-03-14 00:16:50 | INFO | SELECT anonymisations.footprint_file 
+FROM anonymisations 
+WHERE anonymisations.id = ?
+2025-03-14 00:16:50 | INFO | [generated in 0.00016s] (5,)
+2025-03-14 00:16:50 | INFO | SQL Query: SELECT anonymisations.footprint_file 
+FROM anonymisations 
+WHERE anonymisations.id = ? | Params: (5,) | Execution Time: 0.00023s
+2025-03-14 00:16:50 | INFO | ROLLBACK
+2025-03-14 00:17:25 | INFO | BEGIN (implicit)
+2025-03-14 00:17:25 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-03-14 00:17:25 | INFO | [cached since 44.91s ago] ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',)
+2025-03-14 00:17:25 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',) | Execution Time: 0.00025s
+2025-03-14 00:17:25 | INFO | INSERT INTO anonymisations (footprint_file, shuffled_file, original_file, file_link, naive_attack, utility, status, name, is_published, group_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-03-14 00:17:25 | INFO | [cached since 44.91s ago] ('/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/footprint/165dc2f4fdbf4c60', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/shuffled_file/59c9190108804bd7', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/original_files/6335f2d9fa1e4047', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/anonym_file/dd6ee423edf3456c', 0.0, 0.0, 'processing', 'ano_1', 0, 1)
+2025-03-14 00:17:25 | INFO | SQL Query: INSERT INTO anonymisations (footprint_file, shuffled_file, original_file, file_link, naive_attack, utility, status, name, is_published, group_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | Params: ('/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/footprint/165dc2f4fdbf4c60', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/shuffled_file/59c9190108804bd7', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/original_files/6335f2d9fa1e4047', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/anonym_file/dd6ee423edf3456c', 0.0, 0.0, 'processing', 'ano_1', 0, 1) | Execution Time: 0.00057s
+2025-03-14 00:17:25 | INFO | COMMIT
+2025-03-14 00:17:25 | INFO | BEGIN (implicit)
+2025-03-14 00:17:25 | INFO | SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ?
+2025-03-14 00:17:25 | INFO | [cached since 44.9s ago] (6,)
+2025-03-14 00:17:25 | INFO | SQL Query: SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ? | Params: (6,) | Execution Time: 0.00011s
+2025-03-14 00:17:25 | INFO | ROLLBACK
+2025-03-14 00:17:25 | INFO | BEGIN (implicit)
+2025-03-14 00:17:25 | INFO | SELECT metrics.name, metrics.parameters 
+FROM metrics 
+WHERE metrics.is_selected = 1
+2025-03-14 00:17:25 | INFO | [cached since 44.91s ago] ()
+2025-03-14 00:17:25 | INFO | SQL Query: SELECT metrics.name, metrics.parameters 
+FROM metrics 
+WHERE metrics.is_selected = 1 | Params: () | Execution Time: 0.00024s
+2025-03-14 00:17:25 | INFO | ROLLBACK
+2025-03-14 00:17:25 | INFO | BEGIN (implicit)
+2025-03-14 00:17:25 | INFO | SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ?
+2025-03-14 00:17:25 | INFO | [cached since 44.91s ago] (6,)
+2025-03-14 00:17:25 | INFO | SQL Query: SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ? | Params: (6,) | Execution Time: 0.00011s
+2025-03-14 00:17:25 | INFO | UPDATE anonymisations SET status=? WHERE anonymisations.id = ?
+2025-03-14 00:17:25 | INFO | [generated in 0.00008s] ('failed with Error: Error in script utility_POI', 6)
+2025-03-14 00:17:25 | INFO | SQL Query: UPDATE anonymisations SET status=? WHERE anonymisations.id = ? | Params: ('failed with Error: Error in script utility_POI', 6) | Execution Time: 0.00080s
+2025-03-14 00:17:25 | INFO | COMMIT
+2025-03-14 00:17:32 | INFO | BEGIN (implicit)
+2025-03-14 00:17:32 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-03-14 00:17:32 | INFO | [generated in 0.00028s] ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',)
+2025-03-14 00:17:32 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',) | Execution Time: 0.00050s
+2025-03-14 00:17:32 | INFO | INSERT INTO anonymisations (footprint_file, shuffled_file, original_file, file_link, naive_attack, utility, status, name, is_published, group_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-03-14 00:17:32 | INFO | [generated in 0.00024s] ('/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/footprint/0df396a2e78d4f44.json', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/shuffled_file/f09fcf6fb8dd401a', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/original_files/6335f2d9fa1e4047', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/anonym_file/9e2bac2e5aca4261', 0.0, 0.0, 'processing', 'ano_1', 0, 1)
+2025-03-14 00:17:32 | INFO | SQL Query: INSERT INTO anonymisations (footprint_file, shuffled_file, original_file, file_link, naive_attack, utility, status, name, is_published, group_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) | Params: ('/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/footprint/0df396a2e78d4f44.json', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/shuffled_file/f09fcf6fb8dd401a', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/original_files/6335f2d9fa1e4047', '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/anonym_file/9e2bac2e5aca4261', 0.0, 0.0, 'processing', 'ano_1', 0, 1) | Execution Time: 0.00050s
+2025-03-14 00:17:32 | INFO | COMMIT
+2025-03-14 00:17:32 | INFO | BEGIN (implicit)
+2025-03-14 00:17:32 | INFO | SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ?
+2025-03-14 00:17:32 | INFO | [generated in 0.00011s] (7,)
+2025-03-14 00:17:32 | INFO | SQL Query: SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ? | Params: (7,) | Execution Time: 0.00016s
+2025-03-14 00:17:32 | INFO | ROLLBACK
+2025-03-14 00:17:32 | INFO | BEGIN (implicit)
+2025-03-14 00:17:32 | INFO | SELECT metrics.name, metrics.parameters 
+FROM metrics 
+WHERE metrics.is_selected = 1
+2025-03-14 00:17:32 | INFO | [generated in 0.00014s] ()
+2025-03-14 00:17:32 | INFO | SQL Query: SELECT metrics.name, metrics.parameters 
+FROM metrics 
+WHERE metrics.is_selected = 1 | Params: () | Execution Time: 0.00053s
+2025-03-14 00:17:32 | INFO | SELECT aggregations.name 
+FROM aggregations
+2025-03-14 00:17:32 | INFO | [generated in 0.00019s] ()
+2025-03-14 00:17:32 | INFO | SQL Query: SELECT aggregations.name 
+FROM aggregations | Params: () | Execution Time: 0.00023s
+2025-03-14 00:17:32 | INFO | ROLLBACK
+2025-03-14 00:17:32 | INFO | BEGIN (implicit)
+2025-03-14 00:17:32 | INFO | SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ?
+2025-03-14 00:17:32 | INFO | [generated in 0.00011s] (7,)
+2025-03-14 00:17:32 | INFO | SQL Query: SELECT anonymisations.id AS anonymisations_id, anonymisations.footprint_file AS anonymisations_footprint_file, anonymisations.shuffled_file AS anonymisations_shuffled_file, anonymisations.original_file AS anonymisations_original_file, anonymisations.file_link AS anonymisations_file_link, anonymisations.naive_attack AS anonymisations_naive_attack, anonymisations.utility AS anonymisations_utility, anonymisations.status AS anonymisations_status, anonymisations.name AS anonymisations_name, anonymisations.is_published AS anonymisations_is_published, anonymisations.group_id AS anonymisations_group_id 
+FROM anonymisations 
+WHERE anonymisations.id = ? | Params: (7,) | Execution Time: 0.00016s
+2025-03-14 00:17:32 | INFO | UPDATE anonymisations SET naive_attack=?, utility=?, status=? WHERE anonymisations.id = ?
+2025-03-14 00:17:32 | INFO | [generated in 0.00008s] (0.86, 0.6730855501004456, 'completed', 7)
+2025-03-14 00:17:32 | INFO | SQL Query: UPDATE anonymisations SET naive_attack=?, utility=?, status=? WHERE anonymisations.id = ? | Params: (0.86, 0.6730855501004456, 'completed', 7) | Execution Time: 0.00026s
+2025-03-14 00:17:32 | INFO | COMMIT
+2025-03-14 00:17:40 | INFO | BEGIN (implicit)
+2025-03-14 00:17:40 | INFO | SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ?
+2025-03-14 00:17:40 | INFO | [cached since 8.053s ago] ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',)
+2025-03-14 00:17:40 | INFO | SQL Query: SELECT blacklisted_tokens.id, blacklisted_tokens.jti, blacklisted_tokens.created_at 
+FROM blacklisted_tokens 
+WHERE blacklisted_tokens.jti = ? | Params: ('584b1a4b-d9b4-4538-bfcd-2b263bed59a6',) | Execution Time: 0.00020s
+2025-03-14 00:17:40 | INFO | SELECT anonymisations.footprint_file 
+FROM anonymisations 
+WHERE anonymisations.id = ?
+2025-03-14 00:17:40 | INFO | [generated in 0.00016s] (7,)
+2025-03-14 00:17:40 | INFO | SQL Query: SELECT anonymisations.footprint_file 
+FROM anonymisations 
+WHERE anonymisations.id = ? | Params: (7,) | Execution Time: 0.00023s
+2025-03-14 00:17:40 | INFO | INSERT INTO attacks (score, file, anonym_id, group_id) VALUES (?, ?, ?, ?)
+2025-03-14 00:17:40 | INFO | [generated in 0.00010s] (1.0, '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/footprint/980fbe5d1b0c4f79.json', 7, 1)
+2025-03-14 00:17:40 | INFO | SQL Query: INSERT INTO attacks (score, file, anonym_id, group_id) VALUES (?, ?, ?, ?) | Params: (1.0, '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/footprint/980fbe5d1b0c4f79.json', 7, 1) | Execution Time: 0.00034s
+2025-03-14 00:17:40 | INFO | COMMIT
+2025-03-14 00:17:40 | INFO | BEGIN (implicit)
+2025-03-14 00:17:40 | INFO | SELECT attacks.id AS attacks_id, attacks.score AS attacks_score, attacks.file AS attacks_file, attacks.anonym_id AS attacks_anonym_id, attacks.group_id AS attacks_group_id 
+FROM attacks 
+WHERE attacks.id = ?
+2025-03-14 00:17:40 | INFO | [generated in 0.00029s] (1,)
+2025-03-14 00:17:40 | INFO | SQL Query: SELECT attacks.id AS attacks_id, attacks.score AS attacks_score, attacks.file AS attacks_file, attacks.anonym_id AS attacks_anonym_id, attacks.group_id AS attacks_group_id 
+FROM attacks 
+WHERE attacks.id = ? | Params: (1,) | Execution Time: 0.00038s
+2025-03-14 00:17:40 | INFO | ROLLBACK

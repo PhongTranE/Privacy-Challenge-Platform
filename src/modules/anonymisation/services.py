@@ -41,7 +41,7 @@ class AnonymService:
             return {"message": ORIGIN_FILE_NOT_FOUND}, HTTPStatus.BAD_REQUEST
 
         anonym_model = AnonymModel(
-            footprint_file=footprint_file[:-4],
+            footprint_file=footprint_file,
             shuffled_file=shuffled_file[:-4],
             original_file=original_file[:-4],
             file_link=extracted_file_path[:-4],
