@@ -1,7 +1,7 @@
 # docs/user_docs.py
 
 from http import HTTPStatus
-from src.modules.auth.schemas import UserSchema
+from src.modules.auth.schemas import UserLoginSchema
 from openapi.components import pagination_parameters, pagination_metadata
 
 user_list_doc = {
@@ -17,7 +17,7 @@ user_list_doc = {
                         "properties": {
                             "data": {
                                 "type": "array",
-                                "items": UserSchema
+                                "items": UserLoginSchema
                             },
                             "meta": pagination_metadata
                         }

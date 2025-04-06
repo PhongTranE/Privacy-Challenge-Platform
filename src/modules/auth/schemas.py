@@ -1,23 +1,46 @@
-from marshmallow import Schema, fields, validate, validates_schema, ValidationError
+from marshmallow import Schema, fields, validate, ValidationError, validates_schema
 
-class PlainRoleSchema(Schema):
-    name = fields.Str(dump_only=True)
-class RoleSchema(PlainRoleSchema):
+from src.modules.auth.services import validate_password_match
+from src.constants.app_msg import *
+from password_validator import PasswordValidator
+
+
+password_schema = PasswordValidator() \
+    .min(8) \
+    .max(128) \
+    .has().uppercase() \
+    .has().lowercase() \
+    .has().digits() \
+    .has().symbols()
+
+# Define the validation function
+def validate_password(password):
+    if not password_schema.validate(password):
+        raise ValidationError("Password must be 8-128 characters long, contain uppercase, lowercase, a digit and a symbol.")
+    
+email_validator = validate.And(
+    validate.Email(error=INVALID_FORMAT.format("email", "email")),
+    validate.Length(max=255, error="Email must be at most 255 characters long.")
+)
+
+class BaseRoleSchema(Schema):
+    name =fields.Str(dump_only=True)
+class RoleSchema(BaseRoleSchema):
     id = fields.Int(dump_only=True)
     default = fields.Bool(dump_only=True)
 
-class UserSchema(Schema):
+class UserRegisterSchema(Schema):
     id = fields.Int(
         dump_only=True,
-        error_messages={"invalid": "ID must be an integer."}
+        error_messages={"invalid": INVALID_FORMAT.format("id", "number")}
     )
     
     username = fields.Str(
         required=True,
         validate=validate.Length(min=3, max=50),
         error_messages={
-            "required": "Username is required.",
-            "null": "Username cannot be null.",
+            "required": MISSING_FIELD_ERROR.format("username"),
+            "null": NON_NULL_ERROR.format("username"),
             "validator_failed": "Username must be between 3 and 50 characters."
         }
     )
@@ -25,16 +48,15 @@ class UserSchema(Schema):
     password = fields.Str(
         required=True,
         load_only=True,
-        validate=validate.Length(min=8, max=128),
+        validate=validate_password,
         error_messages={
-            "required": "Password is required.",
-            "null": "Password cannot be null.",
-            "validator_failed": "Password must be between 8 and 128 characters."
+            "required": MISSING_FIELD_ERROR.format("password"),
+            "null": NON_NULL_ERROR.format("password")
         }
     )
 
     roles = fields.List(
-        fields.Nested(PlainRoleSchema()),
+        fields.Nested(BaseRoleSchema()),
         dump_only=True,
         error_messages={"invalid": "Roles must be a list of valid role objects."}
     )
@@ -43,16 +65,20 @@ class UserSchema(Schema):
         dump_only=True,
         error_messages={"invalid": "Active status must be a boolean (true or false)."}
     )
-class UserRegisterSchema(UserSchema):
     email = fields.Str(
         required=True,
-        validate=[
-            validate.Email(error="Invalid email format. Please enter a valid email address."),
-            validate.Length(max=255, error="Email must be at most 255 characters long.")
-        ],
+        validate=email_validator,
         error_messages={
-            "required": "Email is required.",
-            "null": "Email cannot be null."
+            "required": MISSING_FIELD_ERROR.format("email"),
+            "null": NON_NULL_ERROR.format("email")
+        }
+    )
+
+    confirm_password = fields.Str(
+        load_only=True,
+        required=True,
+        error_messages={
+            "required": MISSING_FIELD_ERROR.format("confirm_password"),
         }
     )
 
@@ -60,15 +86,44 @@ class UserRegisterSchema(UserSchema):
         required=True,
         load_only=True,
         error_messages={
-            "required": "Invite key is required.",
+            "required": MISSING_FIELD_ERROR.format("invite_key")
         }
     )
 
     group_name = fields.Str(
         required=True,
         error_messages={
-            "required": "Group name is required.",
+            "required": MISSING_FIELD_ERROR.format("group_name"),
         }
+    )
+
+    @validates_schema
+    def check_passwords(self, data, **kwargs):
+        validate_password_match(data)
+class UserLoginSchema(Schema):
+    id = fields.Int(
+        dump_only=True,
+    )
+    
+    username = fields.Str(
+        required=True,
+    )
+
+    password = fields.Str(
+        required=True,
+        load_only=True,
+    )
+
+    roles = fields.List(
+        fields.Nested(BaseRoleSchema()),
+        dump_only=True
+    )
+
+    is_active = fields.Bool(
+        dump_only=True,
+    )
+    email = fields.Str(
+        dump_only=True
     )
 
 class ChangePasswordSchema(Schema):
@@ -76,55 +131,66 @@ class ChangePasswordSchema(Schema):
         load_only=True, 
         required=True,
         error_messages={
-            "required": "Old password is required.",
-            "null": "Old password cannot be null.",
+            "required": MISSING_FIELD_ERROR.format("old_password"),
+            "null": NON_NULL_ERROR.format("old_password"),
         }
         )
     new_password = fields.Str(
         load_only=True, 
         required=True,
+        validate=validate_password,
         error_messages={
-            "required": "Old password is required.",
-            "null": "Old password cannot be null.",
+            "required": MISSING_FIELD_ERROR.format("new_password"),
+            "null": NON_NULL_ERROR.format("new_password"),
         }
         )
-
-class ResetPasswordSchema(Schema):
-    new_password = fields.Str(
+    confirm_password = fields.Str(
+        load_only=True,
         required=True,
         error_messages={
-            "required": "New password is required.",
+            "required": MISSING_FIELD_ERROR.format("confirm_password"),
         }
-    )
-    confirm_password = fields.Str(
-        required=True,
-        error_messages={"required": "Password confirmation is required."}
     )
 
     @validates_schema
-    def validate_password_match(self, data, **kwargs):
-        """Ensures new_password and confirm_password match."""
-        if data.get("new_password") != data.get("confirm_password"):
-            raise ValidationError({"confirm_password": "Passwords do not match."})
+    def check_passwords(self, data, **kwargs):
+        validate_password_match(data)
+
+class ResetPasswordSchema(Schema):
+    new_password = fields.Str(
+        load_only=True,
+        required=True,
+        validate=validate_password,
+        error_messages={
+            "required": MISSING_FIELD_ERROR.format("new_password"),
+        }
+    )
+    confirm_password = fields.Str(
+        load_only=True,
+        required=True,
+        error_messages={
+            "required": MISSING_FIELD_ERROR.format("confirm_password"),
+        }
+    )
+
+    @validates_schema
+    def check_passwords(self, data, **kwargs):
+        validate_password_match(data)
 
 class SendEmailSchema(Schema):
     email = fields.Str(
         required=True,
-        validate=[
-            validate.Email(error="Invalid email format. Please enter a valid email address."),
-            validate.Length(max=255, error="Email must be at most 255 characters long.")
-        ],
+        validate=email_validator,
         error_messages={
-            "required": "Email is required.",
-            "null": "Email cannot be null."
+            "required": MISSING_FIELD_ERROR.format("email"),
+            "null": NON_NULL_ERROR.format("email")
         }
     )
-
 
 class GroupUserSchema(Schema):
     name = fields.Str(
         required=True,
         error_messages={
-            "required": "Group name is required."
+            "required": MISSING_FIELD_ERROR.format("group_name")
         }        
     )

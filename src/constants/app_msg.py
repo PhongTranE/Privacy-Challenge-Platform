@@ -1,8 +1,15 @@
 # Authentication Messages
-LOGIN_SUCCESS = "Login successful."
+USER_NOT_FOUND = "User not found."
+USER_ALREADY_EXISTS = "A user with that username already exists."
+USER_ALREADY_ACTIVATED = "User is already activated."
 INVALID_CREDENTIALS = "Invalid credentials."
 ACCOUNT_NOT_ACTIVATED = "Account is not activated."
+LOGIN_SUCCESS = "Successfully logged in."
 LOGOUT_SUCCESS = "Successfully logged out."
+REGISTER_SUCCESS = "Successfully registered."
+REFRESH_SUCCESS = "Successfully refreshed token."
+ACTIVATE_SUCCESS = "Successfully activated account."
+ME_SUCCESS = "Successfully fetched user info."
 
 # Token Errors
 TOKEN_EXPIRED = "The token has expired."
@@ -27,7 +34,9 @@ INCORRECT_OLD_PASSWORD = "Incorrect old password."
 
 # Validation Errors
 VALIDATION_ERROR = "Validation Error"
-MISSING_FIELD_ERROR = "Missing required field: {}"
+MISSING_FIELD_ERROR = "Missing required field: {}."
+NON_NULL_ERROR = "Field cannot be null: {}."
+INVALID_FORMAT = "Invalid format for field {}. Expected a valid {}."
 INVALID_OR_EXPIRED_TOKEN = "Invalid or expired token."
 
 # General Errors
@@ -35,6 +44,9 @@ INTERNAL_SERVER_ERROR = "An unexpected error occurred. Please try again later."
 BAD_REQUEST = "Invalid request parameters."
 PERMISSION_DENIED = "Permission denied. Missing required roles."
 NO_DEFAULT_ROLE = "No default role assigned."
+
+# Limiter Errors
+TOO_MANY_REQUEST = "You are sending requests too quickly. Please wait before trying again."
 
 # Invite Messages
 INVITE_KEY_NOT_FOUND = "Invite key not found."

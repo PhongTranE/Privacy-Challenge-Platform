@@ -19,6 +19,9 @@ from src.modules.admin.services import is_invite_key_expired
 from src.modules.auth.models import GroupUserModel, RoleModel, UserModel
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from src.constants.app_msg import *
+from marshmallow import ValidationError
+
+from flask import current_app
 
 def hash_password(raw_password: str) -> str:
     return pbkdf2_sha256.hash(raw_password)
@@ -39,6 +42,12 @@ def validate_password(password):
     if not password_schema.validate(password):
         raise ValueError("Password must be 8-128 characters long, contain uppercase, lowercase, a digit and a symbol.")
 
+
+
+def validate_password_match(data, password_field="password", confirm_field="confirm_password"):
+    if data.get(password_field) != data.get(confirm_field):
+        raise ValidationError({confirm_field: "Passwords do not match."})
+    
 def generate_activation_token(email):
     """Generate a secure activation token."""
     serializer = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
@@ -62,13 +71,12 @@ def get_server_name():
 
 def send_activation_email(user_email):
     """Send an account activation email."""
-
     activation_token = generate_activation_token(user_email)
-
-    scheme = get_scheme()
-    server_name = get_server_name()
-    # Direct backend API endpoint for activation
-    activation_link = f"{scheme}://{server_name}/api/auth/activation/{activation_token}"
+    
+    frontend_base_url = current_app.config["FRONTEND_URL"]
+    
+    # Direct Frontend endpoint for activation
+    activation_link = f"{frontend_base_url}/email/activate?token={activation_token}"
 
     msg = Message(
         subject="Activate Your Account",
@@ -145,14 +153,17 @@ def create_user(username, email, password, invite_key, group_name, is_active=Fal
     user = UserModel(username=username, email=email, is_active=is_active, group=group)
     user.password = password  
     user.roles.append(role)
+
     try:
         session.add(user)
-        session.delete(invite)  
-        session.commit()  
+        session.delete(invite)
+        session.commit()
         return user
-    except IntegrityError:
+    except IntegrityError as e:
         session.rollback()
+        current_app.logger.error(f"IntegrityError: {e.orig}")
         raise ValueError(USER_ALREADY_EXISTS)
     except SQLAlchemyError as e:
         session.rollback()
+        current_app.logger.error(f"SQLAlchemyError: {str(e)}")
         raise RuntimeError(f"Database error: {str(e)}")

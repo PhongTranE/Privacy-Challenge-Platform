@@ -1,7 +1,1 @@
-2025-03-14 00:16:40 INFO services run_anonymization Anonymization completed for ID 5
-2025-03-14 00:16:50 ERROR services check_attack_json Error loading JSON files: [Errno 2] No such file or directory: '/Users/quynhnguyen/Documents/Documents/Code/Dev_Practice/Flask/Privacy-Challenge-Platform/Privacy-Challenge-Platform/src/uploads/footprint/15554d6f62ad4ba5'
-2025-03-14 00:17:25 INFO services process_anonymization Submitting anonymization task for 6
-2025-03-14 00:17:25 ERROR services run_anonymization Anonymization failed for ID 6: Error in script utility_POI
-2025-03-14 00:17:32 INFO services process_anonymization Submitting anonymization task for 7
-2025-03-14 00:17:32 INFO services run_anonymization Anonymization completed for ID 7
-2025-03-14 00:17:40 INFO services check_attack_json Attack processed: Attack 1 against 7
+2025-04-06 18:47:07 INFO resources post Login successful for user: admin

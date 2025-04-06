@@ -1,7 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from src.core.services.anonym_threads import Footprint, Utility, Shuffle, NaiveAttack
 from src.constants.core_msg import *
-from src.common.utils import *
+from src.core.utils import *
 
 class AnonymManager:
     """Handles anonymization processing, including footprint generation and utility calculation."""

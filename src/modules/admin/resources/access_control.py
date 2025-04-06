@@ -10,7 +10,7 @@ from src.modules.auth.models import UserModel, GroupUserModel
 
 from flask import jsonify
 from src.modules.admin.schemas import InviteKeySchema
-from src.modules.auth.schemas import UserSchema, GroupUserSchema
+from src.modules.auth.schemas import UserLoginSchema, GroupUserSchema
 
 from http import HTTPStatus
 from sqlalchemy import select
@@ -100,7 +100,7 @@ class InviteKeyRemove(MethodView):
 class UserList(MethodView):
     """Handles retrieving a list of users with pagination."""
     @role_required([ADMIN_ROLE])
-    @admin_blp.response(HTTPStatus.OK, UserSchema(many=True))
+    @admin_blp.response(HTTPStatus.OK, UserLoginSchema(many=True))
     @admin_blp.doc(**user_list_doc)
     def get(self):
         """Retrieves a paginated list of users."""
@@ -124,7 +124,7 @@ class UserList(MethodView):
         items = result['data']
         meta = result['meta']
 
-        serialized_items = UserSchema(many=True).dump(items)
+        serialized_items = UserLoginSchema(many=True).dump(items)
 
         return jsonify({
             'data': serialized_items,

@@ -2,7 +2,7 @@ import random
 import pandas as pd
 import csv
 from src.constants.core_msg import *
-from src.common.utils import csv_length
+from src.core.utils import csv_length
 from src.core.services.file_manager import FileManager
 class Shuffle:
     """

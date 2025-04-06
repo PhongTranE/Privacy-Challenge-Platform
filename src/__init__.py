@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 from flask_smorest import Api
-from src.extensions import db, jwt, mail, init_celery
+from src.extensions import db, jwt, mail, init_celery, limiter, cors
 from flask_migrate import Migrate
 
 from src.config import get_config
@@ -35,6 +35,16 @@ def create_app(config=None):
     migrate = Migrate(app, db)
     api = Api(app)
 
+    cors.init_app(app, resources={
+        r"/api/*": {
+            "origins": [
+                "http://localhost:5173",
+                "http://127.0.0.1:5173"
+            ]
+        }
+    }, supports_credentials=True)
+
+    limiter.init_app(app)
     jwt.init_app(app)
 
     # Initialize Flask-Mail 

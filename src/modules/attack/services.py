@@ -6,7 +6,7 @@ from src.modules.attack.models import AttackModel
 from src.modules.anonymisation.models import AnonymModel
 from http import HTTPStatus
 from src.core.services.file_manager import FileManager
-from src.common.utils import generate_secure_filename
+from src.core.utils import generate_secure_filename
 
 
 class AttackService:

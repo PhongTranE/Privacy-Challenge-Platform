@@ -2,7 +2,7 @@ from flask import current_app
 from src.extensions import db
 from src.core.services.file_manager import FileManager
 from src.core.services.anonym_manager import AnonymManager
-from src.common.utils import generate_secure_filename
+from src.core.utils import generate_secure_filename
 from src.modules.anonymisation.models import AnonymModel
 import os
 from concurrent.futures import ThreadPoolExecutor
