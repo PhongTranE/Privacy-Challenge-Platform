@@ -10,6 +10,8 @@ REGISTER_SUCCESS = "Successfully registered."
 REFRESH_SUCCESS = "Successfully refreshed token."
 ACTIVATE_SUCCESS = "Successfully activated account."
 ME_SUCCESS = "Successfully fetched user info."
+GROUP_NOT_FOUND = "Group not found"
+GROUP_FOUND = "Group found"
 
 # Token Errors
 TOKEN_EXPIRED = "The token has expired."
@@ -46,7 +48,9 @@ PERMISSION_DENIED = "Permission denied. Missing required roles."
 NO_DEFAULT_ROLE = "No default role assigned."
 
 # Limiter Errors
-TOO_MANY_REQUEST = "You are sending requests too quickly. Please wait before trying again."
+TOO_MANY_REQUEST = (
+    "You are sending requests too quickly. Please wait before trying again."
+)
 
 # Invite Messages
 INVITE_KEY_NOT_FOUND = "Invite key not found."

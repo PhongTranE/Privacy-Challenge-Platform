@@ -15,15 +15,12 @@ user_list_doc = {
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "data": {
-                                "type": "array",
-                                "items": UserLoginSchema
-                            },
-                            "meta": pagination_metadata
-                        }
+                            "data": {"type": "array", "items": UserLoginSchema},
+                            "meta": pagination_metadata,
+                        },
                     }
                 }
-            }
+            },
         }
-    }
+    },
 }

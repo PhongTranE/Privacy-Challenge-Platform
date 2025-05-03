@@ -6,10 +6,10 @@ COPY requirements.txt requirements.txt
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ${ROOT_PROJECT} .
+# COPY ${ROOT_PROJECT} .
 
 ENV FLASK_APP=run:flask_app
-ENV FLASK_ENV=docker
+ENV FLASK_ENV=development
 
 EXPOSE 5050
 
