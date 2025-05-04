@@ -193,7 +193,7 @@ class UserActivateAccount(MethodView):
 
 
 @limiter.limit("1 per 2 minutes")
-@blp.route("/resend_activation")
+@blp.route("/resend-activation")
 class UserResendActivateAccount(MethodView):
     """Handles resending the account activation email."""
 
@@ -223,7 +223,7 @@ class UserResendActivateAccount(MethodView):
         )
 
 
-@blp.route("/change_password")
+@blp.route("/change-password")
 class ChangePassword(MethodView):
     """Allows an authenticated user to change their password."""
 
@@ -262,7 +262,7 @@ class ChangePassword(MethodView):
         )
 
 
-@blp.route("/forgot_password")
+@blp.route("/forgot-password")
 class ForgotPassword(MethodView):
     """Allows users to request a password reset token."""
 
