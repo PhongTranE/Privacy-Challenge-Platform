@@ -43,8 +43,8 @@ class BaseConfig(ABC):
     # LOG_DIR = ""
 
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "lnguye01")
-    JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=1)
-    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=5)
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=5)
+    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
     # JWT_BLACKLIST_ENABLED = True  # Enable token revocation
     # JWT_BLACKLIST_TOKEN_CHECKS = ["access", "refresh"]
     JWT_TOKEN_LOCATION = ["headers", "cookies"]

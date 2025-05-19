@@ -1,0 +1,1025 @@
+2025-05-19 22:50:08 | INFO | BEGIN (implicit)
+2025-05-19 22:50:08 | INFO | SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ?
+2025-05-19 22:50:08 | INFO | [generated in 0.00364s] ('KMA-01',)
+2025-05-19 22:50:08 | INFO | SQL Query: SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ? | Params: ('KMA-01',) | Execution Time: 0.01061s
+2025-05-19 22:50:08 | INFO | ROLLBACK
+2025-05-19 22:51:09 | INFO | BEGIN (implicit)
+2025-05-19 22:51:09 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ?
+2025-05-19 22:51:09 | INFO | [generated in 0.00327s] ('admin',)
+2025-05-19 22:51:09 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ? | Params: ('admin',) | Execution Time: 0.00902s
+2025-05-19 22:51:09 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-05-19 22:51:09 | INFO | [generated in 0.00365s] (1,)
+2025-05-19 22:51:09 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (1,) | Execution Time: 0.00892s
+2025-05-19 22:51:09 | INFO | ROLLBACK
+2025-05-19 22:51:17 | INFO | BEGIN (implicit)
+2025-05-19 22:51:17 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 22:51:17 | INFO | [generated in 0.00245s] (5, 0)
+2025-05-19 22:51:17 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00793s
+2025-05-19 22:51:17 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 22:51:17 | INFO | [generated in 0.00243s] ()
+2025-05-19 22:51:17 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00825s
+2025-05-19 22:51:17 | INFO | ROLLBACK
+2025-05-19 22:51:19 | INFO | BEGIN (implicit)
+2025-05-19 22:51:19 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 22:51:19 | INFO | [generated in 0.00511s] ('L9A41I',)
+2025-05-19 22:51:19 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('L9A41I',) | Execution Time: 0.00859s
+2025-05-19 22:51:19 | INFO | INSERT INTO invite_keys ("key", created, creator_id) VALUES (?, ?, ?)
+2025-05-19 22:51:19 | INFO | [generated in 0.00433s] ('L9A41I', '2025-05-19 22:51:19.200127', None)
+2025-05-19 22:51:19 | INFO | SQL Query: INSERT INTO invite_keys ("key", created, creator_id) VALUES (?, ?, ?) | Params: ('L9A41I', '2025-05-19 22:51:19.200127', None) | Execution Time: 0.01540s
+2025-05-19 22:51:19 | INFO | COMMIT
+2025-05-19 22:51:19 | INFO | BEGIN (implicit)
+2025-05-19 22:51:19 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 22:51:19 | INFO | [generated in 0.00130s] ('L9A41I',)
+2025-05-19 22:51:19 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('L9A41I',) | Execution Time: 0.00313s
+2025-05-19 22:51:19 | INFO | ROLLBACK
+2025-05-19 22:51:19 | INFO | BEGIN (implicit)
+2025-05-19 22:51:19 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 22:51:19 | INFO | [cached since 2.001s ago] (5, 0)
+2025-05-19 22:51:19 | INFO | BEGIN (implicit)
+2025-05-19 22:51:19 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 22:51:19 | INFO | [cached since 2.008s ago] (5, 0)
+2025-05-19 22:51:19 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00571s
+2025-05-19 22:51:19 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 22:51:19 | INFO | [cached since 2.002s ago] ()
+2025-05-19 22:51:19 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00850s
+2025-05-19 22:51:19 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00529s
+2025-05-19 22:51:19 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 22:51:19 | INFO | [cached since 2.012s ago] ()
+2025-05-19 22:51:19 | INFO | ROLLBACK
+2025-05-19 22:51:19 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00908s
+2025-05-19 22:51:19 | INFO | ROLLBACK
+2025-05-19 22:51:34 | INFO | BEGIN (implicit)
+2025-05-19 22:51:34 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 22:51:34 | INFO | [cached since 17.69s ago] (5, 0)
+2025-05-19 22:51:34 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00646s
+2025-05-19 22:51:34 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 22:51:34 | INFO | [cached since 17.69s ago] ()
+2025-05-19 22:51:34 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00803s
+2025-05-19 22:51:34 | INFO | ROLLBACK
+2025-05-19 22:52:03 | INFO | BEGIN (implicit)
+2025-05-19 22:52:03 | INFO | SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ?
+2025-05-19 22:52:03 | INFO | [cached since 115.3s ago] ('123',)
+2025-05-19 22:52:03 | INFO | SQL Query: SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ? | Params: ('123',) | Execution Time: 0.00781s
+2025-05-19 22:52:03 | INFO | ROLLBACK
+2025-05-19 22:52:08 | INFO | BEGIN (implicit)
+2025-05-19 22:52:08 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 22:52:08 | INFO | [cached since 49.04s ago] ('L9A41I',)
+2025-05-19 22:52:08 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('L9A41I',) | Execution Time: 0.00644s
+2025-05-19 22:52:08 | INFO | SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ?
+2025-05-19 22:52:08 | INFO | [cached since 119.9s ago] ('123',)
+2025-05-19 22:52:08 | INFO | SQL Query: SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ? | Params: ('123',) | Execution Time: 0.00505s
+2025-05-19 22:52:08 | INFO | SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ?
+2025-05-19 22:52:08 | INFO | [generated in 0.00354s] (1, 0)
+2025-05-19 22:52:08 | INFO | SQL Query: SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ? | Params: (1, 0) | Execution Time: 0.00898s
+2025-05-19 22:52:08 | INFO | INSERT INTO users (username, _password, email, is_active, group_id) VALUES (?, ?, ?, ?, ?)
+2025-05-19 22:52:08 | INFO | [generated in 0.00412s] ('quynh', '$pbkdf2-sha256$29000$4lyrNUaolZJSypkTIkRISQ$uVK17Qh0/1S9.FcOsOJA7QFtGmGr9xCi9DX4vjgZxrk', 'quynh@gmail.com', 0, 1)
+2025-05-19 22:52:08 | INFO | SQL Query: INSERT INTO users (username, _password, email, is_active, group_id) VALUES (?, ?, ?, ?, ?) | Params: ('quynh', '$pbkdf2-sha256$29000$4lyrNUaolZJSypkTIkRISQ$uVK17Qh0/1S9.FcOsOJA7QFtGmGr9xCi9DX4vjgZxrk', 'quynh@gmail.com', 0, 1) | Execution Time: 0.01582s
+2025-05-19 22:52:08 | INFO | INSERT INTO roles_users (role_id, user_id) VALUES (?, ?)
+2025-05-19 22:52:08 | INFO | [generated in 0.00224s] (1, 3)
+2025-05-19 22:52:08 | INFO | SQL Query: INSERT INTO roles_users (role_id, user_id) VALUES (?, ?) | Params: (1, 3) | Execution Time: 0.00530s
+2025-05-19 22:52:08 | INFO | DELETE FROM invite_keys WHERE invite_keys."key" = ?
+2025-05-19 22:52:08 | INFO | [generated in 0.00241s] ('L9A41I',)
+2025-05-19 22:52:08 | INFO | SQL Query: DELETE FROM invite_keys WHERE invite_keys."key" = ? | Params: ('L9A41I',) | Execution Time: 0.00717s
+2025-05-19 22:52:08 | INFO | COMMIT
+2025-05-19 22:52:08 | INFO | BEGIN (implicit)
+2025-05-19 22:52:08 | INFO | SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active, users.group_id AS users_group_id 
+FROM users 
+WHERE users.id = ?
+2025-05-19 22:52:08 | INFO | [generated in 0.00186s] (3,)
+2025-05-19 22:52:08 | INFO | SQL Query: SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active, users.group_id AS users_group_id 
+FROM users 
+WHERE users.id = ? | Params: (3,) | Execution Time: 0.00471s
+2025-05-19 22:52:08 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-05-19 22:52:08 | INFO | [cached since 58.95s ago] (3,)
+2025-05-19 22:52:08 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (3,) | Execution Time: 0.00477s
+2025-05-19 22:52:08 | INFO | ROLLBACK
+2025-05-19 22:57:34 | INFO | BEGIN (implicit)
+2025-05-19 22:57:34 | INFO | SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ?
+2025-05-19 22:57:34 | INFO | [cached since 446.3s ago] ('123',)
+2025-05-19 22:57:34 | INFO | SQL Query: SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ? | Params: ('123',) | Execution Time: 0.00825s
+2025-05-19 22:57:34 | INFO | ROLLBACK
+2025-05-19 22:58:38 | INFO | BEGIN (implicit)
+2025-05-19 22:58:38 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ?
+2025-05-19 22:58:38 | INFO | [cached since 449s ago] ('admin',)
+2025-05-19 22:58:38 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ? | Params: ('admin',) | Execution Time: 0.00589s
+2025-05-19 22:58:38 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-05-19 22:58:38 | INFO | [cached since 449s ago] (1,)
+2025-05-19 22:58:38 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (1,) | Execution Time: 0.00476s
+2025-05-19 22:58:38 | INFO | ROLLBACK
+2025-05-19 22:58:41 | INFO | BEGIN (implicit)
+2025-05-19 22:58:41 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 22:58:41 | INFO | [cached since 444.1s ago] (5, 0)
+2025-05-19 22:58:41 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.01003s
+2025-05-19 22:58:41 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 22:58:41 | INFO | [cached since 444.1s ago] ()
+2025-05-19 22:58:41 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00655s
+2025-05-19 22:58:41 | INFO | ROLLBACK
+2025-05-19 22:58:42 | INFO | BEGIN (implicit)
+2025-05-19 22:58:42 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 22:58:42 | INFO | [cached since 443.4s ago] ('6XETO3',)
+2025-05-19 22:58:42 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('6XETO3',) | Execution Time: 0.00513s
+2025-05-19 22:58:42 | INFO | INSERT INTO invite_keys ("key", created, creator_id) VALUES (?, ?, ?)
+2025-05-19 22:58:42 | INFO | [cached since 443.4s ago] ('6XETO3', '2025-05-19 22:58:42.600535', None)
+2025-05-19 22:58:42 | INFO | SQL Query: INSERT INTO invite_keys ("key", created, creator_id) VALUES (?, ?, ?) | Params: ('6XETO3', '2025-05-19 22:58:42.600535', None) | Execution Time: 0.01389s
+2025-05-19 22:58:42 | INFO | COMMIT
+2025-05-19 22:58:42 | INFO | BEGIN (implicit)
+2025-05-19 22:58:42 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 22:58:42 | INFO | [cached since 443.4s ago] ('6XETO3',)
+2025-05-19 22:58:42 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('6XETO3',) | Execution Time: 0.00387s
+2025-05-19 22:58:42 | INFO | ROLLBACK
+2025-05-19 22:58:42 | INFO | BEGIN (implicit)
+2025-05-19 22:58:42 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 22:58:42 | INFO | [cached since 445.4s ago] (5, 0)
+2025-05-19 22:58:42 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00475s
+2025-05-19 22:58:42 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 22:58:42 | INFO | [cached since 445.4s ago] ()
+2025-05-19 22:58:42 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00470s
+2025-05-19 22:58:42 | INFO | ROLLBACK
+2025-05-19 22:58:42 | INFO | BEGIN (implicit)
+2025-05-19 22:58:42 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 22:58:42 | INFO | [cached since 445.4s ago] (5, 0)
+2025-05-19 22:58:42 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00562s
+2025-05-19 22:58:42 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 22:58:42 | INFO | [cached since 445.4s ago] ()
+2025-05-19 22:58:42 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00364s
+2025-05-19 22:58:42 | INFO | ROLLBACK
+2025-05-19 22:58:49 | INFO | BEGIN (implicit)
+2025-05-19 22:58:49 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 22:58:49 | INFO | [cached since 450.1s ago] ('6XETO3',)
+2025-05-19 22:58:49 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('6XETO3',) | Execution Time: 0.00549s
+2025-05-19 22:58:49 | INFO | SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ?
+2025-05-19 22:58:49 | INFO | [cached since 521s ago] ('123',)
+2025-05-19 22:58:49 | INFO | SQL Query: SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ? | Params: ('123',) | Execution Time: 0.00484s
+2025-05-19 22:58:49 | INFO | SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ?
+2025-05-19 22:58:49 | INFO | [cached since 401.1s ago] (1, 0)
+2025-05-19 22:58:49 | INFO | SQL Query: SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ? | Params: (1, 0) | Execution Time: 0.00622s
+2025-05-19 22:58:49 | INFO | INSERT INTO users (username, _password, email, is_active, group_id) VALUES (?, ?, ?, ?, ?)
+2025-05-19 22:58:49 | INFO | [cached since 401.1s ago] ('test123', '$pbkdf2-sha256$29000$ZmxtLUXI2dsbA4Awxrh3bg$zWqUyKGk92qES4vctBaO3JuYpbW1y7KXFf7vWl2USm0', 'test123@gmail.com', 0, 1)
+2025-05-19 22:58:49 | INFO | SQL Query: INSERT INTO users (username, _password, email, is_active, group_id) VALUES (?, ?, ?, ?, ?) | Params: ('test123', '$pbkdf2-sha256$29000$ZmxtLUXI2dsbA4Awxrh3bg$zWqUyKGk92qES4vctBaO3JuYpbW1y7KXFf7vWl2USm0', 'test123@gmail.com', 0, 1) | Execution Time: 0.04168s
+2025-05-19 22:58:49 | INFO | INSERT INTO roles_users (role_id, user_id) VALUES (?, ?)
+2025-05-19 22:58:49 | INFO | [cached since 401.1s ago] (1, 4)
+2025-05-19 22:58:49 | INFO | SQL Query: INSERT INTO roles_users (role_id, user_id) VALUES (?, ?) | Params: (1, 4) | Execution Time: 0.00547s
+2025-05-19 22:58:49 | INFO | DELETE FROM invite_keys WHERE invite_keys."key" = ?
+2025-05-19 22:58:49 | INFO | [cached since 401.1s ago] ('6XETO3',)
+2025-05-19 22:58:49 | INFO | SQL Query: DELETE FROM invite_keys WHERE invite_keys."key" = ? | Params: ('6XETO3',) | Execution Time: 0.00819s
+2025-05-19 22:58:49 | INFO | COMMIT
+2025-05-19 22:58:49 | INFO | BEGIN (implicit)
+2025-05-19 22:58:49 | INFO | SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active, users.group_id AS users_group_id 
+FROM users 
+WHERE users.id = ?
+2025-05-19 22:58:49 | INFO | [cached since 401.1s ago] (4,)
+2025-05-19 22:58:49 | INFO | SQL Query: SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active, users.group_id AS users_group_id 
+FROM users 
+WHERE users.id = ? | Params: (4,) | Execution Time: 0.00443s
+2025-05-19 22:58:49 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-05-19 22:58:49 | INFO | [cached since 460s ago] (4,)
+2025-05-19 22:58:49 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (4,) | Execution Time: 0.00568s
+2025-05-19 22:58:49 | INFO | ROLLBACK
+2025-05-19 23:01:10 | INFO | BEGIN (implicit)
+2025-05-19 23:01:10 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ?
+2025-05-19 23:01:10 | INFO | [cached since 600.7s ago] ('admin',)
+2025-05-19 23:01:10 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ? | Params: ('admin',) | Execution Time: 0.00737s
+2025-05-19 23:01:10 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-05-19 23:01:10 | INFO | [cached since 600.6s ago] (1,)
+2025-05-19 23:01:10 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (1,) | Execution Time: 0.00794s
+2025-05-19 23:01:10 | INFO | ROLLBACK
+2025-05-19 23:01:12 | INFO | BEGIN (implicit)
+2025-05-19 23:01:12 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:01:12 | INFO | [cached since 595.7s ago] (5, 0)
+2025-05-19 23:01:12 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00736s
+2025-05-19 23:01:12 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:01:12 | INFO | [cached since 595.7s ago] ()
+2025-05-19 23:01:13 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00471s
+2025-05-19 23:01:13 | INFO | ROLLBACK
+2025-05-19 23:01:14 | INFO | BEGIN (implicit)
+2025-05-19 23:01:14 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:01:14 | INFO | [cached since 594.9s ago] ('T9F2U7',)
+2025-05-19 23:01:14 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('T9F2U7',) | Execution Time: 0.00928s
+2025-05-19 23:01:14 | INFO | INSERT INTO invite_keys ("key", created, creator_id) VALUES (?, ?, ?)
+2025-05-19 23:01:14 | INFO | [cached since 594.9s ago] ('T9F2U7', '2025-05-19 23:01:14.100083', None)
+2025-05-19 23:01:14 | INFO | SQL Query: INSERT INTO invite_keys ("key", created, creator_id) VALUES (?, ?, ?) | Params: ('T9F2U7', '2025-05-19 23:01:14.100083', None) | Execution Time: 0.01433s
+2025-05-19 23:01:14 | INFO | COMMIT
+2025-05-19 23:01:14 | INFO | BEGIN (implicit)
+2025-05-19 23:01:14 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:01:14 | INFO | [cached since 594.9s ago] ('T9F2U7',)
+2025-05-19 23:01:14 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('T9F2U7',) | Execution Time: 0.00405s
+2025-05-19 23:01:14 | INFO | ROLLBACK
+2025-05-19 23:01:14 | INFO | BEGIN (implicit)
+2025-05-19 23:01:14 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:01:14 | INFO | [cached since 596.9s ago] (5, 0)
+2025-05-19 23:01:14 | INFO | BEGIN (implicit)
+2025-05-19 23:01:14 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00819s
+2025-05-19 23:01:14 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:01:14 | INFO | [cached since 596.9s ago] ()
+2025-05-19 23:01:14 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:01:14 | INFO | [cached since 596.9s ago] (5, 0)
+2025-05-19 23:01:14 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00543s
+2025-05-19 23:01:14 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.01318s
+2025-05-19 23:01:14 | INFO | ROLLBACK
+2025-05-19 23:01:14 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:01:14 | INFO | [cached since 596.9s ago] ()
+2025-05-19 23:01:14 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.01735s
+2025-05-19 23:01:14 | INFO | ROLLBACK
+2025-05-19 23:01:37 | INFO | BEGIN (implicit)
+2025-05-19 23:01:37 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:01:37 | INFO | [cached since 617.8s ago] ('T9F2U7',)
+2025-05-19 23:01:37 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('T9F2U7',) | Execution Time: 0.00504s
+2025-05-19 23:01:37 | INFO | SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ?
+2025-05-19 23:01:37 | INFO | [cached since 688.7s ago] ('Hello',)
+2025-05-19 23:01:37 | INFO | SQL Query: SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ? | Params: ('Hello',) | Execution Time: 0.00416s
+2025-05-19 23:01:37 | INFO | INSERT INTO group_users (name) VALUES (?)
+2025-05-19 23:01:37 | INFO | [generated in 0.00288s] ('Hello',)
+2025-05-19 23:01:37 | INFO | SQL Query: INSERT INTO group_users (name) VALUES (?) | Params: ('Hello',) | Execution Time: 0.01351s
+2025-05-19 23:01:37 | INFO | SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ?
+2025-05-19 23:01:37 | INFO | [cached since 568.8s ago] (1, 0)
+2025-05-19 23:01:37 | INFO | SQL Query: SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ? | Params: (1, 0) | Execution Time: 0.00366s
+2025-05-19 23:01:37 | INFO | INSERT INTO users (username, _password, email, is_active, group_id) VALUES (?, ?, ?, ?, ?)
+2025-05-19 23:01:37 | INFO | [cached since 568.8s ago] ('user231', '$pbkdf2-sha256$29000$7n1vLSXEuDfG.P8/hxACAA$cZJY.GnpowV70Nf2lNy/Ot./oV2Gd/3c2FCWq0QK2w0', 'user23@gmail.com', 0, 2)
+2025-05-19 23:01:37 | INFO | SQL Query: INSERT INTO users (username, _password, email, is_active, group_id) VALUES (?, ?, ?, ?, ?) | Params: ('user231', '$pbkdf2-sha256$29000$7n1vLSXEuDfG.P8/hxACAA$cZJY.GnpowV70Nf2lNy/Ot./oV2Gd/3c2FCWq0QK2w0', 'user23@gmail.com', 0, 2) | Execution Time: 0.00965s
+2025-05-19 23:01:37 | INFO | INSERT INTO roles_users (role_id, user_id) VALUES (?, ?)
+2025-05-19 23:01:37 | INFO | [cached since 568.8s ago] (1, 5)
+2025-05-19 23:01:37 | INFO | SQL Query: INSERT INTO roles_users (role_id, user_id) VALUES (?, ?) | Params: (1, 5) | Execution Time: 0.00612s
+2025-05-19 23:01:37 | INFO | DELETE FROM invite_keys WHERE invite_keys."key" = ?
+2025-05-19 23:01:37 | INFO | [cached since 568.8s ago] ('T9F2U7',)
+2025-05-19 23:01:37 | INFO | SQL Query: DELETE FROM invite_keys WHERE invite_keys."key" = ? | Params: ('T9F2U7',) | Execution Time: 0.00851s
+2025-05-19 23:01:37 | INFO | COMMIT
+2025-05-19 23:01:37 | INFO | BEGIN (implicit)
+2025-05-19 23:01:37 | INFO | SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active, users.group_id AS users_group_id 
+FROM users 
+WHERE users.id = ?
+2025-05-19 23:01:37 | INFO | [cached since 568.8s ago] (5,)
+2025-05-19 23:01:37 | INFO | SQL Query: SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active, users.group_id AS users_group_id 
+FROM users 
+WHERE users.id = ? | Params: (5,) | Execution Time: 0.00499s
+2025-05-19 23:01:37 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-05-19 23:01:37 | INFO | [cached since 627.7s ago] (5,)
+2025-05-19 23:01:37 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (5,) | Execution Time: 0.00402s
+2025-05-19 23:01:37 | INFO | ROLLBACK
+2025-05-19 23:10:36 | INFO | BEGIN (implicit)
+2025-05-19 23:10:36 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ?
+2025-05-19 23:10:36 | INFO | [generated in 0.00335s] ('admin',)
+2025-05-19 23:10:36 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ? | Params: ('admin',) | Execution Time: 0.00895s
+2025-05-19 23:10:36 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-05-19 23:10:36 | INFO | [generated in 0.00191s] (1,)
+2025-05-19 23:10:36 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (1,) | Execution Time: 0.00668s
+2025-05-19 23:10:36 | INFO | ROLLBACK
+2025-05-19 23:10:37 | INFO | BEGIN (implicit)
+2025-05-19 23:10:37 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:10:37 | INFO | [generated in 0.00279s] (5, 0)
+2025-05-19 23:10:37 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00896s
+2025-05-19 23:10:37 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:10:37 | INFO | [generated in 0.00188s] ()
+2025-05-19 23:10:37 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00882s
+2025-05-19 23:10:37 | INFO | ROLLBACK
+2025-05-19 23:10:39 | INFO | BEGIN (implicit)
+2025-05-19 23:10:39 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:10:39 | INFO | [generated in 0.00282s] ('O7F7X3',)
+2025-05-19 23:10:39 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('O7F7X3',) | Execution Time: 0.00758s
+2025-05-19 23:10:39 | INFO | INSERT INTO invite_keys ("key", created, creator_id) VALUES (?, ?, ?)
+2025-05-19 23:10:39 | INFO | [generated in 0.00312s] ('O7F7X3', '2025-05-19 23:10:39.071381', None)
+2025-05-19 23:10:39 | INFO | SQL Query: INSERT INTO invite_keys ("key", created, creator_id) VALUES (?, ?, ?) | Params: ('O7F7X3', '2025-05-19 23:10:39.071381', None) | Execution Time: 0.01508s
+2025-05-19 23:10:39 | INFO | COMMIT
+2025-05-19 23:10:39 | INFO | BEGIN (implicit)
+2025-05-19 23:10:39 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:10:39 | INFO | [generated in 0.00141s] ('O7F7X3',)
+2025-05-19 23:10:39 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('O7F7X3',) | Execution Time: 0.00427s
+2025-05-19 23:10:39 | INFO | ROLLBACK
+2025-05-19 23:10:39 | INFO | BEGIN (implicit)
+2025-05-19 23:10:39 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:10:39 | INFO | [cached since 1.253s ago] (5, 0)
+2025-05-19 23:10:39 | INFO | BEGIN (implicit)
+2025-05-19 23:10:39 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:10:39 | INFO | [cached since 1.259s ago] (5, 0)
+2025-05-19 23:10:39 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00583s
+2025-05-19 23:10:39 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:10:39 | INFO | [cached since 1.252s ago] ()
+2025-05-19 23:10:39 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00770s
+2025-05-19 23:10:39 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:10:39 | INFO | [cached since 1.259s ago] ()
+2025-05-19 23:10:39 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00493s
+2025-05-19 23:10:39 | INFO | ROLLBACK
+2025-05-19 23:10:39 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00696s
+2025-05-19 23:10:39 | INFO | ROLLBACK
+2025-05-19 23:10:45 | INFO | BEGIN (implicit)
+2025-05-19 23:10:45 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:10:45 | INFO | [cached since 7.688s ago] (5, 0)
+2025-05-19 23:10:45 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00539s
+2025-05-19 23:10:45 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:10:45 | INFO | [cached since 7.686s ago] ()
+2025-05-19 23:10:45 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00824s
+2025-05-19 23:10:45 | INFO | ROLLBACK
+2025-05-19 23:10:47 | INFO | BEGIN (implicit)
+2025-05-19 23:10:47 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:10:47 | INFO | [cached since 9.818s ago] (5, 0)
+2025-05-19 23:10:47 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00708s
+2025-05-19 23:10:47 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:10:47 | INFO | [cached since 9.817s ago] ()
+2025-05-19 23:10:47 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00791s
+2025-05-19 23:10:47 | INFO | ROLLBACK
+2025-05-19 23:11:01 | INFO | BEGIN (implicit)
+2025-05-19 23:11:01 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:11:01 | INFO | [cached since 22.9s ago] ('O7F7X3',)
+2025-05-19 23:11:01 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('O7F7X3',) | Execution Time: 0.00580s
+2025-05-19 23:11:01 | INFO | SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ?
+2025-05-19 23:11:01 | INFO | [generated in 0.00203s] ('Hello',)
+2025-05-19 23:11:01 | INFO | SQL Query: SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ? | Params: ('Hello',) | Execution Time: 0.00494s
+2025-05-19 23:11:01 | INFO | SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ?
+2025-05-19 23:11:01 | INFO | [generated in 0.00248s] (1, 0)
+2025-05-19 23:11:01 | INFO | SQL Query: SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ? | Params: (1, 0) | Execution Time: 0.00685s
+2025-05-19 23:11:01 | INFO | INSERT INTO users (username, _password, email, is_active, group_id) VALUES (?, ?, ?, ?, ?)
+2025-05-19 23:11:01 | INFO | [generated in 0.00630s] ('user2312', '$pbkdf2-sha256$29000$pFTqPQcgRMhZay1ljFGqlQ$J85RbkgbhV1YVnJzioGsjEJd47.Z8QEaScRRDPoolkI', 'user231@gmail.com', 0, 2)
+2025-05-19 23:11:02 | INFO | SQL Query: INSERT INTO users (username, _password, email, is_active, group_id) VALUES (?, ?, ?, ?, ?) | Params: ('user2312', '$pbkdf2-sha256$29000$pFTqPQcgRMhZay1ljFGqlQ$J85RbkgbhV1YVnJzioGsjEJd47.Z8QEaScRRDPoolkI', 'user231@gmail.com', 0, 2) | Execution Time: 0.02347s
+2025-05-19 23:11:02 | INFO | INSERT INTO roles_users (role_id, user_id) VALUES (?, ?)
+2025-05-19 23:11:02 | INFO | [generated in 0.00342s] (1, 6)
+2025-05-19 23:11:02 | INFO | SQL Query: INSERT INTO roles_users (role_id, user_id) VALUES (?, ?) | Params: (1, 6) | Execution Time: 0.00681s
+2025-05-19 23:11:02 | INFO | DELETE FROM invite_keys WHERE invite_keys."key" = ?
+2025-05-19 23:11:02 | INFO | [generated in 0.00237s] ('O7F7X3',)
+2025-05-19 23:11:02 | INFO | SQL Query: DELETE FROM invite_keys WHERE invite_keys."key" = ? | Params: ('O7F7X3',) | Execution Time: 0.01533s
+2025-05-19 23:11:02 | INFO | COMMIT
+2025-05-19 23:11:02 | INFO | BEGIN (implicit)
+2025-05-19 23:11:02 | INFO | SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active, users.group_id AS users_group_id 
+FROM users 
+WHERE users.id = ?
+2025-05-19 23:11:02 | INFO | [generated in 0.00240s] (6,)
+2025-05-19 23:11:02 | INFO | SQL Query: SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active, users.group_id AS users_group_id 
+FROM users 
+WHERE users.id = ? | Params: (6,) | Execution Time: 0.00570s
+2025-05-19 23:11:02 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-05-19 23:11:02 | INFO | [cached since 25.85s ago] (6,)
+2025-05-19 23:11:02 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (6,) | Execution Time: 0.00599s
+2025-05-19 23:11:02 | INFO | ROLLBACK
+2025-05-19 23:11:49 | INFO | BEGIN (implicit)
+2025-05-19 23:11:49 | INFO | SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ?
+2025-05-19 23:11:49 | INFO | [cached since 47.24s ago] ('123',)
+2025-05-19 23:11:49 | INFO | SQL Query: SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ? | Params: ('123',) | Execution Time: 0.00529s
+2025-05-19 23:11:49 | INFO | ROLLBACK
+2025-05-19 23:12:19 | INFO | BEGIN (implicit)
+2025-05-19 23:12:19 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:12:19 | INFO | [cached since 100.1s ago] ('Admin1234@@',)
+2025-05-19 23:12:19 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('Admin1234@@',) | Execution Time: 0.00739s
+2025-05-19 23:12:19 | INFO | ROLLBACK
+2025-05-19 23:12:29 | INFO | BEGIN (implicit)
+2025-05-19 23:12:29 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ?
+2025-05-19 23:12:29 | INFO | [cached since 113.2s ago] ('admin',)
+2025-05-19 23:12:29 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ? | Params: ('admin',) | Execution Time: 0.00744s
+2025-05-19 23:12:29 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-05-19 23:12:29 | INFO | [cached since 113.2s ago] (1,)
+2025-05-19 23:12:29 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (1,) | Execution Time: 0.00692s
+2025-05-19 23:12:29 | INFO | ROLLBACK
+2025-05-19 23:12:31 | INFO | BEGIN (implicit)
+2025-05-19 23:12:31 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:12:31 | INFO | [cached since 113.3s ago] (5, 0)
+2025-05-19 23:12:31 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00660s
+2025-05-19 23:12:31 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:12:31 | INFO | [cached since 113.3s ago] ()
+2025-05-19 23:12:31 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00618s
+2025-05-19 23:12:31 | INFO | ROLLBACK
+2025-05-19 23:12:32 | INFO | BEGIN (implicit)
+2025-05-19 23:12:32 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:12:32 | INFO | [cached since 113.1s ago] ('44EA0W',)
+2025-05-19 23:12:32 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('44EA0W',) | Execution Time: 0.00592s
+2025-05-19 23:12:32 | INFO | INSERT INTO invite_keys ("key", created, creator_id) VALUES (?, ?, ?)
+2025-05-19 23:12:32 | INFO | [cached since 113.1s ago] ('44EA0W', '2025-05-19 23:12:32.190318', None)
+2025-05-19 23:12:32 | INFO | SQL Query: INSERT INTO invite_keys ("key", created, creator_id) VALUES (?, ?, ?) | Params: ('44EA0W', '2025-05-19 23:12:32.190318', None) | Execution Time: 0.01684s
+2025-05-19 23:12:32 | INFO | COMMIT
+2025-05-19 23:12:32 | INFO | BEGIN (implicit)
+2025-05-19 23:12:32 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:12:32 | INFO | [cached since 113.1s ago] ('44EA0W',)
+2025-05-19 23:12:32 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('44EA0W',) | Execution Time: 0.00424s
+2025-05-19 23:12:32 | INFO | ROLLBACK
+2025-05-19 23:12:32 | INFO | BEGIN (implicit)
+2025-05-19 23:12:32 | INFO | BEGIN (implicit)
+2025-05-19 23:12:32 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:12:32 | INFO | [cached since 114.4s ago] (5, 0)
+2025-05-19 23:12:32 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:12:32 | INFO | [cached since 114.4s ago] (5, 0)
+2025-05-19 23:12:32 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00480s
+2025-05-19 23:12:32 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00923s
+2025-05-19 23:12:32 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:12:32 | INFO | [cached since 114.4s ago] ()
+2025-05-19 23:12:32 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:12:32 | INFO | [cached since 114.4s ago] ()
+2025-05-19 23:12:32 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00762s
+2025-05-19 23:12:32 | INFO | ROLLBACK
+2025-05-19 23:12:32 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.01620s
+2025-05-19 23:12:32 | INFO | ROLLBACK
+2025-05-19 23:12:37 | INFO | BEGIN (implicit)
+2025-05-19 23:12:37 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:12:37 | INFO | [cached since 118.3s ago] ('44EA0W',)
+2025-05-19 23:12:37 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('44EA0W',) | Execution Time: 0.00528s
+2025-05-19 23:12:37 | INFO | SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ?
+2025-05-19 23:12:37 | INFO | [cached since 95.41s ago] ('123',)
+2025-05-19 23:12:37 | INFO | SQL Query: SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ? | Params: ('123',) | Execution Time: 0.00451s
+2025-05-19 23:12:37 | INFO | SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ?
+2025-05-19 23:12:37 | INFO | [cached since 95.41s ago] (1, 0)
+2025-05-19 23:12:37 | INFO | SQL Query: SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ? | Params: (1, 0) | Execution Time: 0.00840s
+2025-05-19 23:12:37 | INFO | INSERT INTO users (username, _password, email, is_active, group_id) VALUES (?, ?, ?, ?, ?)
+2025-05-19 23:12:37 | INFO | [cached since 95.41s ago] ('test12345', '$pbkdf2-sha256$29000$GuNcC0HonTPmHOOcc.49hw$yyu0QKrkCwEICmEh9qXvByfyS5zS3EqmbdOZD6cWa70', '123321@gmail.com', 0, 1)
+2025-05-19 23:12:37 | INFO | SQL Query: INSERT INTO users (username, _password, email, is_active, group_id) VALUES (?, ?, ?, ?, ?) | Params: ('test12345', '$pbkdf2-sha256$29000$GuNcC0HonTPmHOOcc.49hw$yyu0QKrkCwEICmEh9qXvByfyS5zS3EqmbdOZD6cWa70', '123321@gmail.com', 0, 1) | Execution Time: 0.01982s
+2025-05-19 23:12:37 | INFO | INSERT INTO roles_users (role_id, user_id) VALUES (?, ?)
+2025-05-19 23:12:37 | INFO | [cached since 95.41s ago] (1, 7)
+2025-05-19 23:12:37 | INFO | SQL Query: INSERT INTO roles_users (role_id, user_id) VALUES (?, ?) | Params: (1, 7) | Execution Time: 0.00699s
+2025-05-19 23:12:37 | INFO | DELETE FROM invite_keys WHERE invite_keys."key" = ?
+2025-05-19 23:12:37 | INFO | [cached since 95.4s ago] ('44EA0W',)
+2025-05-19 23:12:37 | INFO | SQL Query: DELETE FROM invite_keys WHERE invite_keys."key" = ? | Params: ('44EA0W',) | Execution Time: 0.00696s
+2025-05-19 23:12:37 | INFO | COMMIT
+2025-05-19 23:12:37 | INFO | BEGIN (implicit)
+2025-05-19 23:12:37 | INFO | SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active, users.group_id AS users_group_id 
+FROM users 
+WHERE users.id = ?
+2025-05-19 23:12:37 | INFO | [cached since 95.39s ago] (7,)
+2025-05-19 23:12:37 | INFO | SQL Query: SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active, users.group_id AS users_group_id 
+FROM users 
+WHERE users.id = ? | Params: (7,) | Execution Time: 0.00458s
+2025-05-19 23:12:37 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-05-19 23:12:37 | INFO | [cached since 121.2s ago] (7,)
+2025-05-19 23:12:37 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (7,) | Execution Time: 0.00526s
+2025-05-19 23:12:37 | INFO | ROLLBACK
+2025-05-19 23:12:49 | INFO | BEGIN (implicit)
+2025-05-19 23:12:49 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:12:49 | INFO | [cached since 131.2s ago] (5, 0)
+2025-05-19 23:12:49 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00529s
+2025-05-19 23:12:49 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:12:49 | INFO | [cached since 131.2s ago] ()
+2025-05-19 23:12:49 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00641s
+2025-05-19 23:12:49 | INFO | ROLLBACK
+2025-05-19 23:14:39 | INFO | BEGIN (implicit)
+2025-05-19 23:14:39 | INFO | SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ?
+2025-05-19 23:14:39 | INFO | [generated in 0.00174s] ('admin',)
+2025-05-19 23:14:39 | INFO | SQL Query: SELECT users.id, users.username, users._password, users.email, users.is_active, users.group_id 
+FROM users 
+WHERE users.username = ? | Params: ('admin',) | Execution Time: 0.00761s
+2025-05-19 23:14:39 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-05-19 23:14:39 | INFO | [generated in 0.00281s] (1,)
+2025-05-19 23:14:39 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (1,) | Execution Time: 0.00852s
+2025-05-19 23:14:39 | INFO | ROLLBACK
+2025-05-19 23:14:42 | INFO | BEGIN (implicit)
+2025-05-19 23:14:42 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:14:42 | INFO | [generated in 0.00263s] (5, 0)
+2025-05-19 23:14:42 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00724s
+2025-05-19 23:14:42 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:14:42 | INFO | [generated in 0.00203s] ()
+2025-05-19 23:14:42 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00460s
+2025-05-19 23:14:42 | INFO | ROLLBACK
+2025-05-19 23:14:43 | INFO | BEGIN (implicit)
+2025-05-19 23:14:43 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:14:43 | INFO | [generated in 0.00333s] ('LBSDW5',)
+2025-05-19 23:14:43 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('LBSDW5',) | Execution Time: 0.00894s
+2025-05-19 23:14:43 | INFO | INSERT INTO invite_keys ("key", created, creator_id) VALUES (?, ?, ?)
+2025-05-19 23:14:43 | INFO | [generated in 0.00201s] ('LBSDW5', '2025-05-19 23:14:43.739852', None)
+2025-05-19 23:14:43 | INFO | SQL Query: INSERT INTO invite_keys ("key", created, creator_id) VALUES (?, ?, ?) | Params: ('LBSDW5', '2025-05-19 23:14:43.739852', None) | Execution Time: 0.01560s
+2025-05-19 23:14:43 | INFO | COMMIT
+2025-05-19 23:14:43 | INFO | BEGIN (implicit)
+2025-05-19 23:14:43 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:14:43 | INFO | [generated in 0.00158s] ('LBSDW5',)
+2025-05-19 23:14:43 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('LBSDW5',) | Execution Time: 0.00455s
+2025-05-19 23:14:43 | INFO | ROLLBACK
+2025-05-19 23:14:43 | INFO | BEGIN (implicit)
+2025-05-19 23:14:43 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:14:43 | INFO | [cached since 1.117s ago] (5, 0)
+2025-05-19 23:14:43 | INFO | BEGIN (implicit)
+2025-05-19 23:14:43 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:14:43 | INFO | [cached since 1.123s ago] (5, 0)
+2025-05-19 23:14:43 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00518s
+2025-05-19 23:14:43 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:14:43 | INFO | [cached since 1.117s ago] ()
+2025-05-19 23:14:43 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00763s
+2025-05-19 23:14:43 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:14:43 | INFO | [cached since 1.124s ago] ()
+2025-05-19 23:14:43 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00471s
+2025-05-19 23:14:43 | INFO | ROLLBACK
+2025-05-19 23:14:43 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00615s
+2025-05-19 23:14:43 | INFO | ROLLBACK
+2025-05-19 23:15:07 | INFO | BEGIN (implicit)
+2025-05-19 23:15:07 | INFO | SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ?
+2025-05-19 23:15:07 | INFO | [generated in 0.00261s] ('sadas',)
+2025-05-19 23:15:07 | INFO | SQL Query: SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ? | Params: ('sadas',) | Execution Time: 0.00721s
+2025-05-19 23:15:07 | INFO | ROLLBACK
+2025-05-19 23:15:10 | INFO | BEGIN (implicit)
+2025-05-19 23:15:10 | INFO | SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ?
+2025-05-19 23:15:10 | INFO | [cached since 2.626s ago] ('123',)
+2025-05-19 23:15:10 | INFO | SQL Query: SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ? | Params: ('123',) | Execution Time: 0.00677s
+2025-05-19 23:15:10 | INFO | ROLLBACK
+2025-05-19 23:15:15 | INFO | BEGIN (implicit)
+2025-05-19 23:15:15 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:15:15 | INFO | [cached since 31.41s ago] ('LBSDW5',)
+2025-05-19 23:15:15 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('LBSDW5',) | Execution Time: 0.00771s
+2025-05-19 23:15:15 | INFO | SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ?
+2025-05-19 23:15:15 | INFO | [cached since 7.449s ago] ('123',)
+2025-05-19 23:15:15 | INFO | SQL Query: SELECT group_users.id, group_users.name 
+FROM group_users 
+WHERE group_users.name = ? | Params: ('123',) | Execution Time: 0.00783s
+2025-05-19 23:15:15 | INFO | SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ?
+2025-05-19 23:15:15 | INFO | [generated in 0.00187s] (1, 0)
+2025-05-19 23:15:15 | INFO | SQL Query: SELECT roles.id, roles.name, roles."default", roles.permissions 
+FROM roles 
+WHERE roles."default" = 1
+ LIMIT ? OFFSET ? | Params: (1, 0) | Execution Time: 0.00603s
+2025-05-19 23:15:15 | INFO | INSERT INTO users (username, _password, email, is_active, group_id) VALUES (?, ?, ?, ?, ?)
+2025-05-19 23:15:15 | INFO | [generated in 0.00365s] ('qwewqr', '$pbkdf2-sha256$29000$Sul9rzUGQEjJ.b9Xaq21Fg$IVBd6M3sYZc8QlLi1Kd5B8L/bTGrjDub7Hsnd7/DjIA', 'werewr@gmail.com', 0, 1)
+2025-05-19 23:15:15 | INFO | SQL Query: INSERT INTO users (username, _password, email, is_active, group_id) VALUES (?, ?, ?, ?, ?) | Params: ('qwewqr', '$pbkdf2-sha256$29000$Sul9rzUGQEjJ.b9Xaq21Fg$IVBd6M3sYZc8QlLi1Kd5B8L/bTGrjDub7Hsnd7/DjIA', 'werewr@gmail.com', 0, 1) | Execution Time: 0.01647s
+2025-05-19 23:15:15 | INFO | INSERT INTO roles_users (role_id, user_id) VALUES (?, ?)
+2025-05-19 23:15:15 | INFO | [generated in 0.00232s] (1, 8)
+2025-05-19 23:15:15 | INFO | SQL Query: INSERT INTO roles_users (role_id, user_id) VALUES (?, ?) | Params: (1, 8) | Execution Time: 0.00575s
+2025-05-19 23:15:15 | INFO | DELETE FROM invite_keys WHERE invite_keys."key" = ?
+2025-05-19 23:15:15 | INFO | [generated in 0.00272s] ('LBSDW5',)
+2025-05-19 23:15:15 | INFO | SQL Query: DELETE FROM invite_keys WHERE invite_keys."key" = ? | Params: ('LBSDW5',) | Execution Time: 0.00777s
+2025-05-19 23:15:15 | INFO | COMMIT
+2025-05-19 23:15:15 | INFO | BEGIN (implicit)
+2025-05-19 23:15:15 | INFO | SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active, users.group_id AS users_group_id 
+FROM users 
+WHERE users.id = ?
+2025-05-19 23:15:15 | INFO | [generated in 0.00138s] (8,)
+2025-05-19 23:15:15 | INFO | SQL Query: SELECT users.id AS users_id, users.username AS users_username, users._password AS users__password, users.email AS users_email, users.is_active AS users_is_active, users.group_id AS users_group_id 
+FROM users 
+WHERE users.id = ? | Params: (8,) | Execution Time: 0.00406s
+2025-05-19 23:15:15 | INFO | SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id
+2025-05-19 23:15:15 | INFO | [cached since 35.29s ago] (8,)
+2025-05-19 23:15:15 | INFO | SQL Query: SELECT roles.id AS roles_id, roles.name AS roles_name, roles."default" AS roles_default, roles.permissions AS roles_permissions 
+FROM roles, roles_users 
+WHERE ? = roles_users.user_id AND roles.id = roles_users.role_id | Params: (8,) | Execution Time: 0.00504s
+2025-05-19 23:15:15 | INFO | ROLLBACK
+2025-05-19 23:15:22 | INFO | BEGIN (implicit)
+2025-05-19 23:15:22 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:15:22 | INFO | [cached since 39.58s ago] (5, 0)
+2025-05-19 23:15:22 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00586s
+2025-05-19 23:15:22 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:15:22 | INFO | [cached since 39.58s ago] ()
+2025-05-19 23:15:22 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00915s
+2025-05-19 23:15:22 | INFO | ROLLBACK
+2025-05-19 23:15:28 | INFO | BEGIN (implicit)
+2025-05-19 23:15:28 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:15:28 | INFO | [cached since 46s ago] (5, 0)
+2025-05-19 23:15:28 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.00594s
+2025-05-19 23:15:28 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:15:28 | INFO | [cached since 46s ago] ()
+2025-05-19 23:15:28 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.00434s
+2025-05-19 23:15:28 | INFO | ROLLBACK
+2025-05-19 23:15:29 | INFO | BEGIN (implicit)
+2025-05-19 23:15:29 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:15:29 | INFO | [cached since 45.93s ago] ('UMF3IC',)
+2025-05-19 23:15:29 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('UMF3IC',) | Execution Time: 0.00670s
+2025-05-19 23:15:29 | INFO | INSERT INTO invite_keys ("key", created, creator_id) VALUES (?, ?, ?)
+2025-05-19 23:15:29 | INFO | [cached since 45.93s ago] ('UMF3IC', '2025-05-19 23:15:29.663674', None)
+2025-05-19 23:15:29 | INFO | SQL Query: INSERT INTO invite_keys ("key", created, creator_id) VALUES (?, ?, ?) | Params: ('UMF3IC', '2025-05-19 23:15:29.663674', None) | Execution Time: 0.01520s
+2025-05-19 23:15:29 | INFO | COMMIT
+2025-05-19 23:15:29 | INFO | BEGIN (implicit)
+2025-05-19 23:15:29 | INFO | SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ?
+2025-05-19 23:15:29 | INFO | [cached since 45.92s ago] ('UMF3IC',)
+2025-05-19 23:15:29 | INFO | SQL Query: SELECT invite_keys."key" AS invite_keys_key, invite_keys.created AS invite_keys_created, invite_keys.creator_id AS invite_keys_creator_id 
+FROM invite_keys 
+WHERE invite_keys."key" = ? | Params: ('UMF3IC',) | Execution Time: 0.00400s
+2025-05-19 23:15:29 | INFO | ROLLBACK
+2025-05-19 23:15:29 | INFO | BEGIN (implicit)
+2025-05-19 23:15:29 | INFO | BEGIN (implicit)
+2025-05-19 23:15:29 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:15:29 | INFO | SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ?
+2025-05-19 23:15:29 | INFO | [cached since 47.05s ago] (5, 0)
+2025-05-19 23:15:29 | INFO | [cached since 47.05s ago] (5, 0)
+2025-05-19 23:15:29 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.01586s
+2025-05-19 23:15:29 | INFO | SQL Query: SELECT invite_keys."key", invite_keys.created, invite_keys.creator_id 
+FROM invite_keys
+ LIMIT ? OFFSET ? | Params: (5, 0) | Execution Time: 0.01439s
+2025-05-19 23:15:29 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:15:29 | INFO | SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1
+2025-05-19 23:15:29 | INFO | [cached since 47.06s ago] ()
+2025-05-19 23:15:29 | INFO | [cached since 47.06s ago] ()
+2025-05-19 23:15:29 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.01274s
+2025-05-19 23:15:29 | INFO | SQL Query: SELECT count(*) AS count_1 
+FROM (SELECT invite_keys."key" AS "key", invite_keys.created AS created, invite_keys.creator_id AS creator_id 
+FROM invite_keys) AS anon_1 | Params: () | Execution Time: 0.01119s
+2025-05-19 23:15:29 | INFO | ROLLBACK
+2025-05-19 23:15:29 | INFO | ROLLBACK
