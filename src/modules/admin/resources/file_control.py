@@ -8,7 +8,7 @@ from http import HTTPStatus
 from src.core.services.file_manager import FileManager
 from flask import jsonify
 from src.modules.admin.resources import admin_blp
-from src.modules.admin.models import FileModel
+from src.modules.admin.models import RawFileModel
 from src.extensions import db
 from flask_jwt_extended import get_jwt_identity
 from sqlalchemy.exc import IntegrityError
@@ -74,8 +74,8 @@ class OriginalFile(MethodView):
         auto_rename = request.form.get("auto_rename") == "true"
 
         # Kiểm tra duplicate theo filename đã làm sạch
-        existing_file = FileModel.query.filter(
-            FileModel.filename == filename
+        existing_file = RawFileModel.query.filter(
+            RawFileModel.filename == filename
         ).first()
 
         if existing_file:
@@ -93,7 +93,7 @@ class OriginalFile(MethodView):
                 # Sinh tên mới: upload(1).zip, upload(2).zip, ...
                 i = 1
                 new_filename = f"{safe_name}({i}){ext}"
-                while FileModel.query.filter(FileModel.filename == new_filename).first():
+                while RawFileModel.query.filter(RawFileModel.filename == new_filename).first():
                     i += 1
                     new_filename = f"{safe_name}({i}){ext}"
                 filename = new_filename
@@ -110,9 +110,9 @@ class OriginalFile(MethodView):
             current_app.config["ORIGINAL_FILE_PATH"] = extracted_file_path
 
             # Deactivate all existing files
-            FileModel.query.update({"is_active": False})
+            RawFileModel.query.update({"is_active": False})
             creator_id = get_jwt_identity()
-            file_model = FileModel(
+            file_model = RawFileModel(
                 original_filename=original_filename,
                 filename=filename,
                 file_path=file_path,
@@ -144,7 +144,7 @@ class FileList(MethodView):
     @role_required([ADMIN_ROLE])
     def get(self):
         try:
-            files = FileModel.query.order_by(FileModel.uploaded_at.desc()).all()
+            files = RawFileModel.query.order_by(RawFileModel.uploaded_at.desc()).all()
             return api_response(
                 "success",
                 "File list fetched successfully",
@@ -165,7 +165,7 @@ class FileList(MethodView):
 class FileResource(MethodView):
     @role_required([ADMIN_ROLE])
     def delete(self, file_id):
-        file = FileModel.query.get_or_404(file_id)
+        file = RawFileModel.query.get_or_404(file_id)
         try:
             # Delete file from filesystem
             file_manager = FileManager(upload_dir="original_files")
@@ -181,14 +181,14 @@ class FileResource(MethodView):
 class FileActivateResource(MethodView):
     @role_required([ADMIN_ROLE])
     def patch(self, file_id):
-        file = FileModel.query.get_or_404(file_id)
+        file = RawFileModel.query.get_or_404(file_id)
         try:
             # Nếu file đã active thì chuyển thành inactive (toggle off)
             if file.is_active:
                 file.is_active = False
             else:
                 # Nếu file chưa active thì active nó và inactive tất cả file khác
-                FileModel.query.update({"is_active": False})
+                RawFileModel.query.update({"is_active": False})
                 file.is_active = True
             db.session.commit()
             return api_response(

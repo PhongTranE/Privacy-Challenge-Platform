@@ -1,12 +1,13 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from flask import request, jsonify
+from flask import request, jsonify, send_file, after_this_request
 from http import HTTPStatus
 from .services import AnonymService
 from .models import AnonymModel
 from src.common.decorators import group_required  
 from src.extensions import db
 from flask_jwt_extended import jwt_required
+from src.modules.admin.models import RawFileModel
 
 blp = Blueprint("anonymisation_func", __name__, description="Anonymisation Management")
 
@@ -64,3 +65,67 @@ class AnonymTogglePublish(MethodView):
             "message": f"Anonymization {anonym_id} is now {'published' if anonym.is_published else 'unpublished'}.",
             "is_published": anonym.is_published
         }), HTTPStatus.OK
+
+
+def make_response(data=None, message="Success", status="success", error=None):
+    resp = {
+        "status": status,
+        "message": message,
+        "data": data
+    }
+    if error:
+        resp["error"] = error
+    return jsonify(resp)
+
+
+@blp.route("/check-active-rawfile")
+class CheckActiveRawFile(MethodView):
+    def get(self):
+        active_file = RawFileModel.query.filter_by(is_active=True).first()
+        if active_file:
+            return make_response(
+                data=None,
+                message="There is an active raw file.",
+                status="success"
+            ), HTTPStatus.OK
+        else:
+            return make_response(
+                data=None,
+                message="No active raw file found.",
+                status="error",
+                error="NO_ACTIVE_RAWFILE"
+            ), HTTPStatus.NOT_FOUND
+
+
+@blp.route("/download-rawfile")
+class DownloadRawFile(MethodView):
+    def get(self):
+        active_file = RawFileModel.query.filter_by(is_active=True).first()
+        if not active_file:
+            return make_response(
+                data=None,
+                message="No active raw file to download.",
+                status="error",
+                error="NO_ACTIVE_RAWFILE"
+            ), HTTPStatus.NOT_FOUND
+
+        import os
+        if not os.path.exists(active_file.file_path):
+            return make_response(
+                data=None,
+                message="Raw file not found on server.",
+                status="error",
+                error="FILE_NOT_FOUND"
+            ), HTTPStatus.NOT_FOUND
+
+        @after_this_request
+        def add_header(response):
+            response.headers.add("Access-Control-Expose-Headers", "Content-Disposition")
+            return response
+
+        return send_file(
+            active_file.file_path,
+            as_attachment=True,
+            download_name="rawfile.zip",
+            mimetype="application/zip"
+        )

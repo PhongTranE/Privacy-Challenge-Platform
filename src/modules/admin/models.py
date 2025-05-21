@@ -25,7 +25,7 @@ class InviteKeyModel(db.Model):
         return f"<InviteKey {self.key}>"
 
 
-class FileModel(db.Model):
+class RawFileModel(db.Model):
     """Stores uploaded files for anonymization."""
 
     __tablename__ = "files"
@@ -54,4 +54,4 @@ class FileModel(db.Model):
     )
 
     def __repr__(self):
-        return f"<File {self.filename}>"
+        return f"<RawFile {self.filename}>"
