@@ -8,6 +8,8 @@ from src.common.decorators import group_required
 from src.extensions import db
 from flask_jwt_extended import jwt_required
 from src.modules.admin.models import RawFileModel
+from src.common.response_builder import ResponseBuilder
+from src.constants.app_msg import *
 
 blp = Blueprint("anonymisation_func", __name__, description="Anonymisation Management")
 
@@ -17,7 +19,7 @@ class AnonymUpload(MethodView):
     def post(self):
         """Handles file upload and triggers anonymization."""
         if "file" not in request.files:
-            abort(HTTPStatus.BAD_REQUEST, message="No file uploaded.")
+            abort(HTTPStatus.BAD_REQUEST, message=NO_FILE_UPLOADED)
 
         file = request.files["file"]
         response, status_code = AnonymService.process_anonymization(file)
@@ -35,12 +37,20 @@ class AnonymResult(MethodView):
         if not anonym:
             abort(HTTPStatus.NOT_FOUND, message="Anonymization result not found.")
 
-        return jsonify({
-            "status": anonym.status,
-            "utility_score": anonym.utility,
-            "naive_attack_score": anonym.naive_attack,
-            "is_published": anonym.is_published
-        }), HTTPStatus.OK
+        return (
+            ResponseBuilder()
+            .success(
+                message="Anonymization result fetched successfully",
+                data={
+                    "status": anonym.status,
+                    "utility_score": anonym.utility,
+                    "naive_attack_score": anonym.naive_attack,
+                    "is_published": anonym.is_published
+                },
+                status_code=HTTPStatus.OK
+            )
+            .build()
+        )
 
 
 @blp.route("/toggle-publish/<int:anonym_id>")
@@ -61,10 +71,17 @@ class AnonymTogglePublish(MethodView):
         anonym.is_published = not anonym.is_published
         db.session.commit()
 
-        return jsonify({
-            "message": f"Anonymization {anonym_id} is now {'published' if anonym.is_published else 'unpublished'}.",
-            "is_published": anonym.is_published
-        }), HTTPStatus.OK
+        return (
+            ResponseBuilder()
+            .success(
+                message=f"Anonymization {anonym_id} is now {'published' if anonym.is_published else 'unpublished'}.",
+                data={
+                    "is_published": anonym.is_published
+                },
+                status_code=HTTPStatus.OK
+            )
+            .build()
+        )
 
 
 @blp.route("/check-active-rawfile")
@@ -72,9 +89,14 @@ class CheckActiveRawFile(MethodView):
     def get(self):
         active_file = RawFileModel.query.filter_by(is_active=True).first()
         if active_file:
-            return jsonify({
-                "message": "There is an active raw file."
-            }), HTTPStatus.OK
+            return (
+                ResponseBuilder()
+                .success(
+                    message="There is an active raw file.",
+                    status_code=HTTPStatus.OK
+                )
+                .build()
+            )
         else:
             abort(HTTPStatus.NOT_FOUND, message="No active raw file found.")
 

@@ -12,6 +12,7 @@ from src.modules.admin.models import RawFileModel
 from src.extensions import db
 from flask_jwt_extended import get_jwt_identity
 from sqlalchemy.exc import IntegrityError
+from src.common.response_builder import ResponseBuilder
 import time
 import os
 import re
@@ -88,11 +89,7 @@ class OriginalFile(MethodView):
                     new_filename = f"{safe_name}({i}){ext}"
                 filename = new_filename
             else:
-                return api_response(
-                    "error",
-                    "File name already exists",
-                    {"filename": filename}
-                ), 409
+                abort(HTTPStatus.CONFLICT, message="File name already exists")
 
         try:
             file_path = file_manager.save_file(file, filename=filename)
@@ -112,15 +109,20 @@ class OriginalFile(MethodView):
             db.session.add(file_model)
             db.session.commit()
 
-            return jsonify({
-                "message": "File uploaded successfully",
-                "data": {
-                    "file_path": file_path,
-                    "extracted_file_path": extracted_file_path,
-                    "file_id": file_model.id,
-                    "filename": filename
-                }
-            }), HTTPStatus.CREATED
+            return (
+                ResponseBuilder()
+                .success(
+                    message=FILE_UPLOADED_SUCESS,
+                    data={
+                        "file_path": file_path,
+                        "extracted_file_path": extracted_file_path,
+                        "file_id": file_model.id,
+                        "filename": filename
+                    },
+                    status_code=HTTPStatus.CREATED
+                )
+                .build()
+            )
         except IntegrityError:
             db.session.rollback()
             abort(HTTPStatus.BAD_REQUEST, message="File already exists, please try again with a different file.")
@@ -134,18 +136,23 @@ class FileList(MethodView):
     def get(self):
         try:
             files = RawFileModel.query.order_by(RawFileModel.uploaded_at.desc()).all()
-            return jsonify({
-                "message": "File list fetched successfully",
-                "data": [
-                    {
-                        "id": file.id,
-                        "filename": file.filename,
-                        "uploaded_at": file.uploaded_at.isoformat(),
-                        "is_active": file.is_active,
-                        "creator_id": file.creator_id
-                    } for file in files
-                ]
-            }), HTTPStatus.OK
+            return (
+                ResponseBuilder()
+                .success(
+                    message="File list fetched successfully",
+                    data=[
+                        {
+                            "id": file.id,
+                            "filename": file.filename,
+                            "uploaded_at": file.uploaded_at.isoformat(),
+                            "is_active": file.is_active,
+                            "creator_id": file.creator_id
+                        } for file in files
+                    ],
+                    status_code=HTTPStatus.OK
+                )
+                .build()
+            )
         except Exception as e:
             abort(HTTPStatus.INTERNAL_SERVER_ERROR, message="Get file list failed")
 
@@ -161,7 +168,14 @@ class FileResource(MethodView):
             # Delete from database
             db.session.delete(file)
             db.session.commit()
-            return jsonify({"message": "File deleted successfully"}), HTTPStatus.OK
+            return (
+                ResponseBuilder()
+                .success(
+                    message=FILE_DELETED_SUCCESS,
+                    status_code=HTTPStatus.OK
+                )
+                .build()
+            )
         except Exception as e:
             abort(HTTPStatus.INTERNAL_SERVER_ERROR, message="Delete failed")
 
@@ -179,13 +193,18 @@ class FileActivateResource(MethodView):
                 RawFileModel.query.update({"is_active": False})
                 file.is_active = True
             db.session.commit()
-            return jsonify({
-                "message": "File status updated successfully",
-                "data": {
-                    "id": file.id,
-                    "is_active": file.is_active
-                }
-            }), HTTPStatus.OK
+            return (
+                ResponseBuilder()
+                .success(
+                    message="File status updated successfully",
+                    data={
+                        "id": file.id,
+                        "is_active": file.is_active
+                    },
+                    status_code=HTTPStatus.OK
+                )
+                .build()
+            )
         except Exception as e:
             abort(HTTPStatus.INTERNAL_SERVER_ERROR, message="Activate failed")
     
