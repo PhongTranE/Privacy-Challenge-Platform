@@ -10,16 +10,20 @@ from src.modules.auth.models import UserModel, GroupUserModel
 
 from flask import jsonify
 from src.modules.admin.schemas import InviteKeySchema
-from src.modules.auth.schemas import UserLoginSchema, GroupUserSchema
+from src.modules.auth.schemas import UserLoginSchema, GroupUserSchema, ResetPasswordSchema
 
 from http import HTTPStatus
-from sqlalchemy import select
+from sqlalchemy import select, or_
 from src.constants.app_msg import *
 from src.constants.admin import *
 from src.common.pagination import PageNumberPagination
 
 from openapi import *
 from src.modules.admin.resources import admin_blp
+from src.modules.admin.services import is_invite_key_expired
+from src.modules.auth.services import hash_password, validate_password_match, validate_password
+from marshmallow import ValidationError
+from marshmallow import fields, Schema
 
 @admin_blp.route("/invite")
 class InviteUser(MethodView):
@@ -107,11 +111,22 @@ class UserList(MethodView):
         page = request.args.get('page', type=int)
         per_page = request.args.get('per_page', type=int)
         count = request.args.get('count', type=str)
+        search = request.args.get('search', type=str)
 
         if count is not None:
             count = count.lower() == 'true'
 
         users = select(UserModel)
+
+        if search:
+            search_pattern = f"%{search}%"
+            users = users.where(
+                or_(
+                    UserModel.username.ilike(search_pattern),
+                    UserModel.email.ilike(search_pattern),
+                    UserModel.group.has(GroupUserModel.name.ilike(search_pattern))
+                )
+            )
 
         paginator = PageNumberPagination(
             select=users,  
@@ -144,6 +159,40 @@ class User(MethodView):
         db.session.commit()
         return jsonify({"message": USER_DELETED}), HTTPStatus.OK
 
+
+@admin_blp.route("/user/<int:user_id>/password")
+class AdminUserPassword(MethodView):
+    @role_required([ADMIN_ROLE])
+    @admin_blp.arguments(
+        Schema.from_dict({
+            "new_password": fields.Str(required=True, validate=validate_password)
+        })()
+    )
+    def put(self, password_data, user_id):
+        user = db.session.get(UserModel, user_id)
+        if not user:
+            return jsonify({
+                "status": "error",
+                "message": "User not found!",
+            }), 404
+        try:
+            validate_password(password_data["new_password"])
+            user.password = password_data["new_password"]
+            db.session.commit()
+            return jsonify({
+                "status": "success",
+                "message": "Password updated successfully!",
+            }), 200
+        except ValidationError as ve:
+            return jsonify({
+                "status": "error",
+                "message": { "json": ve.messages },
+            }), 400
+        except Exception as e:
+            return jsonify({
+                "status": "error",
+                "message": str(e),
+            }), 500
 
 
 @admin_blp.route("/group_user")
