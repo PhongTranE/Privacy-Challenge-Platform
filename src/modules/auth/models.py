@@ -34,6 +34,9 @@ class UserModel(db.Model):
     invitekeys: so.Mapped[list["InviteKeyModel"]] = so.relationship(
         "InviteKeyModel", back_populates="creator"
     )
+    files: so.Mapped[list["RawFileModel"]] = so.relationship(
+        "RawFileModel", back_populates="creator"
+    )
 
     @property
     def password(self):
