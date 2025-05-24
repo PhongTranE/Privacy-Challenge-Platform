@@ -18,16 +18,6 @@ import re
 
 MAX_FILE_SIZE = 50 * 1024 * 1024  # 50MB in bytes
 
-def api_response(status: str, message, data=None, error=None):
-    resp = {
-        "status": status,  # only "success" or "error"
-        "message": message,
-        "data": data
-    }
-    if error is not None:
-        resp["error"] = error
-    return jsonify(resp)
-
 def extract_base_filename(filename):
     # Loại bỏ _timestamp hoặc (n) trước .zip
     return re.sub(r'(_\d+)?(\(\d+\))?\.zip$', '', filename)
@@ -46,7 +36,7 @@ class OriginalFile(MethodView):
     @role_required([ADMIN_ROLE])
     def post(self):
         if "file" not in request.files:
-            return api_response("error", "No file uploaded!"), 400
+            abort(HTTPStatus.BAD_REQUEST, message=NO_FILE_UPLOADED)
 
         file = request.files["file"]
         # Check file size
@@ -54,14 +44,14 @@ class OriginalFile(MethodView):
         size = file.tell()
         file.seek(0)
         if size > MAX_FILE_SIZE:
-            return api_response("error", "File size exceeds 50MB limit"), 400
+            abort(HTTPStatus.BAD_REQUEST, message="File size exceeds 50MB limit")
 
         # Validate extension
         allowed_ext = ".zip"
         original_filename = file.filename
         name, ext = os.path.splitext(original_filename)
         if ext != allowed_ext:
-            return api_response("error", "Only ZIP files are allowed"), 400
+            abort(HTTPStatus.BAD_REQUEST, message="Only ZIP files are allowed")
 
         # Làm sạch tên file
         safe_name = re.sub(r'[^a-zA-Z0-9_-]', '_', name)
@@ -122,22 +112,21 @@ class OriginalFile(MethodView):
             db.session.add(file_model)
             db.session.commit()
 
-            return api_response(
-                "success",
-                "File uploaded successfully",
-                {
+            return jsonify({
+                "message": "File uploaded successfully",
+                "data": {
                     "file_path": file_path,
                     "extracted_file_path": extracted_file_path,
                     "file_id": file_model.id,
                     "filename": filename
                 }
-            ), 201
-        except IntegrityError as e:
+            }), HTTPStatus.CREATED
+        except IntegrityError:
             db.session.rollback()
-            return api_response("error", "File already exists, please try again with a different file."), 400
+            abort(HTTPStatus.BAD_REQUEST, message="File already exists, please try again with a different file.")
         except Exception as e:
             db.session.rollback()
-            return api_response("error", "Internal error", None, str(e)), 500
+            abort(HTTPStatus.INTERNAL_SERVER_ERROR, message=INTERNAL_SERVER_ERROR)
 
 @admin_blp.route("/files")
 class FileList(MethodView):
@@ -145,10 +134,9 @@ class FileList(MethodView):
     def get(self):
         try:
             files = RawFileModel.query.order_by(RawFileModel.uploaded_at.desc()).all()
-            return api_response(
-                "success",
-                "File list fetched successfully",
-                [
+            return jsonify({
+                "message": "File list fetched successfully",
+                "data": [
                     {
                         "id": file.id,
                         "filename": file.filename,
@@ -157,9 +145,9 @@ class FileList(MethodView):
                         "creator_id": file.creator_id
                     } for file in files
                 ]
-            ), 200
+            }), HTTPStatus.OK
         except Exception as e:
-            return api_response("error", "Get file list failed", None, str(e)), 400
+            abort(HTTPStatus.INTERNAL_SERVER_ERROR, message="Get file list failed")
 
 @admin_blp.route("/files/<int:file_id>")
 class FileResource(MethodView):
@@ -173,9 +161,9 @@ class FileResource(MethodView):
             # Delete from database
             db.session.delete(file)
             db.session.commit()
-            return api_response("success", "File deleted successfully"), 200
+            return jsonify({"message": "File deleted successfully"}), HTTPStatus.OK
         except Exception as e:
-            return api_response("error", "Delete failed", None, str(e)), 400
+            abort(HTTPStatus.INTERNAL_SERVER_ERROR, message="Delete failed")
 
 @admin_blp.route("/files/<int:file_id>/activate")
 class FileActivateResource(MethodView):
@@ -191,14 +179,13 @@ class FileActivateResource(MethodView):
                 RawFileModel.query.update({"is_active": False})
                 file.is_active = True
             db.session.commit()
-            return api_response(
-                "success",
-                "File status updated successfully",
-                {
+            return jsonify({
+                "message": "File status updated successfully",
+                "data": {
                     "id": file.id,
                     "is_active": file.is_active
                 }
-            ), 200
+            }), HTTPStatus.OK
         except Exception as e:
-            return api_response("error", "Activate failed", None, str(e)), 400
+            abort(HTTPStatus.INTERNAL_SERVER_ERROR, message="Activate failed")
     

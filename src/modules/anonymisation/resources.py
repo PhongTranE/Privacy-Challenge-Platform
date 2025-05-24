@@ -67,34 +67,16 @@ class AnonymTogglePublish(MethodView):
         }), HTTPStatus.OK
 
 
-def make_response(data=None, message="Success", status="success", error=None):
-    resp = {
-        "status": status,
-        "message": message,
-        "data": data
-    }
-    if error:
-        resp["error"] = error
-    return jsonify(resp)
-
-
 @blp.route("/check-active-rawfile")
 class CheckActiveRawFile(MethodView):
     def get(self):
         active_file = RawFileModel.query.filter_by(is_active=True).first()
         if active_file:
-            return make_response(
-                data=None,
-                message="There is an active raw file.",
-                status="success"
-            ), HTTPStatus.OK
+            return jsonify({
+                "message": "There is an active raw file."
+            }), HTTPStatus.OK
         else:
-            return make_response(
-                data=None,
-                message="No active raw file found.",
-                status="error",
-                error="NO_ACTIVE_RAWFILE"
-            ), HTTPStatus.NOT_FOUND
+            abort(HTTPStatus.NOT_FOUND, message="No active raw file found.")
 
 
 @blp.route("/download-rawfile")
@@ -102,21 +84,11 @@ class DownloadRawFile(MethodView):
     def get(self):
         active_file = RawFileModel.query.filter_by(is_active=True).first()
         if not active_file:
-            return make_response(
-                data=None,
-                message="No active raw file to download.",
-                status="error",
-                error="NO_ACTIVE_RAWFILE"
-            ), HTTPStatus.NOT_FOUND
+            abort(HTTPStatus.NOT_FOUND, message="No active raw file to download.")
 
         import os
         if not os.path.exists(active_file.file_path):
-            return make_response(
-                data=None,
-                message="Raw file not found on server.",
-                status="error",
-                error="FILE_NOT_FOUND"
-            ), HTTPStatus.NOT_FOUND
+            abort(HTTPStatus.NOT_FOUND, message="Raw file not found on server.")
 
         @after_this_request
         def add_header(response):

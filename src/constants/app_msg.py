@@ -67,3 +67,4 @@ UNAUTHORIZED_ACCESS = "You do not have permission to access this resource."
 # File Management Messages
 NO_FILE_UPLOADED = "No file uploaded"
 FILE_UPLOADED_SUCESS = "File uploaded successfully"
+FILE_DELETED_SUCCESS = "File deleted successfully"
