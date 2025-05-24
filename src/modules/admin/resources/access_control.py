@@ -20,6 +20,7 @@ from src.common.pagination import PageNumberPagination
 
 from openapi import *
 from src.modules.admin.resources import admin_blp
+from src.modules.admin.services import is_invite_key_expired
 
 @admin_blp.route("/invite")
 class InviteUser(MethodView):
@@ -45,6 +46,8 @@ class InviteUser(MethodView):
         invite_key = InviteKeyModel(key=new_key)
         db.session.add(invite_key)
         db.session.commit()
+        
+        invite_key.is_expired = is_invite_key_expired(invite_key)
 
         return invite_key
     
@@ -75,7 +78,13 @@ class InviteUser(MethodView):
         meta = result['meta']
 
         # Serialize items using the schema
-        serialized_items = InviteKeySchema(many=True).dump(items)
+        # serialized_items = InviteKeySchema(many=True).dump(items)
+
+        serialized_items = []
+        for item in items:
+            data = InviteKeySchema().dump(item)
+            data['is_expired'] = is_invite_key_expired(item)
+            serialized_items.append(data)
 
         # Return a JSON response with data and metadata
         return jsonify({
@@ -95,6 +104,20 @@ class InviteKeyRemove(MethodView):
         db.session.delete(invite_key)
         db.session.commit()
         return jsonify({"message": INVITE_KEY_DELETED}), HTTPStatus.OK
+
+@admin_blp.route("/invite/expired")
+class ExpiredInviteKeyRemove(MethodView):
+    """Handles deleting all expired invite keys."""
+    @role_required([ADMIN_ROLE])
+    def delete(self):
+        expired_keys = db.session.query(InviteKeyModel).all()
+        count = 0
+        for key in expired_keys:
+            if is_invite_key_expired(key):
+                db.session.delete(key)
+                count += 1
+        db.session.commit()
+        return jsonify({"message": f"Deleted {count} expired invite keys."}), HTTPStatus.OK
 
 @admin_blp.route("/user")
 class UserList(MethodView):
