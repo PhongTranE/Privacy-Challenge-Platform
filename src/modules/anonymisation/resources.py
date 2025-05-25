@@ -8,6 +8,8 @@ from src.common.decorators import group_required
 from src.extensions import db
 from flask_jwt_extended import jwt_required
 from src.modules.admin.models import RawFileModel
+from src.common.response_builder import ResponseBuilder
+from src.constants.app_msg import *
 
 blp = Blueprint("anonymisation_func", __name__, description="Anonymisation Management")
 
@@ -17,7 +19,7 @@ class AnonymUpload(MethodView):
     def post(self):
         """Handles file upload and triggers anonymization."""
         if "file" not in request.files:
-            abort(HTTPStatus.BAD_REQUEST, message="No file uploaded.")
+            abort(HTTPStatus.BAD_REQUEST, message=NO_FILE_UPLOADED)
 
         file = request.files["file"]
         response, status_code = AnonymService.process_anonymization(file)
@@ -35,12 +37,20 @@ class AnonymResult(MethodView):
         if not anonym:
             abort(HTTPStatus.NOT_FOUND, message="Anonymization result not found.")
 
-        return jsonify({
-            "status": anonym.status,
-            "utility_score": anonym.utility,
-            "naive_attack_score": anonym.naive_attack,
-            "is_published": anonym.is_published
-        }), HTTPStatus.OK
+        return (
+            ResponseBuilder()
+            .success(
+                message="Anonymization result fetched successfully",
+                data={
+                    "status": anonym.status,
+                    "utility_score": anonym.utility,
+                    "naive_attack_score": anonym.naive_attack,
+                    "is_published": anonym.is_published
+                },
+                status_code=HTTPStatus.OK
+            )
+            .build()
+        )
 
 
 @blp.route("/toggle-publish/<int:anonym_id>")
@@ -61,21 +71,17 @@ class AnonymTogglePublish(MethodView):
         anonym.is_published = not anonym.is_published
         db.session.commit()
 
-        return jsonify({
-            "message": f"Anonymization {anonym_id} is now {'published' if anonym.is_published else 'unpublished'}.",
-            "is_published": anonym.is_published
-        }), HTTPStatus.OK
-
-
-def make_response(data=None, message="Success", status="success", error=None):
-    resp = {
-        "status": status,
-        "message": message,
-        "data": data
-    }
-    if error:
-        resp["error"] = error
-    return jsonify(resp)
+        return (
+            ResponseBuilder()
+            .success(
+                message=f"Anonymization {anonym_id} is now {'published' if anonym.is_published else 'unpublished'}.",
+                data={
+                    "is_published": anonym.is_published
+                },
+                status_code=HTTPStatus.OK
+            )
+            .build()
+        )
 
 
 @blp.route("/check-active-rawfile")
@@ -83,18 +89,16 @@ class CheckActiveRawFile(MethodView):
     def get(self):
         active_file = RawFileModel.query.filter_by(is_active=True).first()
         if active_file:
-            return make_response(
-                data=None,
-                message="There is an active raw file.",
-                status="success"
-            ), HTTPStatus.OK
+            return (
+                ResponseBuilder()
+                .success(
+                    message="There is an active raw file.",
+                    status_code=HTTPStatus.OK
+                )
+                .build()
+            )
         else:
-            return make_response(
-                data=None,
-                message="No active raw file found.",
-                status="error",
-                error="NO_ACTIVE_RAWFILE"
-            ), HTTPStatus.NOT_FOUND
+            abort(HTTPStatus.NOT_FOUND, message="No active raw file found.")
 
 
 @blp.route("/download-rawfile")
@@ -102,21 +106,11 @@ class DownloadRawFile(MethodView):
     def get(self):
         active_file = RawFileModel.query.filter_by(is_active=True).first()
         if not active_file:
-            return make_response(
-                data=None,
-                message="No active raw file to download.",
-                status="error",
-                error="NO_ACTIVE_RAWFILE"
-            ), HTTPStatus.NOT_FOUND
+            abort(HTTPStatus.NOT_FOUND, message="No active raw file to download.")
 
         import os
         if not os.path.exists(active_file.file_path):
-            return make_response(
-                data=None,
-                message="Raw file not found on server.",
-                status="error",
-                error="FILE_NOT_FOUND"
-            ), HTTPStatus.NOT_FOUND
+            abort(HTTPStatus.NOT_FOUND, message="Raw file not found on server.")
 
         @after_this_request
         def add_header(response):

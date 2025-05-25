@@ -114,6 +114,12 @@ class UserRegisterSchema(Schema):
         validate_password_match(data)
 
 
+class GroupUserSchema(Schema):
+    name = fields.Str(
+        required=True,
+        error_messages={"required": MISSING_FIELD_ERROR.format("group_name")},
+    )
+
 class UserLoginSchema(Schema):
     id = fields.Int(
         dump_only=True,
@@ -134,6 +140,7 @@ class UserLoginSchema(Schema):
         dump_only=True,
     )
     email = fields.Str(dump_only=True)
+    group = fields.Nested(GroupUserSchema(), dump_only=True)
 
 
 class ChangePasswordSchema(Schema):

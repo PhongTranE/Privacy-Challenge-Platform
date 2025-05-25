@@ -325,7 +325,7 @@ class ResetPassword(MethodView):
 class Logout(MethodView):
     """Logs out a user by revoking their token."""
 
-    @jwt_required(locations=["cookies"], refresh=True)
+    @jwt_required()
     def post(self):
         res = (
             ResponseBuilder()
