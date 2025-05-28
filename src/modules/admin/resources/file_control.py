@@ -16,6 +16,12 @@ from src.common.response_builder import ResponseBuilder
 import time
 import os
 import re
+from flask import send_file
+from src.modules.auth.models import GroupUserModel
+from src.modules.admin.services import get_group_files
+from src.modules.admin.schemas import GroupFileSchema
+from src.modules.anonymisation.models import AnonymModel
+from src.modules.attack.models import AttackModel
 
 MAX_FILE_SIZE = 50 * 1024 * 1024  # 50MB in bytes
 
@@ -208,3 +214,117 @@ class FileActivateResource(MethodView):
         except Exception as e:
             abort(HTTPStatus.INTERNAL_SERVER_ERROR, message="Activate failed")
     
+
+@admin_blp.route("/group_user/<int:group_user_id>/files")
+class GroupUserFiles(MethodView):
+    """Handles retrieving group files."""
+    @role_required([ADMIN_ROLE])
+    @admin_blp.response(HTTPStatus.OK, GroupFileSchema(many=True))
+    def get(self, group_user_id):
+        """Retrieves files (anonymous and attack) of a group."""
+        file_type = request.args.get('type', type=str)  # 'anonymous', 'attack', or None for all
+        limit = request.args.get('limit', default=20, type=int)
+        
+        group = db.session.get(GroupUserModel, group_user_id)
+        if not group:
+            abort(HTTPStatus.NOT_FOUND, message=GROUP_NOT_FOUND)
+        
+        files = get_group_files(group_user_id, file_type, limit)
+        return ResponseBuilder().success(
+            message="Group files retrieved successfully",
+            data=files
+        ).build()
+
+
+@admin_blp.route("/group_user/<int:group_user_id>/files/<string:file_type>/<int:file_id>/download")
+class GroupUserFileDownload(MethodView):
+    """Handles file download for group files."""
+    @role_required([ADMIN_ROLE])
+    def get(self, group_user_id, file_type, file_id):
+        """Downloads a file (anonymous or attack) from a group."""
+
+        
+        # Verify group exists
+        group = db.session.get(GroupUserModel, group_user_id)
+        if not group:
+            abort(HTTPStatus.NOT_FOUND, message=GROUP_NOT_FOUND)
+        
+        file_path = None
+        filename = None
+        
+        if file_type == 'anonymous':
+            anonym = db.session.get(AnonymModel, file_id)
+            if not anonym or anonym.group_id != group_user_id:
+                abort(HTTPStatus.NOT_FOUND, message="Anonymous file not found")
+            file_path = anonym.file_link
+            ext = os.path.splitext(file_path)[1] # Get file extension, e.g. ".zip"
+            filename = f"{anonym.name}_anonymous{ext}"
+            
+        elif file_type == 'attack':
+            attack = db.session.get(AttackModel, file_id)
+            if not attack or attack.group_id != group_user_id:
+                abort(HTTPStatus.NOT_FOUND, message="Attack file not found")
+            file_path = attack.file
+            ext = os.path.splitext(file_path)[1]
+            filename = f"attack_{attack.id}{ext}"
+        else:
+            abort(HTTPStatus.BAD_REQUEST, message="Invalid file type")
+        
+        if not file_path or not os.path.exists(file_path):
+            abort(HTTPStatus.NOT_FOUND, message="File not found on disk")
+        
+        return send_file(file_path, as_attachment=True, download_name=filename)
+
+
+@admin_blp.route("/group_user/<int:group_user_id>/files/<string:file_type>/<int:file_id>")
+class GroupUserFileManagement(MethodView):
+    """Handles file management for group files."""
+    @role_required([ADMIN_ROLE])
+    def delete(self, group_user_id, file_type, file_id):
+        """Deletes a file (anonymous or attack) from a group."""
+        
+        # Verify group exists
+        group = db.session.get(GroupUserModel, group_user_id)
+        if not group:
+            abort(HTTPStatus.NOT_FOUND, message=GROUP_NOT_FOUND)
+        
+        try:
+            if file_type == 'anonymous':
+                anonym = db.session.get(AnonymModel, file_id)
+                if not anonym or anonym.group_id != group_user_id:
+                    abort(HTTPStatus.NOT_FOUND, message="Anonymous file not found")
+                
+                # Delete physical files
+                if anonym.file_link and os.path.exists(anonym.file_link):
+                    os.remove(anonym.file_link)
+                if anonym.footprint_file and os.path.exists(anonym.footprint_file):
+                    os.remove(anonym.footprint_file)
+                if anonym.shuffled_file and os.path.exists(anonym.shuffled_file):
+                    os.remove(anonym.shuffled_file)
+                
+                # Delete database record
+                db.session.delete(anonym)
+                db.session.commit()
+                
+                return jsonify({"message": "Anonymous file deleted successfully"}), HTTPStatus.OK
+                
+            elif file_type == 'attack':
+                attack = db.session.get(AttackModel, file_id)
+                if not attack or attack.group_id != group_user_id:
+                    abort(HTTPStatus.NOT_FOUND, message="Attack file not found")
+                
+                # Delete physical file
+                if attack.file and os.path.exists(attack.file):
+                    os.remove(attack.file)
+                
+                # Delete database record
+                db.session.delete(attack)
+                db.session.commit()
+                
+                return jsonify({"message": "Attack file deleted successfully"}), HTTPStatus.OK
+            else:
+                abort(HTTPStatus.BAD_REQUEST, message="Invalid file type")
+                
+        except Exception as e:
+            db.session.rollback()
+            abort(HTTPStatus.INTERNAL_SERVER_ERROR, message=f"Failed to delete file: {str(e)}")
