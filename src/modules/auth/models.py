@@ -113,7 +113,9 @@ class GroupUserModel(db.Model):
     __tablename__ = "group_users"
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     name: so.Mapped[str] = so.mapped_column(sa.String(64), unique=True, nullable=False)
-
+    is_banned: so.Mapped[bool] = so.mapped_column(
+        sa.Boolean(), default=False, server_default=sa.text("false")
+    )
     users: so.Mapped[list["UserModel"]] = so.relationship(
         "UserModel", back_populates="group"
     )

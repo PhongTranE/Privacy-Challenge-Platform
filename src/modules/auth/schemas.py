@@ -115,10 +115,13 @@ class UserRegisterSchema(Schema):
 
 
 class GroupUserSchema(Schema):
+    id = fields.Int(dump_only=True)
     name = fields.Str(
         required=True,
         error_messages={"required": MISSING_FIELD_ERROR.format("group_name")},
     )
+    is_banned = fields.Bool(dump_only=True)
+    member_count = fields.Int(dump_only=True)
 
 class UserLoginSchema(Schema):
     id = fields.Int(
@@ -207,8 +210,3 @@ class SendEmailSchema(Schema):
     )
 
 
-class GroupUserSchema(Schema):
-    name = fields.Str(
-        required=True,
-        error_messages={"required": MISSING_FIELD_ERROR.format("group_name")},
-    )
