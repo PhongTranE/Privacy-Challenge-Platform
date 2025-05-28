@@ -12,7 +12,8 @@ class PageNumberPagination:
         page: int = None, 
         per_page: int = None, 
         error_out: bool = False, 
-        count: bool = None
+        count: bool = None,
+        as_tuple: bool = False
     ):
         """
         :param select: The SQLAlchemy select object.
@@ -20,12 +21,14 @@ class PageNumberPagination:
         :param per_page: Number of items per page.
         :param error_out: 404 or empty list.
         :param count: Whether to perform a count query to get the total number of items.
+        :param as_tuple: Whether to return a tuple of items and total count.
         """
         self.select = select
         self.page = page if page is not None else DEFAULT_PAGE
         self.per_page = min(per_page, MAX_PER_PAGE) if per_page is not None else DEFAULT_PER_PAGE
         self.error_out = error_out
         self.count = count if count is not None else True
+        self.as_tuple = as_tuple
 
     def paginate(self):
         if self.count:
@@ -57,7 +60,7 @@ class PageNumberPagination:
         # Execute the select statement with limit and offset
         stmt = self.select.limit(self.per_page + 1).offset((self.page - 1) * self.per_page)
         result = db.session.execute(stmt)
-        items = result.scalars().all()
+        items = result.all() if self.as_tuple else result.scalars().all()
         
         # Determine if there's a next page
         has_next = len(items) > self.per_page
