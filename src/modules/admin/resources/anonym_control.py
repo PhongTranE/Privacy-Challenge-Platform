@@ -1,15 +1,17 @@
 from flask.views import MethodView
 from flask_smorest import abort
-from flask import jsonify
+from flask import jsonify, request
 from http import HTTPStatus
 from src.extensions import db
-from src.modules.anonymisation.models import MetricModel
+from src.modules.anonymisation.models import MetricModel, AggregationModel
 from src.modules.admin.resources import admin_blp
 from sqlalchemy import select
 from src.modules.anonymisation.schemas import MetricSchema
 from sqlalchemy.exc import IntegrityError
 from src.common.decorators import role_required
 from src.constants.admin import *
+import json
+from src.common.response_builder import ResponseBuilder
 
 
 @admin_blp.route("/metric/<string:metric_name>/toggle")
@@ -78,3 +80,83 @@ class MetricList(MethodView):
             abort(HTTPStatus.NOT_FOUND, message="No metrics found.")
 
         return metrics  
+
+@admin_blp.route("/metric/<string:metric_name>/parameters")
+class MetricParamUpdate(MethodView):
+    """Update parameters of a metric"""
+    @role_required([ADMIN_ROLE])
+    def patch(self, metric_name):
+        json_data = request.get_json()
+        parameters = json_data.get("parameters")
+
+        try:
+            json.loads(parameters)
+        except json.JSONDecodeError:
+            abort(HTTPStatus.BAD_REQUEST, message="Parameters must be valid JSON.")
+
+        stmt = select(MetricModel).where(MetricModel.name == metric_name)
+        metric = db.session.execute(stmt).scalars().first()
+
+        if not metric:
+            abort(HTTPStatus.NOT_FOUND, message="Metric not found.")
+
+        metric.parameters = parameters
+        db.session.commit()
+
+        return jsonify({
+            "message": "Parameters updated.",
+            "metric_name": metric.name,
+            "parameters": metric.parameters
+        }), HTTPStatus.OK
+
+
+
+# ===== AGGREGATION ENDPOINTS =====
+# ALLOWED_AGGREGATIONS = ["min", "max", "median", "mean"]
+
+@admin_blp.route("/aggregation/<string:aggregation_name>/toggle")
+class AggregationActivation(MethodView):
+    """Toggle activation status of an aggregation."""
+    @role_required([ADMIN_ROLE])
+    def patch(self, aggregation_name):
+        """Activates or deactivates an aggregation. Only one can be active at a time."""
+        stmt = select(AggregationModel).where(AggregationModel.name == aggregation_name)
+        aggregation = db.session.execute(stmt).scalars().first()
+
+        if not aggregation:
+            abort(HTTPStatus.NOT_FOUND, message="Aggregation not found.")
+
+        if aggregation.is_selected:
+            # Deactivate this aggregation
+            aggregation.is_selected = False
+        else:
+            # Deactivate all others, then activate this one
+            AggregationModel.query.update({"is_selected": False})
+            aggregation.is_selected = True
+
+        db.session.commit()
+
+        return (
+            ResponseBuilder()
+            .success(
+                message=f"Aggregation '{aggregation.name}' {'activated' if aggregation.is_selected else 'deactivated'}.",
+                data={"name": aggregation.name, "is_selected": aggregation.is_selected},
+                status_code=HTTPStatus.OK,
+            )
+            .build()
+        )
+
+
+@admin_blp.route("/aggregation")
+class AggregationList(MethodView):
+    @role_required([ADMIN_ROLE])
+    def get(self):
+        """Retrieve all aggregations."""
+        stmt = select(AggregationModel)
+        aggregations = db.session.execute(stmt).scalars().all()
+        
+        return jsonify([{
+            "id": agg.id,
+            "name": agg.name,
+            "is_selected": agg.is_selected
+        } for agg in aggregations])
