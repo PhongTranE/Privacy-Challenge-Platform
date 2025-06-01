@@ -174,7 +174,7 @@ class ChangePasswordSchema(Schema):
 
     @validates_schema
     def check_passwords(self, data, **kwargs):
-        validate_password_match(data)
+        validate_password_match(data, password_field="new_password", confirm_field="confirm_password")
 
 
 class ResetPasswordSchema(Schema):
