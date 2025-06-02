@@ -1,13 +1,17 @@
 import secrets
 import string
-from src.modules.admin.models import InviteKeyModel
+from src.modules.admin.models import InviteKeyModel, CompetitionModel, RawFileModel
 from src.constants.admin import EXPIRATION_INVITE_KEY
 from datetime import datetime, timezone, timedelta
 from src.modules.auth.models import GroupUserModel, UserModel
-from src.modules.anonymisation.models import AnonymModel
+from src.modules.anonymisation.models import AnonymModel, MetricModel, AggregationModel
+from src.modules.admin.models import CompetitionModel
 from src.modules.attack.models import AttackModel
 from src.extensions import db
 from sqlalchemy import func, select
+from http import HTTPStatus
+from src.common.response_builder import ResponseBuilder
+from flask import abort
 
 def generate_invite_key():
     characters = string.ascii_uppercase + string.digits
@@ -169,3 +173,112 @@ def update_group_name(group_id: int, new_name: str) -> bool:
     group.name = new_name
     db.session.commit()
     return True
+
+def get_selected_metrics():
+    """Get currently selected metrics."""
+    return MetricModel.query.filter_by(is_selected=True).all()
+
+def get_selected_aggregations():
+    """Get currently selected aggregations."""
+    return AggregationModel.query.filter_by(is_selected=True).all()
+
+def get_active_raw_file():
+    """Get currently active raw file."""
+    from src.modules.admin.models import RawFileModel
+    return RawFileModel.query.filter_by(is_active=True).first()
+
+def validate_competition_start():
+    """Validate if competition can start the submission phase."""
+    errors = []
+
+    # Check if at least one metric is selected
+    if not get_selected_metrics():
+        errors.append("No metrics selected. Please select at least one metric.")
+
+    # Check if exactly one aggregation is selected
+    if not get_selected_aggregations():
+        errors.append("No aggregation selected. Please select exactly one aggregation.")
+
+    # Check if raw file is active
+    if not get_active_raw_file():
+        errors.append("No active raw file. Please upload or activate a raw file.")
+
+    return errors
+
+def start_submission_phase(competition: CompetitionModel):
+    """Start submission phase."""
+    competition.current_phase = "submission"
+    competition.metrics_locked = True  # Lock metrics settings during the active phase
+    competition.aggregation_locked = True  # Lock aggregation settings during the active phase
+    db.session.commit()
+
+def end_submission_phase(competition: CompetitionModel):
+    """Manually ends the submission phase without starting attack phase"""
+    if competition.current_phase != "submission":
+        abort(400, message="Cannot end submission phase. It is not active.")
+    
+    competition.current_phase = "finished_submission"
+    competition.is_paused = False
+    db.session.commit()
+
+def start_attack_phase(competition: CompetitionModel):
+    """Start attack phase."""
+    competition.current_phase = "attack"
+    db.session.commit()
+
+def end_competition(competition: CompetitionModel):
+    """End the competition."""
+    competition.current_phase = "finished"
+    competition.metrics_locked = False  # Unlock metrics settings after competition ends
+    competition.aggregation_locked = False  # Unlock aggregation settings after competition ends
+    db.session.commit()
+
+def get_competition_status():
+    """Get competition status."""
+    comp = CompetitionModel.query.first()
+    if not comp:
+        return {
+            "phase": "setup",
+            "is_paused": False,
+            "metrics_locked": False,
+            "metrics": [],
+            "aggregations": [],
+            "active_raw_file": None
+        }
+
+    metrics = get_selected_metrics()
+    aggregations = get_selected_aggregations()
+    raw_file = get_active_raw_file()
+
+    return {
+        "phase": comp.current_phase,
+        "is_paused": comp.is_paused,
+        "metrics_locked": comp.metrics_locked,
+        "aggregation_locked": comp.aggregation_locked,
+        "metrics": [{"name": m.name, "is_selected": m.is_selected} for m in metrics],
+        "aggregations": [{"name": a.name, "is_selected": a.is_selected} for a in aggregations],
+        "active_raw_file": raw_file.filename if raw_file else None
+    }
+
+def pause_competition(competition: CompetitionModel):
+    """Pause the competition."""
+    if competition.current_phase not in ['submission', 'attack']:
+        abort(400, message="Cannot pause. Current phase is not suitable for pausing.")
+    competition.is_paused = True
+    db.session.commit()
+
+def resume_competition(competition: CompetitionModel):
+    """Resume the competition."""
+    if competition.current_phase not in ['submission', 'attack']:
+        abort(400, message="Cannot resume. Current phase is not suitable for resuming.")
+    competition.is_paused = False
+    db.session.commit()
+
+
+def restart_competition(competition: CompetitionModel):
+    """Restart the competition."""
+    competition.current_phase = "setup"
+    competition.metrics_locked = False
+    competition.aggregation_locked = False
+    competition.is_paused = False
+    db.session.commit()

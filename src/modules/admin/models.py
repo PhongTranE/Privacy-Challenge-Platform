@@ -55,3 +55,24 @@ class RawFileModel(db.Model):
 
     def __repr__(self):
         return f"<RawFile {self.filename}>"
+
+class CompetitionModel(db.Model):
+    """Manage phases and settings of the competition"""
+    __tablename__ = "competitions"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    # ===== ADMIN MANAGEMENT =====
+    admin_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="RESTRICT"), nullable=False)
+    admin = db.relationship("UserModel", backref="competition_admin")
+
+    # ===== PHASE CONTROL =====
+    current_phase = db.Column(db.String(20), default="setup")  # "setup", "submission", "finished_submission", "attack"
+    is_paused = db.Column(db.Boolean, default=False)
+
+    # ===== SETTINGS LOCK =====
+    metrics_locked = db.Column(db.Boolean, default=False)
+    aggregation_locked = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return f"<Competition {self.current_phase}>"

@@ -6,4 +6,5 @@ admin_blp = Blueprint("admin_func", __name__, description="Main Admin Blueprint"
 from src.modules.admin.resources.access_control import *
 from src.modules.admin.resources.file_control import *
 from src.modules.admin.resources.anonym_control import *
+from src.modules.admin.resources.competition_control import *
 

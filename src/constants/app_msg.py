@@ -68,3 +68,6 @@ UNAUTHORIZED_ACCESS = "You do not have permission to access this resource."
 NO_FILE_UPLOADED = "No file uploaded"
 FILE_UPLOADED_SUCESS = "File uploaded successfully"
 FILE_DELETED_SUCCESS = "File deleted successfully"
+
+# Group User Messages
+GROUP_DELETED_SUCCESS = "Group deleted successfully."
