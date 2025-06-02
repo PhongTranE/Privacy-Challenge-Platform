@@ -82,3 +82,17 @@ class AnonymService:
                     db.session.commit()
                     current_app.logger.error(f"Anonymization failed for ID {anonym_id}: {str(e)}")
                     raise Exception(str(e))
+
+def validate_submission_limit(group_id: int) -> str:
+    """Check if the team has exceeded submission or publish limits."""
+    # Kiểm tra số lượng file đã upload
+    total_files = db.session.query(AnonymModel).filter_by(group_id=group_id).count()
+    if total_files > 20:
+        return "Your group have reached the maximum limit of 20 submissions."
+
+    # Kiểm tra số lượng file đã publish
+    total_published = db.session.query(AnonymModel).filter_by(group_id=group_id, is_published=True).count()
+    if total_published > 3:
+        return "Your group have reached the maximum limit of 3 published submissions."
+    
+    return ""

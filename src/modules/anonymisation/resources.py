@@ -6,10 +6,11 @@ from .services import AnonymService
 from .models import AnonymModel
 from src.common.decorators import group_required  
 from src.extensions import db
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from src.modules.admin.models import RawFileModel
 from src.common.response_builder import ResponseBuilder
 from src.constants.app_msg import *
+
 
 blp = Blueprint("anonymisation_func", __name__, description="Anonymisation Management")
 
@@ -18,6 +19,11 @@ class AnonymUpload(MethodView):
     @jwt_required()
     def post(self):
         """Handles file upload and triggers anonymization."""
+        group_id = get_jwt_identity().get("group")
+        validation_error = AnonymService.validate_submission_limit(group_id)
+        if validation_error:
+            abort(HTTPStatus.BAD_REQUEST, message=validation_error)
+
         if "file" not in request.files:
             abort(HTTPStatus.BAD_REQUEST, message=NO_FILE_UPLOADED)
 
@@ -83,6 +89,37 @@ class AnonymTogglePublish(MethodView):
             .build()
         )
 
+
+@blp.route("/list")
+class AnonymList(MethodView):
+    @jwt_required()
+    def get(self):
+        group_id = get_jwt_identity().get("group")
+        if not group_id:
+            abort(HTTPStatus.FORBIDDEN, message="User must be part of a group.")
+        files = (
+            db.session.query(AnonymModel)
+            .filter_by(group_id=group_id)
+            .order_by(AnonymModel.id.desc())
+            .all()
+        )
+        data = [
+            {
+                "id": f.id,
+                "name": f.name,
+                "status": f.status,
+                "utility": f.utility,
+                "naive_attack": f.naive_attack,
+                "is_published": f.is_published,
+                "created_at": str(getattr(f, "created_at", "")),
+            }
+            for f in files
+        ]
+        return ResponseBuilder().success(
+            message="Fetched anonymisation list successfully",
+            data=data,
+            status_code=HTTPStatus.OK
+        ).build()
 
 @blp.route("/check-active-rawfile")
 class CheckActiveRawFile(MethodView):
