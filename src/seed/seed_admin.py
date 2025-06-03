@@ -6,12 +6,26 @@ Instead, use the `flask createadmin` command for secure admin creation.
 """
 
 from src.extensions import db
-from src.modules.auth.models import RoleModel, UserModel
+from src.modules.auth.models import RoleModel, UserModel, GroupUserModel
 from src.constants.admin import *
 
 
 def create_admin():
-    """Creates an initial admin user if it does not exist."""
+    """Creates an initial admin user if it does not exist, and ensures group_id=1, name='ADMIN'."""
+    # Ensure group with id=1 and name='ADMIN' exists
+    admin_group = db.session.execute(
+        db.select(GroupUserModel).where(GroupUserModel.id == 1)
+    ).scalars().first()
+    if not admin_group:
+        admin_group = GroupUserModel(id=1, name="ADMIN")
+        db.session.add(admin_group)
+        db.session.commit()
+    else:
+        # Ensure name is correct
+        if admin_group.name != "ADMIN":
+            admin_group.name = "ADMIN"
+            db.session.commit()
+
     admin = (
         db.session.execute(db.select(UserModel).where(UserModel.username == "admin"))
         .scalars()
@@ -24,6 +38,7 @@ def create_admin():
             password="Admin1234@@",
             email="admin@gmail.com",
             is_active=True,
+            group_id=1,
         )
 
         admin_role = (
@@ -37,3 +52,8 @@ def create_admin():
 
         db.session.add(admin)
         db.session.commit()
+    else:
+        # Ensure admin is in group 1
+        if admin.group_id != 1:
+            admin.group_id = 1
+            db.session.commit()
