@@ -2,6 +2,8 @@ from src.extensions import db
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 from datetime import datetime, timezone
+from src.modules.auth.models import GroupUserModel
+from src.modules.attack.models import AttackModel
 class AnonymModel(db.Model):
     """Tracks anonymization file processing activities."""
     __tablename__ = "anonymisations"

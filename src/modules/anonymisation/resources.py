@@ -1,15 +1,16 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from flask import request, jsonify, send_file, after_this_request
+from flask import request, send_file, after_this_request
 from http import HTTPStatus
 from .services import AnonymService
 from .models import AnonymModel
 from src.common.decorators import group_required  
 from src.extensions import db
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt
 from src.modules.admin.models import RawFileModel
 from src.common.response_builder import ResponseBuilder
 from src.constants.app_msg import *
+from src.modules.anonymisation.services import validate_submission_limit
 
 
 blp = Blueprint("anonymisation_func", __name__, description="Anonymisation Management")
@@ -19,8 +20,9 @@ class AnonymUpload(MethodView):
     @jwt_required()
     def post(self):
         """Handles file upload and triggers anonymization."""
-        group_id = get_jwt_identity().get("group")
-        validation_error = AnonymService.validate_submission_limit(group_id)
+        claims = get_jwt()
+        group_id = claims.get('group')
+        validation_error = validate_submission_limit(group_id)
         if validation_error:
             abort(HTTPStatus.BAD_REQUEST, message=validation_error)
 
@@ -94,7 +96,8 @@ class AnonymTogglePublish(MethodView):
 class AnonymList(MethodView):
     @jwt_required()
     def get(self):
-        group_id = get_jwt_identity().get("group")
+        claims = get_jwt()
+        group_id = claims.get('group')
         if not group_id:
             abort(HTTPStatus.FORBIDDEN, message="User must be part of a group.")
         files = (
