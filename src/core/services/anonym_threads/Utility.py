@@ -26,7 +26,7 @@ class Utility:
             # Fetch selected metric scripts and parameters from the database
             stmt = select(MetricModel.name, MetricModel.parameters).where(MetricModel.is_selected == True)
             results = db.session.execute(stmt).fetchall()
-            self.scripts = [(row[0][:-3], row[1]) for row in results]  # Remove '.py' extension
+            self.scripts = [(row[0], row[1]) for row in results]
             # Execute each script
             for script_name, parameters in self.scripts:
                 try:
@@ -57,7 +57,7 @@ class Utility:
             return (NO_WORKING_UTILITY_SCRIPT, -1)
 
         # Fetch the aggregation method from the database
-        stmt = select(AggregationModel.name)
+        stmt = select(AggregationModel.name).where(AggregationModel.is_selected == True)
         aggregation_method = db.session.execute(stmt).scalar()
 
         # Compute and return the final aggregated score
