@@ -1,6 +1,6 @@
 from src.extensions import db 
 from flask.views import MethodView
-from flask import request
+from flask import request, Response
 from flask_smorest import abort
 from src.common.decorators import role_required
 from src.common.response_builder import ResponseBuilder
@@ -27,7 +27,9 @@ from src.modules.admin.services import is_invite_key_expired
 from src.modules.auth.services import validate_password
 from marshmallow import ValidationError
 from marshmallow import fields, Schema
-
+from io import BytesIO, TextIOWrapper
+import logging
+import csv
 
 @admin_blp.route("/invite")
 class InviteUser(MethodView):
@@ -117,6 +119,7 @@ class ExpiredInviteKeyRemove(MethodView):
     """Handles deleting all expired invite keys."""
     @role_required([ADMIN_ROLE])
     def delete(self):
+        """Deletes all expired invite keys."""
         expired_keys = db.session.query(InviteKeyModel).all()
         count = 0
         for key in expired_keys:
@@ -125,6 +128,35 @@ class ExpiredInviteKeyRemove(MethodView):
                 count += 1
         db.session.commit()
         return jsonify({"message": f"Deleted {count} expired invite keys."}), HTTPStatus.OK
+
+@admin_blp.route("/invite/export")
+class ExportData(MethodView):
+    """Handles exporting invite keys from the system."""
+    @role_required([ADMIN_ROLE])
+    def get(self):
+        """Exports invite keys from the system."""
+        try:
+            invite_keys = InviteKeyModel.query.all()
+            output = BytesIO()
+            
+            text_stream = TextIOWrapper(output, encoding='utf-8-sig', newline='')  # utf-8-sig includes BOM for Excel
+            writer = csv.writer(text_stream)
+
+            writer.writerow(["Key"])
+            for key in invite_keys:
+                writer.writerow([
+                    key.key or ""
+                    ])
+
+            text_stream.flush()
+            output.seek(0)
+            return Response(
+                output.read(),
+                mimetype="text/csv",
+                headers={"Content-Disposition": "attachment; filename=invite_keys.csv"}
+            )
+        except Exception as e:
+            abort(500, message="CSV export failed.")
 
 @admin_blp.route("/user")
 class UserList(MethodView):

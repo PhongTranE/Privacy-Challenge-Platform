@@ -26,6 +26,11 @@ class CompetitionStatus(MethodView):
     @role_required([ADMIN_ROLE])
     def get(self):
         """Get competition status."""
+        comp = CompetitionModel.query.first()
+        if not comp:
+            admin_id = "1"
+            comp = CompetitionModel(admin_id=admin_id)
+            db.session.add(comp)
         status = get_competition_status()
         return ResponseBuilder().success(message="Competition status retrieved", data=status).build()
 

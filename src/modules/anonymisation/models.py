@@ -1,7 +1,9 @@
 from src.extensions import db
 import sqlalchemy as sa
 import sqlalchemy.orm as so
-
+from datetime import datetime, timezone
+from src.modules.auth.models import GroupUserModel
+from src.modules.attack.models import AttackModel
 class AnonymModel(db.Model):
     """Tracks anonymization file processing activities."""
     __tablename__ = "anonymisations"
@@ -17,6 +19,7 @@ class AnonymModel(db.Model):
     utility: so.Mapped[float] = so.mapped_column(sa.Float(), nullable=False, default=0.0)
 
     status: so.Mapped[str] = so.mapped_column(sa.String(255), nullable=False, default="pending")
+    created_at: so.Mapped[datetime] = so.mapped_column(sa.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     name: so.Mapped[str] = so.mapped_column(sa.String(64), nullable=False, index=True)
     is_published: so.Mapped[bool] = so.mapped_column(sa.Boolean(), nullable=False, default=False, index=True)
