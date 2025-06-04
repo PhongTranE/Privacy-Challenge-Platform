@@ -5,6 +5,12 @@ from datetime import datetime, timezone
 from src.modules.auth.models import UserModel
 
 
+competition_metrics = db.Table(
+    "competition_metrics",
+    db.Column("competition_id", db.Integer, db.ForeignKey("competitions.id", ondelete="CASCADE"), primary_key=True),
+    db.Column("metric_id", db.Integer, db.ForeignKey("metrics.id", ondelete="CASCADE"), primary_key=True)
+)
+
 class InviteKeyModel(db.Model):
     """Stores invite keys for user registration."""
 
@@ -73,6 +79,15 @@ class CompetitionModel(db.Model):
     # ===== SETTINGS LOCK =====
     metrics_locked = db.Column(db.Boolean, default=False)
     aggregation_locked = db.Column(db.Boolean, default=False)
+
+    metrics = db.relationship(
+        "MetricModel",
+        secondary="competition_metrics",
+        backref="competitions"
+    )
+
+    aggregation_id = db.Column(db.Integer, db.ForeignKey("aggregations.id", ondelete="SET NULL"))
+    aggregation = db.relationship("AggregationModel", backref="competition", uselist=False)
 
     def __repr__(self):
         return f"<Competition {self.current_phase}>"
