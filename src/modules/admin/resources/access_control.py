@@ -142,11 +142,12 @@ class ExportData(MethodView):
             text_stream = TextIOWrapper(output, encoding='utf-8-sig', newline='')  # utf-8-sig includes BOM for Excel
             writer = csv.writer(text_stream)
 
-            writer.writerow(["Key"])
-            for key in invite_keys:
+            writer.writerow(["STT", "Key"])
+            for idx, key in enumerate(invite_keys, start=1):
                 writer.writerow([
+                    idx,
                     key.key or ""
-                    ])
+                ])
 
             text_stream.flush()
             output.seek(0)
