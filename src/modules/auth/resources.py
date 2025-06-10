@@ -27,6 +27,7 @@ from src.modules.auth.services import (
     verify_token,
     verify_password,
     create_user,
+    get_competition_status
 )
 from src.modules.auth.tasks import (
     send_activation_email_task,
@@ -379,3 +380,15 @@ def check_group():
         )
         .build()
     )
+
+
+@blp.route("/competition/status")
+class CompetitionStatus(MethodView):
+    @jwt_required()
+    def get(self):
+        status = get_competition_status()
+        return ResponseBuilder().success(
+            message="Fetched competition status.",
+            data=status,
+            status_code=HTTPStatus.OK
+        ).build()

@@ -12,7 +12,7 @@ from sqlalchemy import select
 from passlib.hash import pbkdf2_sha256
 from flask import current_app
 
-from src.modules.admin.models import InviteKeyModel
+from src.modules.admin.models import InviteKeyModel, CompetitionModel
 from src.modules.admin.services import is_invite_key_expired
 from src.modules.auth.models import GroupUserModel, RoleModel, UserModel
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
@@ -165,3 +165,17 @@ def create_user(username, email, password, invite_key, group_name, is_active=Fal
         session.rollback()
         current_app.logger.error(f"SQLAlchemyError: {str(e)}")
         raise RuntimeError(f"Database error: {str(e)}")
+
+def get_competition_status():
+    """Get the current competition status."""
+    comp = CompetitionModel.query.first()
+    if not comp:
+        return {
+            "phase": "setup",
+            "is_paused": False,
+        }
+    
+    return {
+        "phase": comp.current_phase,
+        "is_paused": comp.is_paused,
+    }
