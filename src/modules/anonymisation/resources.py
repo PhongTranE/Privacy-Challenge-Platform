@@ -11,13 +11,17 @@ from src.modules.admin.models import RawFileModel
 from src.common.response_builder import ResponseBuilder
 from src.constants.app_msg import *
 from src.modules.anonymisation.services import validate_submission_limit
-
+from src.modules.admin.services import group_not_banned_required
+from src.modules.attack.models import AttackModel
+from src.modules.auth.models import GroupUserModel
 
 blp = Blueprint("anonymisation_func", __name__, description="Anonymisation Management")
 
 @blp.route("/upload")
 class AnonymUpload(MethodView):
+    """Handles file upload and triggers anonymization."""
     @jwt_required()
+    @group_not_banned_required()
     def post(self):
         """Handles file upload and triggers anonymization."""
         claims = get_jwt()
@@ -66,6 +70,7 @@ class AnonymTogglePublish(MethodView):
     """Allows group members to publish or unpublish an anonymization entry."""
 
     @group_required()
+    @group_not_banned_required()
     def patch(self, anonym_id):
         anonym = db.session.get(AnonymModel, anonym_id)
 
@@ -96,6 +101,7 @@ class AnonymTogglePublish(MethodView):
 class AnonymList(MethodView):
     @jwt_required()
     def get(self):
+        """Retrieve anonymisation list for the current group."""
         claims = get_jwt()
         group_id = claims.get('group')
         if not group_id:
@@ -160,6 +166,6 @@ class DownloadRawFile(MethodView):
         return send_file(
             active_file.file_path,
             as_attachment=True,
-            download_name="rawfile.zip",
+            download_name="rawFile.zip",
             mimetype="application/zip"
         )

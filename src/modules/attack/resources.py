@@ -8,13 +8,24 @@ from src.modules.attack.services import AttackService
 from src.modules.auth.models import GroupUserModel, UserModel
 from src.modules.anonymisation.models import AnonymModel
 from src.modules.attack.models import AttackModel
+from src.common.response_builder import ResponseBuilder
+import os
+from src.modules.admin.services import group_not_banned_required
+from sqlalchemy import func
 
 blp = Blueprint("attack_func", __name__, description="Attack Management")
 
 @blp.route("/<int:anonym_id>/upload")
 class AttackUpload(MethodView):
+    """
+    Upload an attack file for a specific anonym file.
+    """
     @jwt_required()
+    @group_not_banned_required()
     def post(self, anonym_id):
+        """
+        Upload an attack file for a specific anonym file.
+        """
         if "file" not in request.files:
             abort(HTTPStatus.BAD_REQUEST, message="No file uploaded.")
 

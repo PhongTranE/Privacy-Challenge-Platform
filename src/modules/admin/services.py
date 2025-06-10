@@ -12,6 +12,8 @@ from sqlalchemy import func, select
 from http import HTTPStatus
 from src.common.response_builder import ResponseBuilder
 from flask import abort
+from functools import wraps
+from flask_jwt_extended import get_jwt
 
 def generate_invite_key():
     characters = string.ascii_uppercase + string.digits
@@ -29,6 +31,27 @@ def is_invite_key_expired(invite_key: InviteKeyModel) -> bool:
 
     expiration_time = invite_created_aware + timedelta(seconds=EXPIRATION_INVITE_KEY)
     return datetime.now(timezone.utc) > expiration_time
+
+def group_not_banned_required():
+    def decorator(fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            claims = get_jwt()
+            group_id = claims.get('group')
+            if not group_id:
+                abort(HTTPStatus.FORBIDDEN, message="User must be part of a group.")
+            group = db.session.get(GroupUserModel, group_id)
+            if not group:
+                abort(HTTPStatus.FORBIDDEN, message="User's group not found.")
+            if group.is_banned:
+                response = ResponseBuilder().error(
+                    message="Your group is banned by Admin, please contact Admin to resolve.",
+                    status_code=HTTPStatus.FORBIDDEN
+                ).build()
+                return response
+            return fn(*args, **kwargs)
+        return wrapper
+    return decorator
 
 def calculate_group_statistics(group_id: int) -> dict:
     """
