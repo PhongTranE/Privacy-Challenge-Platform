@@ -169,3 +169,51 @@ class DownloadRawFile(MethodView):
             download_name="rawFile.zip",
             mimetype="application/zip"
         )
+
+@blp.route("/list/<int:group_id>")
+class AnonymListByGroup(MethodView):
+    """
+    Get all submission files of a group, with best offense for each file.
+    """
+    @jwt_required()
+    def get(self, group_id):
+        """Get all submission files of a group, with best offense for each file."""
+        files = (
+            db.session.query(AnonymModel)
+            .filter_by(group_id=group_id, is_published=True)
+            .all()
+        )
+        result = []
+        for f in files:
+            best_attack = (
+                db.session.query(AttackModel, GroupUserModel)
+                .join(GroupUserModel, AttackModel.group_id == GroupUserModel.id)
+                .filter(AttackModel.anonym_id == f.id)
+                .order_by(AttackModel.score.desc())
+                .first()
+            )
+            if best_attack:
+                best_offense_score = best_attack.AttackModel.score
+                best_offense = {
+                    "score": best_offense_score,
+                    "attack_id": best_attack.GroupUserModel.id,
+                    "attack_name": best_attack.GroupUserModel.name
+                }
+            else:
+                best_offense_score = 0
+                best_offense = None
+
+            score = f.utility * (1 - best_offense_score)
+
+            result.append({
+                "id": f.id,
+                "name": f.name,
+                "usefulness": f.utility,
+                "best_offense": best_offense,
+                "defense_score": score,
+            })
+        return ResponseBuilder().success(
+            message="Fetched submission files for group.",
+            data=result,
+            status_code=HTTPStatus.OK
+        ).build()

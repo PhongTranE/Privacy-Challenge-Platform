@@ -22,6 +22,7 @@ from src.modules.admin.services import get_group_files
 from src.modules.admin.schemas import GroupFileSchema
 from src.modules.anonymisation.models import AnonymModel
 from src.modules.attack.models import AttackModel
+from flask import after_this_request
 
 MAX_FILE_SIZE = 50 * 1024 * 1024  # 50MB in bytes
 
@@ -256,16 +257,15 @@ class GroupUserFileDownload(MethodView):
             anonym = db.session.get(AnonymModel, file_id)
             if not anonym or anonym.group_id != group_user_id:
                 abort(HTTPStatus.NOT_FOUND, message="Anonymous file not found")
-            file_path = anonym.file_link
-            ext = os.path.splitext(file_path)[1] # Get file extension, e.g. ".zip"
-            filename = f"{anonym.name}_anonymous{ext}"
+            file_path = anonym.file_link + ".csv"
+            filename = f"{anonym.name}_anonymous.csv"
             
         elif file_type == 'attack':
             attack = db.session.get(AttackModel, file_id)
             if not attack or attack.group_id != group_user_id:
                 abort(HTTPStatus.NOT_FOUND, message="Attack file not found")
             file_path = attack.file
-            ext = os.path.splitext(file_path)[1]
+            ext = os.path.splitext(file_path)[1] 
             filename = f"attack_{attack.id}{ext}"
         else:
             abort(HTTPStatus.BAD_REQUEST, message="Invalid file type")
@@ -273,6 +273,10 @@ class GroupUserFileDownload(MethodView):
         if not file_path or not os.path.exists(file_path):
             abort(HTTPStatus.NOT_FOUND, message="File not found on disk")
         
+        @after_this_request
+        def add_header(response):
+            response.headers.add("Access-Control-Expose-Headers", "Content-Disposition")
+            return response
         return send_file(file_path, as_attachment=True, download_name=filename)
 
 

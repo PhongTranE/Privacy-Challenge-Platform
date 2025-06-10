@@ -4,7 +4,7 @@ from flask import request, Response
 from flask_smorest import abort
 from src.common.decorators import role_required
 from src.common.response_builder import ResponseBuilder
-from src.modules.admin.services import generate_invite_key, get_group_detail, update_group_name
+from src.modules.admin.services import generate_invite_key, get_group_detail, update_group_name, calculate_group_statistics
 
 from src.modules.admin.models import InviteKeyModel
 from src.modules.auth.models import UserModel, GroupUserModel
@@ -341,6 +341,10 @@ class GroupUserList(MethodView):
         for group, member_count in items:
             group_data = GroupUserSchema().dump(group)
             group_data["memberCount"] = member_count
+            stats = calculate_group_statistics(group.id)
+            group_data["defenseScore"] = stats["defense_score"]
+            group_data["attackScore"] = stats["attack_score"]
+            group_data["totalScore"] = stats["total_score"]
             serialized_items.append(group_data)
 
         return jsonify({

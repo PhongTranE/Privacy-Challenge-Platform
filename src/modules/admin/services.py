@@ -75,23 +75,40 @@ def calculate_group_statistics(group_id: int) -> dict:
         .where(AttackModel.group_id == group_id)
     ).scalar()
     
-    # Calculate defense score (average utility score of published anonymous files)
-    defense_score_result = db.session.execute(
-        select(func.avg(AnonymModel.utility))
-        .where(AnonymModel.group_id == group_id, AnonymModel.is_published == True)
-    ).scalar()
-    defense_score = float(defense_score_result) if defense_score_result else 0.0
-    
-    # Calculate attack score (average score of attack files)
-    attack_score_result = db.session.execute(
-        select(func.avg(AttackModel.score))
-        .where(AttackModel.group_id == group_id)
-    ).scalar()
-    attack_score = float(attack_score_result) if attack_score_result else 0.0
-    
+    # Calculate defense score
+    group = db.session.get(GroupUserModel, group_id)
+    published_anonyms = [a for a in group.anonyms if getattr(a, 'is_published', False)]
+    defense_scores = []
+    for anonym in published_anonyms:
+        if anonym.attacks:
+            best_attack = max([atk.score for atk in anonym.attacks])
+        else:
+            best_attack = 0
+        defense_score_file = (1 - best_attack) * anonym.utility
+        defense_scores.append(defense_score_file)
+    defense_score = max(defense_scores) if defense_scores else 0.0
+
+    # Calculate attack score
+    all_groups = GroupUserModel.query.all()
+    attack_score = 0.0
+    for other_group in all_groups:
+        if other_group.id == group.id:
+            continue
+        other_published_anonyms = [a for a in other_group.anonyms if getattr(a, 'is_published', False)]
+        max_scores = []
+        for anonym in other_published_anonyms:
+            attacks = [atk for atk in anonym.attacks if atk.group_id == group.id]
+            if attacks:
+                max_score = max([atk.score for atk in attacks])
+            else:
+                max_score = 0.0
+            max_scores.append(max_score)
+        if max_scores:
+            attack_score += min(max_scores)
+
     # Calculate total score (can customize the formula)
     total_score = (defense_score + attack_score) / 2 if (defense_score > 0 or attack_score > 0) else 0.0
-    
+
     return {
         'total_anonymous_files': anonymous_count or 0,
         'published_anonymous_files': published_count or 0,
@@ -117,12 +134,20 @@ def get_group_files(group_id: int, file_type: str = None, limit: int = 10) -> li
         ).scalars().all()
         
         for anonym in anonymous_files:
+            if anonym.is_published:
+                if anonym.attacks:
+                    best_attack = max([atk.score for atk in anonym.attacks])
+                else:
+                    best_attack = 0
+                file_score = (1 - best_attack) * anonym.utility
+            else:
+                file_score = 0
             files.append({
                 'id': anonym.id,
                 'name': anonym.name,
                 'file_type': 'anonymous',
                 'created_at': None,  # AnonymModel does not have created_at
-                'score': anonym.utility,
+                'score': file_score,
                 'is_published': anonym.is_published,
                 'file_path': anonym.file_link
             })
@@ -305,3 +330,19 @@ def restart_competition(competition: CompetitionModel):
     competition.aggregation_locked = False
     competition.is_paused = False
     db.session.commit()
+
+def get_defense_score_for_file(anonym):
+    """Get defense score for a file."""
+    if anonym.attacks:
+        best_attack = max([atk.score for atk in anonym.attacks])
+    else:
+        best_attack = 0
+    return (1 - best_attack) * anonym.utility
+
+def get_group_defense_score(group):
+    """Get defense score for a group."""
+    published_anonyms = [a for a in group.anonyms if getattr(a, 'is_published', False)]
+    if not published_anonyms:
+        return 0.0
+    defense_scores = [get_defense_score_for_file(a) for a in published_anonyms]
+    return max(defense_scores) if defense_scores else 0.0
