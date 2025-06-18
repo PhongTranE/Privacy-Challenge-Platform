@@ -102,10 +102,13 @@ def send_password_reset_email(user_email):
     """Send a password reset email."""
     reset_token = generate_activation_token(user_email)
 
-    scheme = get_scheme()
-    server_name = get_server_name()
+    frontend_base_url = current_app.config["FRONTEND_URL"]
 
-    reset_link = f"{scheme}://{server_name}/api/auth/reset-password/{reset_token}"
+    # scheme = get_scheme()
+    # server_name = get_server_name()
+
+    # reset_link = f"{scheme}://{server_name}/api/auth/reset-password/{reset_token}"
+    reset_link = f"{frontend_base_url}/email/reset-password/{reset_token}"
 
     msg = Message(
         subject="Reset Your Password",

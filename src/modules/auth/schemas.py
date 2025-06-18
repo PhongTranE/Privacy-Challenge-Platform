@@ -186,17 +186,6 @@ class ResetPasswordSchema(Schema):
             "required": MISSING_FIELD_ERROR.format("new_password"),
         },
     )
-    confirm_password = fields.Str(
-        load_only=True,
-        required=True,
-        error_messages={
-            "required": MISSING_FIELD_ERROR.format("confirm_password"),
-        },
-    )
-
-    @validates_schema
-    def check_passwords(self, data, **kwargs):
-        validate_password_match(data)
 
 
 class SendEmailSchema(Schema):
