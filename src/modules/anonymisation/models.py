@@ -30,7 +30,7 @@ class AnonymModel(db.Model):
     )    
     group: so.Mapped["GroupUserModel"] = so.relationship("GroupUserModel", back_populates="anonyms")
     
-    attacks: so.Mapped[list["AttackModel"]] = so.relationship("AttackModel", back_populates="anonym")
+    attacks: so.Mapped[list["AttackModel"]] = so.relationship("AttackModel", back_populates="anonym", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<Anonymisation {self.name} - {self.status}>"
