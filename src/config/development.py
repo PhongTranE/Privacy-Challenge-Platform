@@ -8,8 +8,8 @@ class DevelopmentConfig(BaseConfig):
 
     @property
     def SQLALCHEMY_DATABASE_URI(self):
-        return os.getenv("DATABASE_URL", "sqlite:///dev.db")
-
+        # return os.getenv("DATABASE_URL", "sqlite:///dev.db")
+        return os.getenv("DATABASE_URL", "postgresql://admin:admin123@host.docker.internal:5432/privacy_challenge")
     SEED_ADMIN = True
 
     MAIL_SERVER = 'localhost'
