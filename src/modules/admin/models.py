@@ -2,8 +2,15 @@ from src.extensions import db
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 from src.modules.auth.models import UserModel
 
+# Tạo timezone Việt Nam
+VIETNAM_TZ = ZoneInfo('Asia/Ho_Chi_Minh')
+
+def get_vietnam_time():
+    """Get current time in Vietnam timezone"""
+    return datetime.now(VIETNAM_TZ)
 
 competition_metrics = db.Table(
     "competition_metrics",
@@ -18,7 +25,7 @@ class InviteKeyModel(db.Model):
 
     key: so.Mapped[str] = so.mapped_column(sa.String(6), primary_key=True)
     created: so.Mapped[datetime] = so.mapped_column(
-        sa.DateTime, default=lambda: datetime.now(timezone.utc)
+        sa.DateTime, default=get_vietnam_time
     )
     creator_id: so.Mapped[int | None] = so.mapped_column(
         sa.ForeignKey("users.id", ondelete="CASCADE")
@@ -43,7 +50,7 @@ class RawFileModel(db.Model):
         sa.String(255), nullable=False, unique=True
     )
     uploaded_at: so.Mapped[datetime] = so.mapped_column(
-        sa.DateTime, default=lambda: datetime.now(timezone.utc)
+        sa.DateTime, default=get_vietnam_time
     )
     is_active: so.Mapped[bool] = so.mapped_column(
         sa.Boolean, default=True, index=True

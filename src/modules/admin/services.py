@@ -14,6 +14,14 @@ from src.common.response_builder import ResponseBuilder
 from flask import abort
 from functools import wraps
 from flask_jwt_extended import get_jwt
+from zoneinfo import ZoneInfo
+
+# Tạo timezone Việt Nam
+VIETNAM_TZ = ZoneInfo('Asia/Ho_Chi_Minh')
+
+def get_vietnam_time():
+    """Get current time in Vietnam timezone"""
+    return datetime.now(VIETNAM_TZ)
 
 def generate_invite_key():
     characters = string.ascii_uppercase + string.digits
@@ -30,7 +38,7 @@ def is_invite_key_expired(invite_key: InviteKeyModel) -> bool:
         invite_created_aware = invite_key.created
 
     expiration_time = invite_created_aware + timedelta(seconds=EXPIRATION_INVITE_KEY)
-    return datetime.now(timezone.utc) > expiration_time
+    return get_vietnam_time() > expiration_time
 
 def group_not_banned_required():
     def decorator(fn):
